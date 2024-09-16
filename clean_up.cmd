@@ -77,8 +77,8 @@ echo All .png files have been deleted.
 :: Detect and delete all __pycache__ folders recursively
 for /r %%D in (__pycache__) do (
     if exist "%%D" rmdir /s /q "%%D" >nul 2>&1
-    echo Deleted %%D
 )
+echo All __pycache__ folders has been deleted.
 
 echo Everything's all cleaned.
 pause
