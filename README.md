@@ -56,5 +56,9 @@ Explaination:
 *Delete players based on amount of pals. IE: 10 is players with 10 or less pals will get automatically deleted.
 *Fixed save(PalworldSaveTools\fixed\Level.sav) is useless after patch v0.3+. Please do not try to use it, it'll change nothing. Thanks for understanding!
 *As of v0.5.5 update, you will be able to get total pals caught/owned. The requirement to grab that data is to get server's Players folder and copy it over into the tool Players folder.
-First pic: Before pasting the files into server path: https://i.imgur.com/JNBmIYG.png
-Second pic: After pasting the files into server path: https://i.imgur.com/2Q5voJZ.png
+
+
+![Screenshot1](.github/images/screenshot1.png)
+
+
+![Screenshot2](.github/images/screenshot2.png)
