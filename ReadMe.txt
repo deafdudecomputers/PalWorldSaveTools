@@ -27,7 +27,7 @@ Ability to see which bases on map via bases.cmd.
 Ability to transfer from dedicated server to single/coop world.
 Ability to transfer from single/coop world to dedicated server.
 
-***In order to be able to transfer from local to server, you have to use fix_host_save.cmd. Make sure to copy everything from your world from: C:\Users\USERNAME\AppData\Local\Pal\Saved\SaveGames\RANDOMID\ and put it in your server. Start it up, and create a new character, then pick up an item/etc, wait for it to save. Afterwards, copy everything from that server save, then paste everything into my tool. Click on fix_host_save.cmd and input your actual UID, then old UID(from local), and it'll progress everything for you. Then delete the saves from server, and paste the updated files in LocalWorldSave and you're good to go.***
+***In order to be able to transfer from local to server, you have to use fix_host_save.cmd. Make sure to copy everything from your world from: C:\Users\USERNAME\AppData\Local\Pal\Saved\SaveGames\RANDOMID\ and put it in your server. Start it up, and create a new character, then pick up an item/etc, wait for it to save. Afterwards, copy everything from that server save, then paste everything into LocalWorldSave in my tool. Click on fix_host_save.cmd and input your actual UID, then old UID(from local), and it'll progress everything for you. Then delete the saves from server, and paste the updated files in LocalWorldSave and you're good to go.***
 
 ***Make sure to use clean_up.cmd every time you update the tool, it'll ensure the best performance.***
 
