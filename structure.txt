@@ -1,0 +1,39 @@
+PalworldSaveTools
+│
+├── palworld_save_tools
+│
+├── external_libs
+│
+├── internal_libs
+│   ├── bases.py
+│   ├── import_libs.py
+│   ├── baseicon.png
+│   ├── marker.png
+│   ├── NotoSans-Regular.ttf
+│   ├── pal_names.py
+│   ├── pal_passives.py
+│   ├── palobject.py
+│   ├── worldmap.png
+│
+├── Players
+│
+├── LocalWorldSave
+│
+├── clean_up.cmd
+├── convert_sav_to_json.cmd
+├── convert_json_to_sav.cmd
+├── convert.py
+├── delete_pals_save.cmd
+├── delete_pals_save.py
+├── fix_save.cmd
+├── fix_save.py
+├── fix_save.sh
+├── fix_world.cmd
+├── fix_world.sh
+├── linux_test.cmd
+├── bases.cmd
+├── ReadMe.txt
+├── sort_players.cmd
+├── sort_players.py
+├── structure.txt
+└── convertxycoords.bat
