@@ -19,6 +19,8 @@ PalworldSaveTools
 │
 ├── LocalWorldSave
 │
+├── .github
+│
 ├── clean_up.cmd
 ├── convert_sav_to_json.cmd
 ├── convert_json_to_sav.cmd
@@ -32,7 +34,8 @@ PalworldSaveTools
 ├── fix_world.sh
 ├── linux_test.cmd
 ├── bases.cmd
-├── ReadMe.txt
+├── README.md
+├── LICENSE
 ├── sort_players.cmd
 ├── sort_players.py
 ├── structure.txt
