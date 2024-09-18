@@ -159,6 +159,13 @@ def LoadFile(filename):
         print("\n")
     wsd = gvas_file.properties['worldSaveData']['value']
     MappingCache = MappingCacheObject.get(wsd, use_mp=not getattr(args, "reduce_memory", False))
+def extract_value(data, key, default_value=''):
+    value = data.get(key, default_value)
+    if isinstance(value, dict):
+        value = value.get('value', default_value)
+        if isinstance(value, dict):
+            value = value.get('value', default_value)
+    return value
 def count_pals_found(data, player_pals_count):
     from collections import defaultdict
     owner_pals_info = defaultdict(list)
@@ -189,8 +196,8 @@ def count_pals_found(data, player_pals_count):
         if not player_uid:
             continue
         character_id = raw_data.get("CharacterID", {}).get("value")
-        level = raw_data.get("Level", {}).get("value", 1)
-        rank = raw_data.get("Rank", {}).get("value", 1)
+        level = extract_value(raw_data, "Level", 1)
+        rank = extract_value(raw_data, "Rank", 1)
         gender_value = raw_data.get("Gender", {}).get("value", {}).get("value", "")
         gender_info = {
             "EPalGenderType::Male": "Male",
@@ -201,14 +208,14 @@ def count_pals_found(data, player_pals_count):
             for skill_id in raw_data.get("PassiveSkillList", {}).get("value", {}).get("values", [])
         ]
         passive_skills_str = ", Skills: " + ", ".join(passive_skills) if passive_skills else ""
-        rank_hp = int(raw_data.get("Rank_HP", {}).get("value", 0)) * 3
-        rank_attack = int(raw_data.get("Rank_Attack", {}).get("value", 0)) * 3
-        rank_defense = int(raw_data.get("Rank_Defense", {}).get("value", 0)) * 3
-        rank_craft_speed = int(raw_data.get("Rank_CraftSpeed", {}).get("value", 0)) * 3
+        rank_hp = int(extract_value(raw_data, "Rank_HP", 0)) * 3
+        rank_attack = int(extract_value(raw_data, "Rank_Attack", 0)) * 3
+        rank_defense = int(extract_value(raw_data, "Rank_Defense", 0)) * 3
+        rank_craft_speed = int(extract_value(raw_data, "Rank_CraftSpeed", 0)) * 3
         talents_str = (
-            f"HP IV: {raw_data.get('Talent_HP', {}).get('value', '0')}({rank_hp}%), "
-            f"ATK IV: {raw_data.get('Talent_Shot', {}).get('value', '0')}({rank_attack}%), "
-            f"DEF IV: {raw_data.get('Talent_Defense', {}).get('value', '0')}({rank_defense}%), "
+            f"HP IV: {extract_value(raw_data, 'Talent_HP', '0')}({rank_hp}%), "
+            f"ATK IV: {extract_value(raw_data, 'Talent_Shot', '0')}({rank_attack}%), "
+            f"DEF IV: {extract_value(raw_data, 'Talent_Defense', '0')}({rank_defense}%), "
             f"Work Speed: ({rank_craft_speed}%)"
         )
         pal_name = PAL_NAMES.get(character_id, character_id)
@@ -327,7 +334,7 @@ def ShowPlayers():
                         player_uid = raw_data_value_key.get("PlayerUId", {}).get("value") if isinstance(raw_data_value_key, dict) else None
                         instance_id = raw_data_value_key.get("InstanceId", {}).get("value") if isinstance(raw_data_value_key, dict) else None
                         nickname = raw_data_value_value["value"]["object"]["SaveParameter"]["value"].get("NickName", {}).get("value")
-                        player_level = raw_data_value_value["value"]["object"]["SaveParameter"]["value"].get("Level", {}).get("value")
+                        player_level = extract_value(raw_data_value_value["value"]["object"]["SaveParameter"]["value"], "Level", 0)
                         playerPalCount = player_pals_count.get(player_uid, 0)
                         playerPalCaughtCount = player_pal_caught_count.get(player_uid, 0)
                         process_player_file(player_uid, nickname, 'Players')
@@ -368,7 +375,8 @@ def ShowPlayers():
     for playerUId in playerMapping:
         playerMeta = playerMapping[playerUId]
         try:
-            level = max(playerMeta.get('Level', 0), 1)
+            level_value = extract_value(playerMeta, 'Level', 0)
+            level = max(int(level_value), 1)
             last_online = "Unknown"
             for guild in guild_data.values():
                 for player in guild['players']:
@@ -457,7 +465,7 @@ def ShowPlayers():
                 if player_data:
                     nickname = player_data.get('NickName', 'Unknown')
                     player_uid = player['player_uid']
-                    level = player_data.get('Level', 0)
+                    level = extract_value(player_data, 'Level', 0)
                     pal_count = player_pals_count.get(player_uid, 0)
                     pal_caught_count = player_pal_caught_count.get(player_uid, 0)
                     pal_caught_unique = player_pal_caught_unique.get(player_uid, 0)

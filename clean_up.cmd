@@ -20,13 +20,11 @@ if exist "external_libs" (
     for /d %%D in (*) do (
         if /i not "%%~nxD"=="palworld_save_tools" (
             rmdir /s /q "%%D" >nul 2>&1
-            echo Deleted folder %%D
         )
     )
     for %%F in (*) do (
         if /i not "%%~nxF"=="palworld_save_tools" (
             del /q "%%F" >nul 2>&1
-            echo Deleted file %%F
         )
     )
     popd
@@ -39,7 +37,6 @@ if exist "internal_libs" (
     for %%F in (*) do (
         if /i not "%%~xF"==".py" (
             del /q "%%F" >nul 2>&1
-            echo Deleted file %%F
         )
     )
     popd
@@ -77,8 +74,8 @@ echo All .png files have been deleted.
 :: Detect and delete all __pycache__ folders recursively
 for /r %%D in (__pycache__) do (
     if exist "%%D" rmdir /s /q "%%D" >nul 2>&1
-    echo Deleted %%D
 )
+echo All __pycache__ folders has been deleted.
 
 echo Everything's all cleaned.
 pause
