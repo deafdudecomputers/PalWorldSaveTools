@@ -2,11 +2,11 @@
 
 # Working as of v0.3.7 patch.
 
-**Author:** MagicBear and cheahjs 
-**License:** MIT License  
-**Updated by:** Pylar and Techdude  
-**Map Pictures Provided by:** Kozejin 
-**Testers/Helpers:** Lethe and Choi-Jungwoo
+-**Author:** MagicBear and cheahjs 
+-**License:** MIT License  
+-**Updated by:** Pylar and Techdude  
+-**Map Pictures Provided by:** Kozejin 
+-**Testers/Helpers:** Lethe and Choi-Jungwoo
 
 ## Remember to use `clean_up.cmd` after every update for the best performance!
 
