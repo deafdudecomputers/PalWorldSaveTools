@@ -20,7 +20,7 @@ def ensure_package_installed(package_name):
         #print(f"{package_name} not found. Installing...")
         try:
             subprocess.check_call(
-                [sys.executable, "-m", "pip", "install", package_name, "--target=" + external_libs_path],
+                [sys.executable, "-m", "pip", "install", package_name, "--target=" + external_libs_path, "--no-cache-dir"],
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE
             )
