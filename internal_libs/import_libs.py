@@ -50,9 +50,11 @@ def ensure_internal_libs_exists():
         download_from_dropbox(dropbox_link, zip_path)
         extract_zip(zip_path, internal_libs_path)
         os.remove(zip_path)
-for package in ['msgpack', 'palworld_coord', 'psutil', 'palworld_save_tools', 'matplotlib', 'pandas']:
+for package in ['msgpack', 'palworld_coord', 'psutil', 'palworld_save_tools', 'matplotlib', 'pandas', 'cityhash']:
     ensure_package_installed(package)
     ensure_internal_libs_exists()
+from cityhash import CityHash64
+from uuid import UUID
 import pandas as pd
 import psutil, msgpack, palworld_coord
 import matplotlib.pyplot as plt
