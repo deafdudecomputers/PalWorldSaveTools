@@ -1,5 +1,7 @@
 # Palworld Save Tools
 
+# Working as of v0.3.7 patch.
+
 **Author:** MagicBear  
 **License:** MIT License  
 **Updated by:** Pylar and Techdude  
