@@ -8,33 +8,87 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up zip
-        run: sudo apt-get install -y zip
+      - name: Get Tag Name
+        id: get_tag_name
+        run: |
+          echo "tag=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
 
-      - name: Zip project files
-        run: zip -r PalWorldSaveTools.zip ./*
+      - name: Get Release ID
+        id: get_release
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            try {
+              const release = await github.rest.repos.getReleaseByTag({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                tag: '${{ steps.get_tag_name.outputs.tag }}'
+              });
+              core.setOutput('release_id', release.data.id);
+              core.info(`Found release ID: ${release.data.id}`);
+            } catch (error) {
+              if (error.status === 404) {
+                core.info('No existing release found for this tag.');
+              } else {
+                throw error;
+              }
+            }
+
+      - name: Delete Existing Release
+        if: steps.get_release.outputs.release_id != ''
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            await github.rest.repos.deleteRelease({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              release_id: ${{ steps.get_release.outputs.release_id }}
+            });
+            core.info('Existing release deleted.');
+
+      - name: Delete Tag
+        if: always()
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            try {
+              await github.rest.git.deleteRef({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                ref: 'tags/${{ steps.get_tag_name.outputs.tag }}'
+              });
+              core.info('Tag deleted.');
+            } catch (error) {
+              if (error.status === 422 || error.status === 404) {
+                core.info('Tag does not exist or already deleted.');
+              } else {
+                throw error;
+              }
+            }
+
+      - name: Create ZIP Archive
+        run: |
+          zip -r PalWorldSaveTools.zip . \
+          -x "*.git*" \
+          -x ".github/*" \
+          -x "node_modules/*" \
+          -x "*.DS_Store"
 
       - name: Create GitHub Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: ncipollo/release-action@v1
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
+          tag: ${{ steps.get_tag_name.outputs.tag }}
+          name: Release ${{ steps.get_tag_name.outputs.tag }}
+          artifacts: PalWorldSaveTools.zip
+          token: ${{ secrets.GITHUB_TOKEN }}
           draft: false
           prerelease: false
-
-      - name: Upload zip file to release
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./PalWorldSaveTools.zip
-          asset_name: PalWorldSaveTools.zip
-          asset_content_type: application/zip
+          overwrite: true
