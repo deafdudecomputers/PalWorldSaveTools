@@ -1,10 +1,10 @@
-import base64
+from typing import Any, Sequence
 
 from palworld_save_tools.archive import *
 
 
 def decode(
-        reader: FArchiveReader, type_name: str, size: int, path: str
+    reader: FArchiveReader, type_name: str, size: int, path: str
 ) -> dict[str, Any]:
     if type_name != "ArrayProperty":
         raise Exception(f"Expected ArrayProperty, got {type_name}")
@@ -15,11 +15,12 @@ def decode(
 
 
 def decode_bytes(
-        parent_reader: FArchiveReader, c_bytes: Sequence[int]
+    parent_reader: FArchiveReader, c_bytes: Sequence[int]
 ) -> Optional[dict[str, Any]]:
     if len(c_bytes) == 0:
         return None
     reader = parent_reader.internal_copy(bytes(c_bytes), debug=False)
+    data: dict[str, Any] = {}
     data: dict[str, Any] = {
         "permission": {
             "type_a": reader.u32(),
@@ -27,16 +28,16 @@ def decode_bytes(
             "item_static_id": reader.fstring(),
         },
         "corruption_progress_value": reader.float(),
-        f'unknown_padding': base64.b64encode(reader.read_to_end()).decode('utf-8')
     }
-
+    unknown_bytes = reader.read_to_end()
+    data["local_id"] = UUID(unknown_bytes[12:28])
     if not reader.eof():
         raise Exception("Warning: EOF not reached")
     return data
 
 
 def encode(
-        writer: FArchiveWriter, property_type: str, properties: dict[str, Any]
+    writer: FArchiveWriter, property_type: str, properties: dict[str, Any]
 ) -> int:
     if property_type != "ArrayProperty":
         raise Exception(f"Expected ArrayProperty, got {property_type}")
@@ -54,6 +55,8 @@ def encode_bytes(p: dict[str, Any]) -> bytes:
     writer.u32(p["permission"]["type_b"])
     writer.fstring(p["permission"]["item_static_id"])
     writer.float(p["corruption_progress_value"])
-    writer.write(base64.b64decode(p["unknown_padding"]))
+    writer.write(b"\x00" * 12)
+    uuid_writer(writer, p["local_id"])
+    writer.write(b"\x00" * 16)
     encoded_bytes = writer.bytes()
     return encoded_bytes
