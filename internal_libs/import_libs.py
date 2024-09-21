@@ -46,10 +46,13 @@ def ensure_internal_libs_exists():
     files_missing = any(not os.path.exists(os.path.join(internal_libs_path, file)) for file in required_files)
     if files_missing:
         print(f"Downloading and extracting assets...")
-        dropbox_link = 'https://www.dropbox.com/scl/fi/9fdibnhxl2dhn79856klj/PST_Assets.zip?rlkey=ulp17jmz9630dr97pavop4b4h&st=mtrbvswh&dl=1'
-        download_from_dropbox(dropbox_link, zip_path)
-        extract_zip(zip_path, internal_libs_path)
-        os.remove(zip_path)
+        dropbox_link = 'https://www.dropbox.com/scl/fi/9fdibnhxl2dhn79856klj/PST_Assets.zip?rlkey=ulp17jmz9630dr97pavop4b4h&st=mtrbvswh&dl=1'        
+        try:
+            download_from_dropbox(dropbox_link, zip_path)
+            extract_zip(zip_path, internal_libs_path)
+            os.remove(zip_path)
+        except Exception as e:
+            print(f"Network/Permission error, unable to download the assets. Error details: {str(e)}")
 for package in ['msgpack', 'palworld_coord', 'psutil', 'palworld_save_tools', 'matplotlib', 'pandas', 'cityhash']:
     ensure_package_installed(package)
     ensure_internal_libs_exists()
