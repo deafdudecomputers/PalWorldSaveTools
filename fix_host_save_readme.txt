@@ -30,6 +30,7 @@ Step 4:
 Check the server's Players folder. You should now see two save files: 00000000000000000000000000000001.sav and a new one, such as 4E6DACB6000000000000000000000000.sav. This can be with an exception of your buddies who plays on that server. Just make note of what these saves are. 
 
 Step 5:
+Shut down the server. 
 Copy the server’s Players folder and Level.sav.
 
 Step 6:
