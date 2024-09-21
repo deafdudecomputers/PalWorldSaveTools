@@ -37,6 +37,24 @@ def main():
         old_json = sav_to_json(old_sav_path)
         print('Modifying JSON save data...')
         old_json['properties']['SaveData']['value']['PlayerUId']['value'] = new_guid_formatted
+        old_instance_id = old_json['properties']['SaveData']['value']['IndividualId']['value']['InstanceId']['value']
+        if guild_fix:
+            group_ids_len = len(level_json['properties']['worldSaveData']['value']['GroupSaveDataMap']['value'])
+            for i in range(group_ids_len):
+                group_id = level_json['properties']['worldSaveData']['value']['GroupSaveDataMap']['value'][i]
+                if group_id['value']['GroupType']['value']['value'] == 'EPalGroupType::Guild':
+                    group_data = group_id['value']['RawData']['value']
+                    if 'individual_character_handle_ids' in group_data:
+                        handle_ids = group_data['individual_character_handle_ids']
+                        for j in range(len(handle_ids)):
+                            if handle_ids[j]['instance_id'] == old_instance_id:
+                                handle_ids[j]['guid'] = new_guid_formatted
+                    if 'admin_player_uid' in group_data and old_guid_formatted == group_data['admin_player_uid']:
+                        group_data['admin_player_uid'] = new_guid_formatted
+                    if 'players' in group_data:
+                        for j in range(len(group_data['players'])):
+                            if old_guid_formatted == group_data['players'][j]['player_uid']:
+                                group_data['players'][j]['player_uid'] = new_guid_formatted
         json_to_sav(level_json, level_sav_path)
         json_to_sav(old_json, old_sav_path)
         if os.path.exists(new_sav_path):
