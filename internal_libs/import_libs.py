@@ -74,9 +74,12 @@ from palworld_save_tools.archive import *
 import palworld_save_tools.rawdata.group as palworld_save_group
 from palworld_save_tools.rawdata import *
 def set_high_priority():
-    p = psutil.Process(os.getpid())
-    if os.name == 'nt':
-        p.nice(psutil.HIGH_PRIORITY_CLASS)
-    else:
-        p.nice(-20)
+    try:
+        p = psutil.Process(os.getpid())
+        if os.name == 'nt':
+            p.nice(psutil.HIGH_PRIORITY_CLASS)
+        else:
+            p.nice(-20)
+    except Exception as e:
+        print(f"Failed to set high priority: {e}")
 set_high_priority()
