@@ -48,7 +48,5 @@ set "SAVE_PATH=%~dp0LocalWorldSave\Level.sav"
 echo Executing fix_host_save.py using !PYTHON_PATH!...
 echo Save Path: %SAVE_PATH%
 echo Running: "%PYTHON_PATH%" "%SCRIPT_PATH%" 
-set /p NEW_GUID="Enter the new GUID (e.g., 4E6DACB6000000000000000000000000): "
-set /p OLD_GUID="Enter the old GUID (e.g., 00000000000000000000000000000001): "
-"%PYTHON_PATH%" "%SCRIPT_PATH%" "LocalWorldSave" %NEW_GUID% %OLD_GUID% True
+"%PYTHON_PATH%" "%SCRIPT_PATH%" "LocalWorldSave"
 pause
