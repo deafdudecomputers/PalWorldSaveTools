@@ -32,15 +32,7 @@
 - Look up the palworld id via steam id by convertids.
 
 ## Transferring Local Saves to Server
-1. Use `fix_host_save.cmd`.
-2. Copy everything from:  
-   `C:\Users\USERNAME\AppData\Local\Pal\Saved\SaveGames\RANDOMID\`
-3. Paste into your server save folder.
-4. Start the server, create a new character, pick up an item, and wait for a save.
-5. Copy everything from the server save back into `LocalWorldSave` in the tool.
-6. Run `fix_host_save.cmd`, input your actual UID and old UID (from local), and the tool will update the save for you.
-7. Delete the server saves, then paste the updated files from `LocalWorldSave` into the server save folder.
-8. Profit?
+_read the fix_host_save_readme.txt for instructions and make sure to check the fix_host_save_screenshots for clear images on how to do the instructions properly_
 
 ## How to Automatically Delete Player Saves Based on Inactivity
 1. Copy everything from your server (`\Pal\Saved\SaveGames\0\RANDOMSERVERID\`) into the same location within the tool (`PalworldSaveTools\`).
