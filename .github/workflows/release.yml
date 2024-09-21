@@ -39,41 +39,6 @@ jobs:
                 throw error;
               }
             }
-
-      - name: Delete Existing Release
-        if: steps.get_release.outputs.release_id != ''
-        uses: actions/github-script@v6
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            await github.rest.repos.deleteRelease({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              release_id: ${{ steps.get_release.outputs.release_id }}
-            });
-            core.info('Existing release deleted.');
-
-      - name: Delete Tag
-        if: always()
-        uses: actions/github-script@v6
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            try {
-              await github.rest.git.deleteRef({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                ref: 'tags/${{ steps.get_tag_name.outputs.tag }}'
-              });
-              core.info('Tag deleted.');
-            } catch (error) {
-              if (error.status === 422 || error.status === 404) {
-                core.info('Tag does not exist or already deleted.');
-              } else {
-                throw error;
-              }
-            }
-
       - name: Create ZIP Archive
         run: |
           zip -r PalWorldSaveTools.zip . \
