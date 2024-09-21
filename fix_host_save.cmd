@@ -42,6 +42,8 @@ if not exist "%SCRIPT_PATH%" (
     exit /B 1
 )
 
+set "SAVE_PATH=%~dp0LocalWorldSave\Level.sav"
+
 :: Execute the Python script using the found Python path
 echo Executing fix_host_save.py using !PYTHON_PATH!...
 echo Save Path: %SAVE_PATH%
