@@ -11,11 +11,11 @@
 ## Remember to use `clean_up.cmd` after every update for the best performance!
 
 ## If it hangs on this picture, or gives error message concerning the cityhash, please attempt this:
+![Screenshot3](.github/images/screenshot3.png)
 - Install Visual Studios from https://visualstudio.microsoft.com/visual-cpp-build-tools/
 - Tick the option that says Desktop development with C++
 - Then ensure the following components are selected under the Desktop development with C++: MSVC v142 - VS 2019 C++ x64/x86 build tools, Windows 10/11 SDK(depending on your OS), and C++ CMake tools for Windows
 - Afterwards, use clean_up.cmd and try again. Thank you! :)
-![Screenshot3](.github/images/screenshot3.png)
 
 ## Current Features
 - **Fast parsing/reading tool**—one of the quickest out there.
