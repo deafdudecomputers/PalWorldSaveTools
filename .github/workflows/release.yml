@@ -39,6 +39,28 @@ jobs:
                 throw error;
               }
             }
+
+      - name: Delete Previous Releases
+        id: delete_releases
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const releases = await github.rest.repos.listReleases({
+              owner: context.repo.owner,
+              repo: context.repo.repo
+            });
+            for (const release of releases.data) {
+              if (release.tag_name !== '${{ steps.get_tag_name.outputs.tag }}') {
+                await github.rest.repos.deleteRelease({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  release_id: release.id
+                });
+                core.info(`Deleted release: ${release.tag_name}`);
+              }
+            }
+
       - name: Create ZIP Archive
         run: |
           zip -r PalWorldSaveTools.zip . \
