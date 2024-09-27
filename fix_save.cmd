@@ -50,6 +50,9 @@ if exist "sort_players.log" del "sort_players.log"
 :: Delete the Pal Logger folder and its contents
 if exist "Pal Logger" rmdir /s /q "Pal Logger"
 
+:: Ensures pip is installed after checking python is installed already.
+python -m ensurepip --upgrade >nul 2>&1
+
 :: Execute the Python script using the found Python path
 echo Executing fix_save.py using !PYTHON_PATH!...
 "%PYTHON_PATH%" "%SCRIPT_PATH%" "Level.sav"

@@ -2,6 +2,9 @@
 title Pylar's Auto Clean Tool
 setlocal enabledelayedexpansion
 
+:: Ensures pip is installed after checking python is installed already.
+python -m ensurepip --upgrade >nul 2>&1
+
 :: Clean up all .log files
 del /q *.log >nul 2>&1
 echo All logs have been deleted.

@@ -41,6 +41,9 @@ if not exist "sort_players.py" (
     exit /B 1
 )
 
+:: Ensures pip is installed after checking python is installed already.
+python -m ensurepip --upgrade >nul 2>&1
+
 if exist "sort_players.log" del "sort_players.log"
 
 :: Prompt for days and level

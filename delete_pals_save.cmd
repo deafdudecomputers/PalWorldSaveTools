@@ -41,6 +41,9 @@ if not exist "delete_pals_save.py" (
     exit /B 1
 )
 
+:: Ensures pip is installed after checking python is installed already.
+python -m ensurepip --upgrade >nul 2>&1
+
 set /p max_pals=Enter maximum number of pals per player to delete: 
 
 echo Executing delete_pals_save.py using !PYTHON_PATH!...

@@ -41,6 +41,9 @@ if not exist "convert.py" (
     exit /B 1
 )
 
+:: Ensures pip is installed after checking python is installed already.
+python -m ensurepip --upgrade >nul 2>&1
+
 echo Executing convert.py using !PYTHON_PATH!...
 "!PYTHON_PATH!" convert.py "Level.sav.json"
 pause

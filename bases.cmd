@@ -39,6 +39,9 @@ cd /D "%~dp0"
 :: Set the path to the Python script
 set "SCRIPT_PATH=internal_libs.bases"
 
+:: Ensures pip is installed after checking python is installed already.
+python -m ensurepip --upgrade >nul 2>&1
+
 :: Check if the Python script exists
 echo Script Path: %SCRIPT_PATH%
 

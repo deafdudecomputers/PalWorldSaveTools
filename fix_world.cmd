@@ -41,6 +41,9 @@ if not exist "fix_save.py" (
     exit /B 1
 )
 
+:: Ensures pip is installed after checking python is installed already.
+python -m ensurepip --upgrade >nul 2>&1
+
 :: Clean up old log files
 if exist "fix_save.log" del "fix_save.log"
 if exist "players.log" del "players.log"

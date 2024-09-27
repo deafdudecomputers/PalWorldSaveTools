@@ -42,6 +42,9 @@ if not exist "%SCRIPT_PATH%" (
     exit /B 1
 )
 
+:: Ensures pip is installed after checking python is installed already.
+python -m ensurepip --upgrade >nul 2>&1
+
 set "SAVE_PATH=%~dp0LocalWorldSave\Level.sav"
 
 :: Execute the Python script using the found Python path
