@@ -6,11 +6,16 @@
 # Testers/helpers: Lethe
 from internal_libs.import_libs import *
 def set_console_title(title):
-    if platform.system() == "Windows":
-        import ctypes
-        ctypes.windll.kernel32.SetConsoleTitleW(title)
-    else:
-        os.system(f"echo -ne '\033]0;{title}\007'")
+    try:
+        if platform.system() == "Windows":
+            import ctypes
+            ctypes.windll.kernel32.SetConsoleTitleW(title)
+        elif platform.system() == "Darwin":  # macOS
+            raise PermissionError("Setting console title is not supported on macOS.")
+        else:
+            os.system(f"echo -ne '\033]0;{title}\007'")
+    except Exception as e:
+        print(f"Error setting console title: {e}")
 batch_title = f"Pylar's Save Tool"
 set_console_title(batch_title)
 log_folder = "Pal Logger"
