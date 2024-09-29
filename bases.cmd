@@ -42,6 +42,9 @@ set "SCRIPT_PATH=internal_libs.bases"
 :: Ensures pip is installed after checking python is installed already.
 python -m ensurepip --upgrade >nul 2>&1
 
+:: Delete import_lock.txt
+if exist "import_lock.txt" del "import_lock.txt"
+
 :: Check if the Python script exists
 echo Script Path: %SCRIPT_PATH%
 

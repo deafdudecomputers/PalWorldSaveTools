@@ -44,6 +44,9 @@ if not exist "sort_players.py" (
 :: Ensures pip is installed after checking python is installed already.
 python -m ensurepip --upgrade >nul 2>&1
 
+:: Delete import_lock.txt
+if exist "import_lock.txt" del "import_lock.txt"
+
 if exist "sort_players.log" del "sort_players.log"
 
 :: Prompt for days and level

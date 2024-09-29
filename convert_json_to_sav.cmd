@@ -44,6 +44,9 @@ if not exist "convert.py" (
 :: Ensures pip is installed after checking python is installed already.
 python -m ensurepip --upgrade >nul 2>&1
 
+:: Delete import_lock.txt
+if exist "import_lock.txt" del "import_lock.txt"
+
 echo Executing convert.py using !PYTHON_PATH!...
 "!PYTHON_PATH!" convert.py "Level.sav.json"
 pause

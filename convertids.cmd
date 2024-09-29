@@ -44,6 +44,9 @@ if not exist "convertids.py" (
 :: Ensures pip is installed after checking python is installed already.
 python -m ensurepip --upgrade >nul 2>&1
 
+:: Delete import_lock.txt
+if exist "import_lock.txt" del "import_lock.txt"
+
 echo Executing convertids.py using !PYTHON_PATH!...
 "!PYTHON_PATH!" convertids.py
 pause

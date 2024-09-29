@@ -80,5 +80,8 @@ for /r %%D in (__pycache__) do (
 )
 echo All __pycache__ folders has been deleted.
 
+:: Delete import_lock.txt
+if exist "import_lock.txt" del "import_lock.txt"
+
 echo Everything's all cleaned.
 pause

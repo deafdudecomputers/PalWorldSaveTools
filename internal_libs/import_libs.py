@@ -12,21 +12,21 @@ external_libs_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..
 os.makedirs(external_libs_path, exist_ok=True)
 sys.path.insert(0, external_libs_path)
 def ensure_package_installed(package_name):
-    #print(f'Attempting to find {package_name}...')
+    print(f'Attempting to find {package_name}...')
     try:
         importlib.import_module(package_name)
-        #print(f"{package_name} is already installed.")
+        print(f"{package_name} is already installed.")
     except ImportError:
-        #print(f"{package_name} not found. Installing...")
+        print(f"{package_name} not found. Installing...")
         try:
             subprocess.check_call(
                 [sys.executable, "-m", "pip", "install", package_name, "--target=" + external_libs_path, "--no-cache-dir"],
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE
             )
-            #print(f"{package_name} installed successfully.")
+            print(f"{package_name} installed successfully.")
         except subprocess.CalledProcessError as e:
-            #print(f"Failed to install {package_name}. Error: {e}")
+            print(f"Failed to install {package_name}. Error: {e}")
             pass
 def download_from_dropbox(dropbox_link, dest_path):
     urllib.request.urlretrieve(dropbox_link, dest_path)
@@ -53,9 +53,25 @@ def ensure_internal_libs_exists():
             os.remove(zip_path)
         except Exception as e:
             print(f"Network/Permission error, unable to download the assets. Error details: {str(e)}")
-for package in ['msgpack', 'palworld_coord', 'psutil', 'palworld_save_tools', 'matplotlib', 'pandas', 'cityhash']:
-    ensure_package_installed(package)
-    ensure_internal_libs_exists()
+lock_file_path = 'import_lock.txt'
+def delete_lock_file_after_delay(file_path, delay):
+    time.sleep(delay)
+    if os.path.exists(file_path):
+        os.remove(file_path)
+if not os.path.exists(lock_file_path):
+    print(f"Attempting to ensure pip is installed...")
+    try:
+        subprocess.check_call([sys.executable, "-m", "ensurepip", "--upgrade"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        print(f"Pip installed successfully.")
+    except subprocess.CalledProcessError as e:
+        print(f"Failed to ensure pip is installed. Error: {e}")
+    for package in ['msgpack', 'palworld_coord', 'psutil', 'palworld_save_tools', 'matplotlib', 'pandas', 'cityhash']:
+        ensure_package_installed(package)
+    ensure_internal_libs_exists()    
+    with open(lock_file_path, 'w') as lock_file:
+        lock_file.write('initialized')
+    delete_thread = threading.Thread(target=delete_lock_file_after_delay, args=(lock_file_path, 10))
+    delete_thread.start()
 from cityhash import CityHash64
 from uuid import UUID
 import pandas as pd
