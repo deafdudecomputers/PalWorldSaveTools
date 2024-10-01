@@ -1,4 +1,7 @@
 @echo off
+title Pylar's Auto Pip Packages Uninstaller
+setlocal enabledelayedexpansion
+
 :: Save current installed packages to requirements.txt
 pip freeze > requirements.txt
 
