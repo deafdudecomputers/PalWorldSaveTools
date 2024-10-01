@@ -767,13 +767,14 @@ of your save folder before continuing. Press Yes if you would like to continue.'
     target_dynamic_containers = targ_lvl['DynamicItemSaveData']['value']['values']
     repeated_indices = set()
     for i, target_dynamic_container in enumerate(target_dynamic_containers):
-        target_guid = find_id_match_prefix(target_dynamic_container['ID']['value'], LocalIdSearchPrefix)
-        if target_guid in dynamic_guids:
-            for j, (dynamic_container, container_local_id) in enumerate(level_additional_dynamic_containers):
-                if target_guid == container_local_id:
-                    target_dynamic_containers[i] = dynamic_container
-                    repeated_indices.add(j)
-                    break
+        if 'ID' in target_dynamic_container and 'value' in target_dynamic_container['ID']:
+            target_guid = find_id_match_prefix(target_dynamic_container['ID']['value'], LocalIdSearchPrefix)
+            if target_guid in dynamic_guids:
+                for j, (dynamic_container, container_local_id) in enumerate(level_additional_dynamic_containers):
+                    if target_guid == container_local_id:
+                        target_dynamic_containers[i] = dynamic_container
+                        repeated_indices.add(j)
+                        break
     targ_lvl['DynamicItemSaveData']['value']['values'] += [container for i, (container, local_id) in
                                                            enumerate(level_additional_dynamic_containers) if
                                                            i not in repeated_indices]
