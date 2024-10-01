@@ -10,12 +10,12 @@
 
 ## Remember to use `clean_up.cmd` after every update for the best performance!
 
-## If it hangs on this picture, or gives error message concerning the cityhash, please attempt this:
+## If it hangs on this picture, or gives an error message concerning CityHash, please attempt this:
 ![Screenshot3](.github/images/screenshot3.png)
-- Install Visual Studios from https://visualstudio.microsoft.com/visual-cpp-build-tools/
-- Tick the option that says Desktop development with C++
-- Then ensure the following components are selected under the Desktop development with C++: MSVC v142 - VS 2019 C++ x64/x86 build tools, Windows 10/11 SDK(depending on your OS), and C++ CMake tools for Windows
-- Afterwards, use clean_up.cmd and try again. Thank you! :)
+- Install the Visual C++ Redistributable AIO from:  
+  https://github.com/abbodi1406/vcredist/releases  
+- Download and run **VisualCppRedist_AIO_x86_x64.exe** and follow the prompts to complete the installation.
+- Afterwards, use `clean_up.cmd` and try again. Thank you! :)
 
 ## Current Features
 - **Fast parsing/reading tool**—one of the quickest out there.
