@@ -5,6 +5,10 @@ if steam_input.startswith("steam_"):
 try:
     steam_id = int(steam_input)
     palworld_uid = steamIdToPlayerUid(steam_id)
-    print("Palworld UID:", palworld_uid)
+    nosteam_uid = PlayerUid2NoSteam(
+        int.from_bytes(toUUID(palworld_uid).raw_bytes[0:4], byteorder='little')
+    ) + "-0000-0000-0000-000000000000"
+    print("Palworld UID:", str(palworld_uid).upper())
+    print("NoSteam UID:", nosteam_uid.upper())
 except ValueError:
     print("Invalid Steam ID entered. Please provide a valid number.")
