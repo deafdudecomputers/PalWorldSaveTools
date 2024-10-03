@@ -10,12 +10,8 @@
 
 ## Remember to use `clean_up.cmd` after every update for the best performance!
 
-## If it hangs on this picture, or gives an error message concerning CityHash, please attempt this:
-![Screenshot3](.github/images/screenshot3.png)
-- Install the Visual C++ Redistributable AIO from:  
-  https://github.com/abbodi1406/vcredist/releases  
-- Download and run **VisualCppRedist_AIO_x86_x64.exe** and follow the prompts to complete the installation.
-- Afterwards, use `clean_up.cmd` and try again. Thank you! :)
+## Important Python Installation Note
+Please make sure to use the official version of Python via [python.org/downloads](https://www.python.org/downloads), NOT the WindowsApps version of Python. Otherwise, you may encounter issues due to downloading and installing packages. If you encounter any issues even after using the official version of Python, please install the Visual C++ Redistributable AIO.
 
 ## Current Features
 - **Fast parsing/reading tool**—one of the quickest out there.
