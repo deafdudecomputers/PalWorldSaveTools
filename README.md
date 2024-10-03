@@ -14,6 +14,11 @@
 Please make sure to use the official version of Python via [python.org/downloads](https://www.python.org/downloads), NOT the WindowsApps version of Python. Otherwise, you may encounter issues due to downloading and installing packages. If you encounter any issues even after using the official version of Python, please install the Visual C++ Redistributable AIO from:  
 [Visual C++ Redistributable AIO](https://github.com/abbodi1406/vcredist/releases).
 
+### Installation Directions for AIO
+1. Download **VisualCppRedist_AIO_x86_x64.exe** from the link above.
+2. Run the downloaded file and follow the prompts to complete the installation.
+3. After installation, use `clean_up.cmd` and try again.
+
 ## Current Features
 - **Fast parsing/reading tool**—one of the quickest out there.
 - Fixes the 40k pal limit by parsing out inactive pals. **(OBSOLETE, OFFICIALLY FIXED ON 22nd August 2024)**
