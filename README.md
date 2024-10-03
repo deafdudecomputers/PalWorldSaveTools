@@ -1,4 +1,4 @@
-# Palworld Save Tools
+# PalWorldSaveTools
 
 # Working as of v0.3.9 patch.
 
