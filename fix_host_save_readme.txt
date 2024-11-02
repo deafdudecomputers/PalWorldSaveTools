@@ -1,5 +1,9 @@
 How to use my tool:
 
+***Before using my tool, make sure to disable private locks on "host" save.***
+***If using GamePass(Xbox Platform) saves, make sure to do this:***
+-Use the XPG save extractor and with the compressed save folder created, the 01.sav file in the Level folder. Use the convert.py from this tool to convert 01.sav to JSON. Then re-convert it back to a .sav file. Rename the new 01.sav Level.sav and profit.-
+
 Step 1:
 Navigate to: C:\Users\YOURUSERNAME\AppData\Local\Pal\Saved\SaveGames, then open the folder with your saves. For example, mine is: 76561198324966967. The full path looks like this: C:\Users\Administrator\AppData\Local\Pal\Saved\SaveGames\76561198324966967.
 
