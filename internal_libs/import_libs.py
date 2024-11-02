@@ -12,21 +12,21 @@ external_libs_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..
 os.makedirs(external_libs_path, exist_ok=True)
 sys.path.insert(0, external_libs_path)
 def ensure_package_installed(package_name):
-    print(f'Attempting to find {package_name}...')
+    #print(f'Attempting to find {package_name}...')
     try:
         importlib.import_module(package_name)
-        print(f"{package_name} is already installed.")
+        #print(f"{package_name} is already installed.")
     except ImportError:
-        print(f"{package_name} not found. Installing...")
+        #print(f"{package_name} not found. Installing...")
         try:
             subprocess.check_call(
                 [sys.executable, "-m", "pip", "install", package_name, "--target=" + external_libs_path, "--no-cache-dir"],
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE
             )
-            print(f"{package_name} installed successfully.")
+            #print(f"{package_name} installed successfully.")
         except subprocess.CalledProcessError as e:
-            print(f"Failed to install {package_name}. Error: {e}")
+            #print(f"Failed to install {package_name}. Error: {e}")
             pass
 def download_from_dropbox(dropbox_link, dest_path):
     urllib.request.urlretrieve(dropbox_link, dest_path)
