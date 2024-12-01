@@ -59,12 +59,13 @@ def delete_lock_file_after_delay(file_path, delay):
     if os.path.exists(file_path):
         os.remove(file_path)
 if not os.path.exists(lock_file_path):
-    print(f"Attempting to ensure pip is installed...")
+    #print(f"Attempting to ensure pip is installed...")
     try:
         subprocess.check_call([sys.executable, "-m", "ensurepip", "--upgrade"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        print(f"Pip installed successfully.")
+        #print(f"Pip installed successfully.")
     except subprocess.CalledProcessError as e:
-        print(f"Failed to ensure pip is installed. Error: {e}")
+        #print(f"Failed to ensure pip is installed. Error: {e}")
+        pass
     for package in ['msgpack', 'palworld_coord', 'psutil', 'palworld_save_tools', 'matplotlib', 'pandas', 'cityhash']:
         ensure_package_installed(package)
     ensure_internal_libs_exists()    
