@@ -13,6 +13,8 @@
 ## Important Python Installation Note
 Please make sure to use the official version of Python via [python.org/downloads](https://www.python.org/downloads), NOT the WindowsApps version of Python. Otherwise, you may encounter issues due to downloading and installing packages. If you encounter any issues even after using the official version of Python, please install the Visual C++ Redistributable AIO from:  
 [Visual C++ Redistributable AIO](https://github.com/abbodi1406/vcredist/releases).
+If the cityhash hasn't been installed for some reason, likely C++ not working/broken/etc: You might have to download [VS build tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/).
+If that fails, you may try my pre-compiled version of cityhash package [here.](https://www.dropbox.com/scl/fi/dbz4zikmmqawpbo56a7d0/external_libs.zip?rlkey=xf6vz30qlmxrpgpr1aw2117p8&st=4oec5601&dl=0) 
 
 ### Installation Directions for AIO
 1. Download **VisualCppRedist_AIO_x86_x64.exe** from the link above.
