@@ -59,6 +59,7 @@ def delete_lock_file_after_delay(file_path, delay):
     if os.path.exists(file_path):
         os.remove(file_path)
 if not os.path.exists(lock_file_path):
+    pass
     #print(f"Attempting to ensure pip is installed...")
     try:
         subprocess.check_call([sys.executable, "-m", "ensurepip", "--upgrade"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
