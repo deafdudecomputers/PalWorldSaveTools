@@ -1,0 +1,86 @@
+Metadata-Version: 2.1
+Name: palworld-coord
+Version: 1.0.0
+Summary: A library to convert coordinates in Palworld from the .sav file to Paldex Map and vice-versa
+Author-email: Robert Bost <bostrt@gmail.com>
+Maintainer-email: Robert Bost <bostrt@gmail.com>
+License: MIT License
+        
+        Copyright (c) 2023 github.com/bostrt
+        
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:
+        
+        The above copyright notice and this permission notice shall be included in all
+        copies or substantial portions of the Software.
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        SOFTWARE.
+        
+Project-URL: Homepage, https://github.com/palworldlol/palworld-coord
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: System Administrators
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Topic :: System :: Monitoring
+Classifier: Topic :: Games/Entertainment
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Provides-Extra: test
+Requires-Dist: flake8 ; extra == 'test'
+Requires-Dist: pytest ; extra == 'test'
+
+# Palworld Coordinate Converter
+
+*Developed by https://palworld.lol with major help from  https://github.com/cmkb3*
+
+This is a small library with two functions used to convert between two different coordinat systems in Palworld:
+
+1. The coordinate system used in the game itself in the Paldex interactive map
+2. The coordinate system used in the game save files (`.sav`)
+
+## Installation
+
+```shell
+pip install palworld-coord
+```
+
+Also, if you want, you can just copy the [contents of this file](src/palworld_coord/__init__.py) into your project instead of adding a dependency. 
+
+## API
+
+```python
+# Convert from save game file coordinate to Paldex
+sav_to_map(x: float, y: float) -> Point
+# Convert from Paldex coordinate to save game file
+map_to_sav(x: int,   y: int) -> Point
+```
+
+## Usage Examples
+
+
+```python
+from palworld_coord import sav_to_map, map_to_sav
+
+# Anubis boss location pulled from game data
+sav_to_map(-167230, 96430)
+# Point(x=-134, y=-94)
+
+# Get .sav coordinates of random base location in-game:
+map_to_sav(373, -359)
+# Point(x=-288669, y=329207)
+```
