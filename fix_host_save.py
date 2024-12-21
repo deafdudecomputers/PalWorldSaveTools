@@ -92,4 +92,7 @@ def json_to_sav(json_data, output_filepath):
     with open(output_filepath, "wb") as f:
         f.write(sav_file)
 if __name__ == '__main__':
+    with open("version.txt", "r") as file:
+        version = file.read().strip()
+    print(f"PalWorldTools Version: {version}")
     main()
