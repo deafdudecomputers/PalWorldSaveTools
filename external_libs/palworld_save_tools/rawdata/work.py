@@ -102,7 +102,7 @@ def decode_bytes(
             data["target_map_object_model_id"] = reader.guid()
 
     if len(data.keys()) == 0:
-        #print(f"Warning, unable to parse {work_type}, falling back to raw bytes")
+        print(f"Warning, unable to parse {work_type}, falling back to raw bytes")
         return {"values": b_bytes}
     # UPalWorkProgressTransformBase->SerializeProperties
     transform_type = reader.byte()
@@ -227,28 +227,36 @@ def encode_bytes(p: dict[str, Any], work_type: str) -> bytes:
             writer.guid(p["target_map_object_model_id"])
 
     # UPalWorkProgressTransformBase->SerializeProperties
-    transform_type = p["transform"]["type"]
-    writer.byte(transform_type)
-    if transform_type == 1:
-        # pre-v2 the transform was deserialised in the wrong order
-        if "v2" not in p["transform"]:
-            writer.vector_dict(p["transform"]["location"])
-            writer.quat_dict(p["transform"]["rotation"])
-            writer.vector_dict(p["transform"]["scale"])
+    if "transform" in p:
+        transform_type = p["transform"].get("type", None)
+        if transform_type is not None:
+            writer.byte(transform_type)
+            if transform_type == 1:
+                if "v2" not in p["transform"]:
+                    writer.vector_dict(p["transform"]["location"])
+                    writer.quat_dict(p["transform"]["rotation"])
+                    writer.vector_dict(p["transform"]["scale"])
+                else:
+                    writer.ftransform(p["transform"])
+            elif transform_type == 2:
+                writer.guid(p["transform"]["map_object_instance_id"])
+            elif transform_type == 3:
+                writer.guid(p["transform"]["guid"])
+                writer.guid(p["transform"]["instance_id"])
+            else:
+                writer.write(bytes(p["transform"].get("raw_data", b"")))
         else:
-            writer.ftransform(p["transform"])
-    elif transform_type == 2:
-        writer.guid(p["transform"]["map_object_instance_id"])
-    elif transform_type == 3:
-        writer.guid(p["transform"]["guid"])
-        writer.guid(p["transform"]["instance_id"])
+            # Handle missing "type" in "transform" (optional logging or fallback)
+            # print(f"Missing 'type' in transform for work_type: {work_type}")
+            pass
     else:
-        #print(f"Unknown EPalWorkTransformType, please report this: {transform_type}: {work_type}")
-        #writer.write(p["transform"]["raw_data"])
-        writer.write(bytes(p["transform"]["raw_data"]))
+        # Handle missing "transform" key (optional logging or fallback)
+        # print(f"'transform' key is missing in input data for work_type: {work_type}")
+        pass
 
     encoded_bytes = writer.bytes()
     return encoded_bytes
+
 
 
 def encode_work_assign_bytes(p: dict[str, Any]) -> bytes:
