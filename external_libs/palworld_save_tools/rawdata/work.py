@@ -102,7 +102,7 @@ def decode_bytes(
             data["target_map_object_model_id"] = reader.guid()
 
     if len(data.keys()) == 0:
-        print(f"Warning, unable to parse {work_type}, falling back to raw bytes")
+        #print(f"Warning, unable to parse {work_type}, falling back to raw bytes")
         return {"values": b_bytes}
     # UPalWorkProgressTransformBase->SerializeProperties
     transform_type = reader.byte()
@@ -116,9 +116,7 @@ def decode_bytes(
         data["transform"]["instance_id"] = reader.guid()
     else:
         remaining_data = reader.read_to_end()
-        print(
-            f"Unknown EPalWorkTransformType, please report this: {transform_type}: {work_type}: {''.join(f'{b:02x}' for b in remaining_data)}"
-        )
+        #print(f"Unknown EPalWorkTransformType, please report this: {transform_type}: {work_type}: {''.join(f'{b:02x}' for b in remaining_data)}")
         data["transform"]["raw_data"] = [b for b in remaining_data]
 
     if not reader.eof():
@@ -245,10 +243,9 @@ def encode_bytes(p: dict[str, Any], work_type: str) -> bytes:
         writer.guid(p["transform"]["guid"])
         writer.guid(p["transform"]["instance_id"])
     else:
-        print(
-            f"Unknown EPalWorkTransformType, please report this: {transform_type}: {work_type}"
-        )
-        writer.write(p["transform"]["raw_data"])
+        #print(f"Unknown EPalWorkTransformType, please report this: {transform_type}: {work_type}")
+        #writer.write(p["transform"]["raw_data"])
+        writer.write(bytes(p["transform"]["raw_data"]))
 
     encoded_bytes = writer.bytes()
     return encoded_bytes

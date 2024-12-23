@@ -250,7 +250,7 @@ class FArchiveReader:
         if path in self.type_hints:
             return self.type_hints[path]
         else:
-            print(f"Struct type for {path} not found, assuming {default}")
+            #print(f"Struct type for {path} not found, assuming {default}")
             return default
 
     def eof(self) -> bool:
