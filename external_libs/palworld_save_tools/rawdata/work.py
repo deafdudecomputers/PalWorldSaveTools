@@ -11,6 +11,7 @@ WORK_BASE_TYPES = set(
         "EPalWorkableType::TransportItemInBaseCamp",
         "EPalWorkableType::ReviveCharacter",
         # "EPalWorkableType::CollectResource",
+        "EPalWorkableType::Booth",
         "EPalWorkableType::LevelObject",
         "EPalWorkableType::Repair",
         "EPalWorkableType::Defense",
