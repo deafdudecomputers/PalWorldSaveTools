@@ -17,21 +17,21 @@ echo Pal Logger folder and all contents within have been deleted.
 if exist "Players" rmdir /s /q "Players" >nul 2>&1
 echo Players folder and all contents within have been deleted.
 
-:: Delete everything in external_libs except for palworld_save_tools
+:: Delete everything in external_libs except for palworld_save_tools and palworld_coord
 if exist "external_libs" (
     pushd "external_libs"
     for /d %%D in (*) do (
-        if /i not "%%~nxD"=="palworld_save_tools" (
+        if /i not "%%~nxD"=="palworld_save_tools" if /i not "%%~nxD"=="palworld_coord" (
             rmdir /s /q "%%D" >nul 2>&1
         )
     )
     for %%F in (*) do (
-        if /i not "%%~nxF"=="palworld_save_tools" (
+        if /i not "%%~nxF"=="palworld_save_tools" if /i not "%%~nxF"=="palworld_coord" (
             del /q "%%F" >nul 2>&1
         )
     )
     popd
-    echo All contents except palworld_save_tools have been deleted from external_libs.
+    echo All contents except palworld_save_tools and palworld_coord have been deleted from external_libs.
 )
 
 :: Delete everything in internal_libs except .py files
