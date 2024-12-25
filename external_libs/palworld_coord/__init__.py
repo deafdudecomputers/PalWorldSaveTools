@@ -1,8 +1,14 @@
 from collections import namedtuple
 
-__transl_x = 276020
-__transl_y = -15000
-__scale    = 724
+#Works on v4.11 update
+#__transl_x = 276020
+#__transl_y = -15000
+#__scale    = 724
+
+#Works before v4.11 update
+__transl_x = 123888
+__transl_y = 158000
+__scale = 459
 
 Point = namedtuple('Point', ['x', 'y'])
 

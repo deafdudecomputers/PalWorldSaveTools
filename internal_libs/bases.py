@@ -91,7 +91,7 @@ def create_world_map():
     for _, row in df.iterrows():
         for col in base_cols:
             if pd.notna(row[col]):
-                x, y = map(int, row[col].split(', '))
+                x, y = map(int, row[col].split(' | ')[0].split(', '))
                 x_img, y_img = to_image_coordinates(x, y)
                 circle_radius = 35
                 circle_x = x_img
