@@ -471,7 +471,8 @@ def ShowPlayers():
                 if basecamp:
                     offset = basecamp['value']['RawData']['value']['transform']['translation']
                     mapped_coords = palworld_coord.sav_to_map(offset['x'], offset['y'])
-                    base_locations[base_id] = f"{mapped_coords[0]}, {mapped_coords[1]}"
+                    #base_locations[base_id] = f"{mapped_coords[0]}, {mapped_coords[1]}"
+                    base_locations[base_id] = f"{mapped_coords[0]}, {mapped_coords[1]} | RawData: {offset['x']}, {offset['y']}, {offset['z']}"
                 else:
                     base_locations[base_id] = "Unknown, Unknown"
         else:
