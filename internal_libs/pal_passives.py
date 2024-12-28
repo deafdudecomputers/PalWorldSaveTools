@@ -125,6 +125,10 @@ PAL_PASSIVES = {
         "Name": "Ferocious",
         "Description": "+20% to Attack stat"
     },
+    "PAL_ALLAttack_up3": {
+        "Name": "Demon God",
+        "Description": "+30% to Attack stat; +5% to Defence stat"
+    },
     "PAL_ALLAttack_down1": {
         "Name": "Coward",
         "Description": "-10% to Attack stat"
@@ -140,6 +144,10 @@ PAL_PASSIVES = {
     "Deffence_up2": {
         "Name": "Burly Body",
         "Description": "+20% to Defence stat"
+    },
+    "Deffence_up3": {
+        "Name": "Diamond Body",
+        "Description": "+30% to Defence stat"
     },
     "Deffence_down1": {
         "Name": "Downtrodden",
@@ -171,27 +179,35 @@ PAL_PASSIVES = {
     },
     "PAL_Sanity_Down_1": {
         "Name": "Positive Thinker",
-        "Description": "Sanity drops 10% slower"
+        "Description": "SAN drops +10% slower"
     },
     "PAL_Sanity_Down_2": {
         "Name": "Workaholic",
-        "Description": "Sanity drops 15% slower"
+        "Description": "SAN drops +15% slower"
+    },
+    "PAL_Sanity_Down_3": {
+        "Name": "Heart of the Immovable King",
+        "Description": "SAN drops +20% slower"
     },
     "PAL_Sanity_Up_1": {
         "Name": "Unstable",
-        "Description": "Sanity drops 10% faster"
+        "Description": "SAN drops 10% faster"
     },
     "PAL_Sanity_Up_2": {
         "Name": "Destructive",
-        "Description": "Sanity drops 15% faster"
+        "Description": "SAN drops 15% faster"
     },
     "PAL_FullStomach_Down_1": {
         "Name": "Dainty Eater",
-        "Description": "Hunger drops 10% slower"
+        "Description": "Hunger decreases 10% slower"
     },
     "PAL_FullStomach_Down_2": {
         "Name": "Diet Lover",
-        "Description": "Chance to lose hunger -15%"
+        "Description": "Hunger decreases -15% slower"
+    },
+    "PAL_FullStomach_Down_3": {
+        "Name": "Mastery of Fasting",
+        "Description": "Hunger decreases -20% slower"
     },
     "PAL_FullStomach_Up_1": {
         "Name": "Glutton",
@@ -208,6 +224,10 @@ PAL_PASSIVES = {
     "CraftSpeed_up2": {
         "Name": "Artisan",
         "Description": "+50% work speed"
+    },
+    "CraftSpeed_up3": {
+        "Name": "Remarkable Craftsmanship",
+        "Description": "+75% work speed"
     },
     "CraftSpeed_down1": {
         "Name": "Clumsy",
@@ -273,6 +293,10 @@ PAL_PASSIVES = {
         "Name": "Infinite Stamina",
         "Description": "Max Stamina +50% (This effect is only valid for rideable pals.)"
     },
+    "Stamina_Up_3": {
+        "Name": "Eternal Engine",
+        "Description": "Max Stamina +75% (This effect is only valid for rideable pals.)"
+    },
     "SalePrice_Up_1": {
         "Name": "Noble",
         "Description": "+5% Sell price"
@@ -324,5 +348,9 @@ PAL_PASSIVES = {
     "Alien": {
         "Name": "Otherworldly Cells",
         "Description": "Attack +10%; -15% damage received from Fire and Lightning damage"
+    },
+    "Vampire": {
+        "Name": "Vampiric",
+        "Description": "Absorbs a portion of the damage dealt to restore Health.; Does not sleep at night and continues to work."
     }
 }
