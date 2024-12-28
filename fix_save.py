@@ -470,9 +470,13 @@ def ShowPlayers():
                 basecamp = srcGuildMapping.BaseCampMapping.get(toUUID(base_id))
                 if basecamp:
                     offset = basecamp['value']['RawData']['value']['transform']['translation']
-                    mapped_coords = palworld_coord.sav_to_map(offset['x'], offset['y'])
-                    #base_locations[base_id] = f"{mapped_coords[0]}, {mapped_coords[1]}"
-                    base_locations[base_id] = f"{mapped_coords[0]}, {mapped_coords[1]} | RawData: {offset['x']}, {offset['y']}, {offset['z']}"
+                    old_coords = palworld_coord.sav_to_map(offset['x'], offset['y'], new=False)
+                    new_coords = palworld_coord.sav_to_map(offset['x'], offset['y'], new=True)
+                    base_locations[base_id] = (
+                        f"Old: {old_coords[0]}, {old_coords[1]} | "
+                        f"New: {new_coords[0]}, {new_coords[1]} | "
+                        f"RawData: {offset['x']}, {offset['y']}, {offset['z']}"
+                    )
                 else:
                     base_locations[base_id] = "Unknown, Unknown"
         else:

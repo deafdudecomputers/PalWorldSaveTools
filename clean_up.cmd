@@ -34,6 +34,18 @@ if exist "external_libs" (
     echo All contents except palworld_save_tools and palworld_coord have been deleted from external_libs.
 )
 
+:: Delete everything in internal_libs except .py files
+if exist "internal_libs" (
+    pushd "internal_libs"
+    for %%F in (*) do (
+        if /i not "%%~xF"==".py" (
+            del /q "%%F" >nul 2>&1
+        )
+    )
+    popd
+    echo All non-.py files have been deleted from internal_libs.
+)
+
 :: Delete the LocalWorldSave folder and its contents
 if exist "LocalWorldSave" rmdir /s /q "LocalWorldSave" >nul 2>&1
 echo LocalWorldSave folder and all contents within have been deleted.
