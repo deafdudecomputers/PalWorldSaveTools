@@ -8,9 +8,6 @@ python -m venv venv
 :: Activate the environment
 call venv\Scripts\activate
 
-:: Update pip to the latest version
-python -m pip install --upgrade pip
-
 :: Install the required packages
 python -m pip install -r requirements.txt
 
