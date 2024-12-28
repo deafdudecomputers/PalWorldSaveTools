@@ -1,5 +1,5 @@
 @echo off
-title Pylar's Auto Delete Pals Saves Tool
+title Pylar's Auto Delete Pals Saves Tool *venv*
 echo Setting up your environment!
 
 :: Create a virtual environment

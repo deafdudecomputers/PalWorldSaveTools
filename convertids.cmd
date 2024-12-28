@@ -1,5 +1,5 @@
 @echo off
-title Pylar's Auto Convert Tool
+title Pylar's Auto Convert Tool *venv*
 echo Setting up your environment!
 
 :: Create a virtual environment

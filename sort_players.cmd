@@ -1,5 +1,5 @@
 @echo off
-title Pylar's Auto Delete Players Saves Tool
+title Pylar's Auto Delete Players Saves Tool *venv*
 echo Setting up your environment!
 
 :: Enable delayed variable expansion
