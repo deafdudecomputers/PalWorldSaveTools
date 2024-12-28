@@ -12,7 +12,7 @@ external_libs_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..
 os.makedirs(external_libs_path, exist_ok=True)
 sys.path.insert(0, external_libs_path)
 def ensure_package_installed(package_name):
-    #return
+    return
     package_marker = os.path.join(external_libs_path, f"{package_name}.txt")
     if os.path.exists(package_marker):
         return
@@ -42,7 +42,7 @@ def extract_zip(zip_path, extract_to_folder):
     with ZipFile(zip_path, 'r') as zip_ref:
         zip_ref.extractall(extract_to_folder)
 def ensure_internal_libs_exists():
-    #return
+    return
     internal_libs_path = 'internal_libs'
     zip_path = 'PST_Assets.zip'
     required_files = [
