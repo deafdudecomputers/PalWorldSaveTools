@@ -1,58 +1,17 @@
 @echo off
-title Pylar's Save Tool
-setlocal enabledelayedexpansion
+title Pylar's Save Tool *venv*
+echo Setting up your environment!
 
-:: Function to check if Python is installed and capture its path
-:CheckPython
-for %%A in (python python3 py) do (
-    for /f "usebackq tokens=*" %%P in (`where %%A 2^>nul`) do (
-        set "PYTHON_PATH=%%P"
-        echo Found Python at !PYTHON_PATH!
-        goto :PythonFound
-    )
-)
+:: Create a virtual environment
+python -m venv venv
 
-:: If Python is not found, download and install it
-echo Python not found. Downloading Python...
-echo Downloading Python installer...
-curl -o python_installer.exe https://www.python.org/ftp/python/3.11.9/python-3.11.9-amd64.exe
+:: Activate the environment
+call venv\Scripts\activate
 
-echo Installing Python...
-start /wait python_installer.exe /quiet InstallAllUsers=1 PrependPath=1 Include_launcher=0 DefaultAllUsersTargetDir=C:\Python311
+:: Install the required packages
+python -m pip install -r requirements.txt
 
-:: Clean up
-del python_installer.exe
+:: Run the fix_host_save.py with LocalWorldSave
+python fix_host_save.py LocalWorldSave
 
-:: Check again if Python is installed after installation
-goto CheckPython
-
-:PythonFound
-:: Get the Python version
-"%PYTHON_PATH%" --version > "python_version.txt" 2>&1
-set /p PYTHON_VERSION_TEXT=< "python_version.txt"
-echo Python Version: !PYTHON_VERSION_TEXT!
-if exist "python_version.txt" del "python_version.txt"
-
-:: Switch to script directory
-cd /D "%~dp0"
-
-set "SCRIPT_PATH=fix_host_save.py"
-:: Check if fix_host_save.py exists
-if not exist "%SCRIPT_PATH%" (
-    exit /B 1
-)
-
-:: Ensures pip is installed after checking python is installed already.
-python -m ensurepip --upgrade >nul 2>&1
-
-:: Delete import_lock.txt
-if exist "import_lock.txt" del "import_lock.txt"
-
-set "SAVE_PATH=%~dp0LocalWorldSave\Level.sav"
-
-:: Execute the Python script using the found Python path
-echo Executing fix_host_save.py using !PYTHON_PATH!...
-echo Save Path: %SAVE_PATH%
-echo Running: "%PYTHON_PATH%" "%SCRIPT_PATH%" 
-"%PYTHON_PATH%" "%SCRIPT_PATH%" "LocalWorldSave"
 pause
