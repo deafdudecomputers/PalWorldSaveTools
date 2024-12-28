@@ -1,6 +1,6 @@
 # PalWorldSaveTools
 
-# Working as of v0.4.11 patch.
+# Working as of v0.4.12 patch.
 
 - **Author:** MagicBear and cheahjs 
 - **License:** MIT License  
@@ -36,7 +36,6 @@
 - Automatically downloads and installs required assets (images/fonts) into the `internal_libs` folder.
 - Automatically downloads and installs required libraries (packages) into the `external_libs` folder.
 - Automatically downloads and installs the missing `palworld_save_tools` folder (no progress bar and might show "errors" but still usable).
-- Allows testing in a Linux environment via `fix_save.sh` and `fix_world.sh`.
 - Enables drag-and-drop functionality for world versions of files.
 - Enables double-click functionality for save versions of files.
 - Provides a base map view through `bases.cmd`.
