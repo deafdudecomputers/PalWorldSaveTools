@@ -12,6 +12,6 @@ call venv\Scripts\activate
 python -m pip install -r requirements.txt
 
 :: Run the convertids.py script
-python convert.py "Level.sav."
+python convert.py "Level.sav"
 
 pause
