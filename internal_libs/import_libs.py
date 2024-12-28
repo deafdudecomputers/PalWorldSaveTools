@@ -12,6 +12,7 @@ external_libs_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..
 os.makedirs(external_libs_path, exist_ok=True)
 sys.path.insert(0, external_libs_path)
 def ensure_package_installed(package_name):
+    pass
     package_marker = os.path.join(external_libs_path, f"{package_name}.txt")
     if os.path.exists(package_marker):
         return
