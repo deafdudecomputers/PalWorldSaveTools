@@ -28,16 +28,22 @@ def parse_logfile(log_path):
             current_guild['Guild'] = guild_info[0].split(': ')[1].strip()
             current_guild['Guild Leader'] = guild_info[1].split(': ')[1].strip()
         if line.startswith('Base ') and line.split(':')[0].strip() in ['Base 1', 'Base 2', 'Base 3', 'Base 4', 'Base 5', 'Base 6', 'Base 7', 'Base 8', 'Base 9', 'Base 10']:
-            base_info = line.strip().split(':')
-            base_key = base_info[0].strip()
-            current_guild[base_key] = base_info[1].strip()
-            base_keys.add(base_key)
-            total_bases += 1
+            base_info = line.strip().split('|')
+            base_key = base_info[0].split(':')[0].strip()
+            new_coords = next(
+                (part.split('New:')[1].strip() for part in base_info if part.strip().startswith("New:")),
+                None
+            )
+            if new_coords:
+                current_guild[base_key] = new_coords
+                base_keys.add(base_key)
+                total_bases += 1
         if "Level: 55" in line:
             level_55_count += 1
     if current_guild:
         guild_data.append(current_guild)
     return guild_data, sorted(base_keys)
+
 def write_csv(guild_data, base_keys, output_file):
     print(f"Now writing the info into csv...")
     fieldnames = ['Guild', 'Guild Leader'] + base_keys
