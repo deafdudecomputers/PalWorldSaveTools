@@ -22,6 +22,8 @@
 2. Run the downloaded file and follow the prompts to complete the installation.
 3. After installation, use `clean_up.cmd` and try again.
 
+### Make sure to run AutoPackagesInstaller.cmd if you're missing packages required by this tool!!!
+
 ## Current Features
 - **Fast parsing/reading tool**—one of the quickest out there.
 - Fixes the 40k pal limit by parsing out inactive pals. **(OBSOLETE, OFFICIALLY FIXED ON 22nd August 2024)**
