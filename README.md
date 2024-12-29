@@ -22,8 +22,6 @@
 2. Run the downloaded file and follow the prompts to complete the installation.
 3. After installation, use `clean_up.cmd` and try again.
 
-### Make sure to run AutoPackagesInstaller.cmd if you're missing packages required by this tool!!!
-
 ## Current Features
 - **Fast parsing/reading tool**—one of the quickest out there.
 - Fixes the 40k pal limit by parsing out inactive pals. **(OBSOLETE, OFFICIALLY FIXED ON 22nd August 2024)**
@@ -35,10 +33,6 @@
 - Sorts and deletes players based on level and last online time.
 - Logs and sorts players by the number of pals they own.
 - Deletes players based on the number of pals.
-- Automatically downloads and installs required assets (images/fonts) into the `internal_libs` folder.
-- Automatically downloads and installs required libraries (packages) into the `external_libs` folder.
-- Automatically downloads and installs the missing `palworld_save_tools` folder (no progress bar and might show "errors" but still usable).
-- Enables drag-and-drop functionality for world versions of files.
 - Enables double-click functionality for save versions of files.
 - Provides a base map view through `bases.cmd`.
 - Transfers saves between dedicated server and single/coop world.
@@ -56,14 +50,11 @@ _read the fix_host_save_readme.txt for instructions and make sure to check the f
 4. Copy the `Players` folder from the tool.
 5. Delete the original `Players` folder from the server (`\Pal\Saved\SaveGames\0\RANDOMSERVERID\`).
 6. Paste the copied `Players` folder into the server folder.
-7. Profit?
+7. Start the server up.
+8. Reboot twice, once to clear the player out of Level.sav. Twice to clear the player out of ram. 
+9. Profit?
 
 ## Additional Notes
 - **Days:** Tracks players inactive for a specified number of days (e.g., 30 days and older).
 - **Level:** Tracks players up to a specified level (e.g., level 30 or lower).
 - **Pals:** Deletes players based on the number of pals (e.g., 10 or fewer pals).
-- The fixed save (`PalworldSaveTools\fixed\Level.sav`) is no longer functional after patch v0.3+.
-- As of update v0.5.5, you can view the total number of pals caught/owned. To do so, copy the server's `Players` folder into the tool's `Players` folder.
-
-![Screenshot1](.github/images/screenshot1.png)
-![Screenshot2](.github/images/screenshot2.png)
