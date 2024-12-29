@@ -15,7 +15,7 @@
 ## Current Features
 - **Fast parsing/reading tool**—one of the quickest out there.
 - Lists all players/guilds.
-- Lists all pals (All/Deleted/Kept).
+- Lists all pals.
 - Shows last online time for players.
 - Logs players and their relevant information into `players.log`.
 - Sorts and deletes players based on level and last online time.
