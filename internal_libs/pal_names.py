@@ -1,5 +1,3 @@
-# pal_names.py
-
 PAL_NAMES = {
     "Alpaca": "Melpaca",
     "AmaterasuWolf": "Kitsun",

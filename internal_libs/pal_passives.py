@@ -1,5 +1,3 @@
-# pal_passives.py
-
 PAL_PASSIVES = {
     "TestSkill1": {
         "Name": "en Text"
@@ -2045,7 +2043,7 @@ PAL_PASSIVES = {
         "Name": "Blade of Uncontrolled Passion"
     },
     "PARTNERSKILL_PurpleSpider": {
-        "Name": "Tarantriss’s Web"
+        "Name": "Tarantriss\u00e2\u20ac\u2122s Web"
     },
     "PARTNERSKILL_BlueThunderHorse": {
         "Name": "Plasma Dash"
@@ -2106,5 +2104,5 @@ PAL_PASSIVES = {
     },
     "Invader": {
         "Name": "Invader"
-    },
+    }
 }
