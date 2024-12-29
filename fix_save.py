@@ -18,6 +18,12 @@ def set_console_title(title):
         pass
 batch_title = f"Pylar's Save Tool"
 set_console_title(batch_title)
+for file in ["fix_save.log", "players.log", "sort_players.log", "import_lock.txt"]:
+    if os.path.exists(file):
+        os.remove(file)
+dir_to_remove = "Pal Logger"
+if os.path.exists(dir_to_remove):
+    shutil.rmtree(dir_to_remove)
 log_folder = "Pal Logger"
 os.makedirs(log_folder, exist_ok=True)
 log_file = "fix_save.log"
