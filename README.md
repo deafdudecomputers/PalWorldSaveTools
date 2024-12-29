@@ -6,7 +6,7 @@
 - **Map Pictures Provided by:** Kozejin 
 - **Testers/Helpers:** Lethe
 
-## Important Python Installation Note
+## Important Installation Note
 - Please make sure to use the official version of Python via [python.org/downloads](https://www.python.org/downloads), NOT the WindowsApps version of Python. Otherwise, you may encounter issues due to downloading and installing packages. 
 - If you encounter any issues even after using the official version of Python, please install the Visual C++ Redistributable AIO from:  
 [Visual C++ Redistributable AIO](https://github.com/abbodi1406/vcredist/releases).
