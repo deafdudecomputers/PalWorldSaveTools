@@ -2,6 +2,8 @@
 
 # Working as of v0.4.12 patch.
 
+# MAKE SURE TO UPDATE YOUR SAVES(via saving in single/coop world OR in server) BEFORE USING THE TOOL!
+
 - **Author:** MagicBear and cheahjs 
 - **License:** MIT License  
 - **Updated by:** Pylar and Techdude  
@@ -9,6 +11,8 @@
 - **Testers/Helpers:** Lethe and Choi-Jungwoo
 
 ## Remember to use `clean_up.cmd` after every update for the best performance!
+
+## If there's errors, please make sure the saves are actually updated after each patch hits, as structures in tool and saves are always constantly changing. 
 
 ## Important Python Installation Note
 - Please make sure to use the official version of Python via [python.org/downloads](https://www.python.org/downloads), NOT the WindowsApps version of Python. Otherwise, you may encounter issues due to downloading and installing packages. 
