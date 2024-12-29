@@ -1,6 +1,8 @@
 from internal_libs.import_libs import *
-steam_input = input("Enter Steam ID (with or without 'steam_'): ")
-if steam_input.startswith("steam_"):
+steam_input = input("Enter Steam ID (with or without 'steam_' or full URL): ")
+if "steamcommunity.com/profiles/" in steam_input:
+    steam_input = steam_input.split("steamcommunity.com/profiles/")[1].split("/")[0]
+elif steam_input.startswith("steam_"):
     steam_input = steam_input[6:]
 try:
     steam_id = int(steam_input)
