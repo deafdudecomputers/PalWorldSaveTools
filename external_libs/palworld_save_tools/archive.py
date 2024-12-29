@@ -840,7 +840,7 @@ class FArchiveWriter:
             # Calculate current progress percent
             progress_percent = int(100 * currCount[0] / totalCount[0])
             if progress_percent >= 100:
-                progress_percent = 99
+                progress_percent = 100
             # Update progress using self.update_progress()
             if lastProgressPercent[0] != progress_percent:
                 lastProgressPercent[0] = progress_percent
@@ -848,7 +848,10 @@ class FArchiveWriter:
         self.fstring("None")
 
     def update_progress(self, progress_percent):
-        sys.stdout.write(f"\rCompressing: {progress_percent}% completed")
+        if progress_percent == 100:
+            sys.stdout.write(f"\rCompressing: {progress_percent}% completed\n")  # Add newline at 100%
+        else:
+            sys.stdout.write(f"\rCompressing: {progress_percent}% completed")
         sys.stdout.flush()
 
     def property(self, property: dict[str, Any]):
