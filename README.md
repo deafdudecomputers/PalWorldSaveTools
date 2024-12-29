@@ -1,16 +1,10 @@
-# PalWorldSaveTools
-
-# Working as of v0.4.12 patch.
-
-# MAKE SURE TO UPDATE YOUR SAVES(via saving in single/coop world OR in server) BEFORE USING THE TOOL!
+### PalWorldSaveTools Working as of v0.4.12 patch.
 
 - **Author:** MagicBear and cheahjs 
 - **License:** MIT License  
 - **Updated by:** Pylar and Techdude  
 - **Map Pictures Provided by:** Kozejin 
-- **Testers/Helpers:** Lethe and Choi-Jungwoo
-
-## Remember to use `clean_up.cmd` after every update for the best performance!
+- **Testers/Helpers:** Lethe
 
 ## If there's errors, please make sure the saves are actually updated after each patch hits, as structures in tool and saves are always constantly changing. 
 
@@ -21,15 +15,13 @@
 - If the cityhash hasn't been installed for some reason, likely C++ not working/broken/etc: You might have to download [VS build tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/).
 - If that fails, you may try my pre-compiled version of cityhash package [here](https://www.dropbox.com/scl/fi/dbz4zikmmqawpbo56a7d0/external_libs.zip?rlkey=xf6vz30qlmxrpgpr1aw2117p8&st=4oec5601&dl=1).
 
-### Installation Directions for AIO
+## Installation Directions for AIO
 1. Download **VisualCppRedist_AIO_x86_x64.exe** from the link above.
 2. Run the downloaded file and follow the prompts to complete the installation.
 3. After installation, use `clean_up.cmd` and try again.
 
 ## Current Features
 - **Fast parsing/reading tool**—one of the quickest out there.
-- Fixes the 40k pal limit by parsing out inactive pals. **(OBSOLETE, OFFICIALLY FIXED ON 22nd August 2024)**
-- Fixes the left mouse bug.
 - Lists all players/guilds.
 - Lists all pals (All/Deleted/Kept).
 - Shows last online time for players.
@@ -58,7 +50,7 @@ _read the fix_host_save_readme.txt for instructions and make sure to check the f
 8. Reboot twice, once to clear the player out of Level.sav. Twice to clear the player out of ram. 
 9. Profit?
 
-## Additional Notes
+# Additional Notes
 - **Days:** Tracks players inactive for a specified number of days (e.g., 30 days and older).
 - **Level:** Tracks players up to a specified level (e.g., level 30 or lower).
 - **Pals:** Deletes players based on the number of pals (e.g., 10 or fewer pals).
