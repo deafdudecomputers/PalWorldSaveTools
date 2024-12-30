@@ -6,12 +6,12 @@
 - **Map Pictures Provided by:** Kozejin 
 - **Testers/Helpers:** Lethe
 
-## Prerequisites to use my tool:
+## Prerequisites:
 - Official version of [Python](https://www.python.org/downloads). 
 - [VS build tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/). *Make sure to tick the option that says: Desktop development with C++ as shown below.*
 ![CityHash Screenshot](https://i.imgur.com/RZGZ9So.png)
 
-## Current Features
+## Current Features:
 - **Fast parsing/reading tool**—one of the quickest out there.
 - Lists all players/guilds.
 - Lists all pals.
@@ -25,11 +25,11 @@
 - Transfers saves between dedicated server and single/coop world.
 - Look up the palworld id via steam id by convertids.
 
-## Transferring Local Saves to Server
+## Transferring Local Saves to Server:
 - Make sure to disable private locks on the "host" chests.
 - If you are trying to use GamePass saves(Xbox Platform), make sure to use XPG save extractor then convert it to json. Then reconvert json back to Level.sav. Then use the tool.
 
-## How to Automatically Delete Player Saves Based on Inactivity
+## How to Automatically Delete Player Saves Based on Inactivity:
 1. Copy everything from your server (`\Pal\Saved\SaveGames\0\RANDOMSERVERID\`) into the same location within the tool (`PalworldSaveTools\`).
 2. Run `fix_save.cmd`.
 3. Run `sort_players.cmd` and/or `delete_pals_save.cmd`.
@@ -40,7 +40,7 @@
 8. Reboot twice, once to clear the player out of Level.sav. Twice to clear the player out of ram. 
 9. Profit?
 
-## Additional Notes
+## Additional Notes:
 - **Days:** Tracks players inactive for a specified number of days (e.g., 30 days and older).
 - **Level:** Tracks players up to a specified level (e.g., level 30 or lower).
 - **Pals:** Deletes players based on the number of pals (e.g., 10 or fewer pals).
