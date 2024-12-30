@@ -10,6 +10,7 @@
 - Official version of [Python](https://www.python.org/downloads). 
 - [VS build tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/). *Make sure to tick the option that says: Desktop development with C++ as shown below.*
 ![CityHash Screenshot](https://i.imgur.com/RZGZ9So.png)
+- Saves that were updated on/after current patch.
 
 ## Current Features:
 - **Fast parsing/reading tool**—one of the quickest out there.
