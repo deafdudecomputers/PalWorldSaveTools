@@ -7,6 +7,5 @@ echo Replacing all files in the current directory with the latest from GitHub...
 git fetch --all
 git reset --hard origin/main
 git clean -fdx
-rd /s /q .git
 echo Update complete. All files have been replaced.
 pause
