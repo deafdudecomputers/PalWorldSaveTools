@@ -8,8 +8,6 @@
 
 ## Important Installation Note
 - Please make sure to use the official version of Python via [python.org/downloads](https://www.python.org/downloads), NOT the WindowsApps version of Python. Otherwise, you may encounter issues due to downloading and installing packages. 
-- If you encounter any issues even after using the official version of Python, please install the Visual C++ Redistributable AIO from:  
-[Visual C++ Redistributable AIO](https://github.com/abbodi1406/vcredist/releases).
 - If the cityhash hasn't been installed, you will need to download the [VS build tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/). *Make sure to tick the option that says: Desktop development with C++ as shown below.*
 ![CityHash Screenshot](https://i.imgur.com/RZGZ9So.png)
 
