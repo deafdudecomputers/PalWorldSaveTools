@@ -1,5 +1,4 @@
 from typing import Any, Callable
-
 from palworld_save_tools.archive import FArchiveReader, FArchiveWriter
 from palworld_save_tools.rawdata import (
     base_camp,
@@ -17,7 +16,10 @@ from palworld_save_tools.rawdata import (
     work_collection,
     worker_director,
 )
-
+DISABLED_PROPERTIES = {
+    ".worldSaveData.BaseCampSaveData.Value.ModuleMap",
+    ".worldSaveData.MapObjectSaveData",
+}
 PALWORLD_TYPE_HINTS: dict[str, str] = {
     ".worldSaveData.CharacterContainerSaveData.Key": "StructProperty",
     ".worldSaveData.CharacterSaveParameterMap.Key": "StructProperty",

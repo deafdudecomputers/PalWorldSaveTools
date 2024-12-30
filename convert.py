@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-import argparse, json, os
+import argparse, json, os, sys
+script_dir = os.path.dirname(os.path.abspath(__file__))
+external_libs_path = os.path.join(script_dir, 'external_libs')
+sys.path.insert(0, external_libs_path)
+sys.path.append(external_libs_path)
 from palworld_save_tools.gvas import GvasFile
 from palworld_save_tools.json_tools import CustomEncoder
 from palworld_save_tools.palsav import compress_gvas_to_sav, decompress_sav_to_gvas
