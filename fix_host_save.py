@@ -101,6 +101,10 @@ def main():
                 players_folder = os.path.join(folder_path, "Players")
                 if os.path.exists(players_folder):
                     player_files = [f[:-4] for f in os.listdir(players_folder) if f.endswith(".sav")]
+                    if len(player_files) <= 1:
+                        sg.popup("There should be at least two different saves in the Players folder to proceed.", text_color='lightcoral')
+                        window.close()
+                        sys.exit(1)
                     window['old_guid'].update(values=player_files)
                     window['new_guid'].update(values=player_files)
                 else:
