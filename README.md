@@ -6,9 +6,9 @@
 - **Map Pictures Provided by:** Kozejin 
 - **Testers/Helpers:** Lethe
 
-## Important Installation Note
-- Please make sure to use the official version of Python via [python.org/downloads](https://www.python.org/downloads), NOT the WindowsApps version of Python. Otherwise, you may encounter issues due to downloading and installing packages. 
-- If the cityhash hasn't been installed, you will need to download the [VS build tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/). *Make sure to tick the option that says: Desktop development with C++ as shown below.*
+## Pre-requirements to use my tool:
+- Official verison of [Python](https://www.python.org/downloads). 
+- [VS build tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/). *Make sure to tick the option that says: Desktop development with C++ as shown below.*
 ![CityHash Screenshot](https://i.imgur.com/RZGZ9So.png)
 
 ## Current Features
