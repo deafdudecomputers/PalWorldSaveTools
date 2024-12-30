@@ -6,8 +6,8 @@
 - **Map Pictures Provided by:** Kozejin 
 - **Testers/Helpers:** Lethe
 
-## Pre-requirements to use my tool:
-- Official verison of [Python](https://www.python.org/downloads). 
+## Prerequisites to use my tool:
+- Official version of [Python](https://www.python.org/downloads). 
 - [VS build tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/). *Make sure to tick the option that says: Desktop development with C++ as shown below.*
 ![CityHash Screenshot](https://i.imgur.com/RZGZ9So.png)
 
