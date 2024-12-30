@@ -43,7 +43,6 @@ def parse_logfile(log_path):
     if current_guild:
         guild_data.append(current_guild)
     return guild_data, sorted(base_keys)
-
 def write_csv(guild_data, base_keys, output_file):
     print(f"Now writing the info into csv...")
     fieldnames = ['Guild', 'Guild Leader'] + base_keys

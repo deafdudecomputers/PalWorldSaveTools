@@ -1,6 +1,7 @@
 import argparse, code, collections, copy, ctypes, datetime, functools, gc, importlib.metadata, json, shutil
 import logging, multiprocessing, os, platform, pprint, re, subprocess, sys, tarfile, threading, cProfile
 import time, traceback, uuid, io, pathlib, tkinter as tk, tkinter.font, pstats, hashlib, csv, urllib.request
+import PySimpleGUI as sg
 from zipfile import ZipFile
 from tkinter import ttk, messagebox, filedialog, simpledialog
 from multiprocessing import shared_memory, Pool
@@ -29,5 +30,4 @@ from palworld_save_tools.gvas import *
 from palworld_save_tools.palsav import *
 from palworld_save_tools.paltypes import *
 from palworld_save_tools.archive import *
-import palworld_save_tools.rawdata.group as palworld_save_group
 from palworld_save_tools.rawdata import *

@@ -1,9 +1,3 @@
-#!/usr/bin/env python3
-# Author: MagicBear
-# License: MIT License
-# Updated by: Pylar and Techdude
-# Map pictures provided by: Kozeji
-# Testers/helpers: Lethe
 from internal_libs.import_libs import *
 def set_console_title(title):
     try:

@@ -1,4 +1,3 @@
-import PySimpleGUI as sg
 from fix_save import *
 def fix_save(save_path, new_guid, old_guid, guild_fix=True):
     if new_guid[-4:] == '.sav' or old_guid[-4:] == '.sav':
