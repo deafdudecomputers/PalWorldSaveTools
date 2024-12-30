@@ -27,7 +27,6 @@
 - Look up the palworld id via steam id by convertids.
 
 ## Transferring Local Saves to Server
-_read the fix_host_save_readme.txt for instructions and make sure to check the fix_host_save_screenshots for clear images on how to do the instructions properly_
 - Make sure to disable private locks on the "host" chests.
 - If you are trying to use GamePass saves(Xbox Platform), make sure to use XPG save extractor then convert it to json. Then reconvert json back to Level.sav. Then use the tool.
 
