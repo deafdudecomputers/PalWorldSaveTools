@@ -39,9 +39,51 @@
 - Transfers saves between dedicated server and single/coop world.
 - Look up the palworld id via steam id by convertids.
 
-## Transferring Local Saves to Server:
+## Transferring between servers/worlds(single/coop):
 - Make sure to disable private locks on the "host" chests.
-- If you are trying to use GamePass saves(Xbox Platform), make sure to use XPG save extractor then convert it to json. Then reconvert json back to Level.sav. Then use the tool.
+
+## Gamepass Saves
+
+If you're playing Palworld through Xbox Game Pass, you'll need to extract and convert your save files using the **XGP-save-extractor** and **PalWorldSaveTools**. Follow the steps below to get everything working smoothly.
+
+---
+
+## XGP-save-extractor
+- [XGP-save-extractor GitHub Repository](https://github.com/Z1ni/XGP-save-extractor)
+
+---
+
+## Steps
+
+### 1. **Extract the Save Files:**
+   - Download and unzip the **XGP-save-extractor**.
+   - Run the program, follow the prompts in the command prompt, and it will output a ZIP file containing your Xbox Game Pass Palworld save files.
+
+### 2. **Locate the Save File:**
+   - Unzip the exported file.
+   - Open the folder, navigate to the nested folder named **`Level`**, and find the file named **`01.sav`**.
+
+### 3. **Rename the Save File:**
+   - Rename **`01.sav`** to **`Level.sav`**.
+
+### 4. **Prepare the Save Tools:**
+   - Unzip the **PalWorldSaveTools** folder.
+
+### 5. **Move the Save File:**
+   - Move the renamed **`Level.sav`** file into the **PalWorldSaveTools** folder.
+
+### 6. **Convert Save to JSON:**
+   - Drag **`Level.sav`** onto the **`convert-sav-to-json.cmd`** file.
+   - A new file named **`Level.sav.json`** will be created in the same folder.
+
+### 7. **Delete the Original Save:**
+   - Delete the **`Level.sav`** file you moved in earlier.
+
+### 8. **Convert JSON Back to Save:**
+   - Drag **`Level.sav.json`** onto the **`convert-json-to-sav.cmd`** file.
+   - You should now have a newly converted **`Level.sav`** file ready to use.
+
+---
 
 ## How to Automatically Delete Player Saves Based on Inactivity:
 1. Copy everything from your server (`\Pal\Saved\SaveGames\0\RANDOMSERVERID\`) into the same location within the tool (`PalworldSaveTools\`).
