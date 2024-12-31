@@ -1,20 +1,4 @@
-import pickle
-import os, sys
-from sys import exit
-from tkinter import *
-from tkinter.filedialog import askopenfilename
-from tkinter import ttk, messagebox
-sys.path.append(os.path.join(os.path.dirname(__file__), 'external_libs'))
-from external_libs.palworld_save_tools.palsav import compress_gvas_to_sav, decompress_sav_to_gvas
-from external_libs.palworld_save_tools.paltypes import PALWORLD_CUSTOM_PROPERTIES, PALWORLD_TYPE_HINTS
-from external_libs.palworld_save_tools.gvas import GvasHeader, GvasFile
-from external_libs.palworld_save_tools.archive import *
-from typing import Any, Callable
-import io
-import struct
-from typing import Sequence
-from time import time
-import threading
+from internal_libs.import_libs import *
 STRUCT_START = b'\x0f\x00\x00\x00StructProperty\x00'
 MAP_START = b'\x0c\x00\x00\x00MapProperty\x00'
 ARRAY_START = b'\x0e\x00\x00\x00ArrayProperty\x00'
@@ -71,9 +55,7 @@ class SkipFArchiveWriter(FArchiveWriter):
             last_end = section_end
         bytes_concat_array.append(bytes[last_end:])
         new_size_bytes = struct.pack('Q', old_size + n_bytes_more)
-        bytes_concat_array[0] = bytes_concat_array[0][:parent_section_size_idx] + new_size_bytes + bytes_concat_array[
-                                                                                                       0][
-                                                                                                   parent_section_size_idx + 8:]
+        bytes_concat_array[0] = bytes_concat_array[0][:parent_section_size_idx] + new_size_bytes + bytes_concat_array[0][parent_section_size_idx + 8:]
         output = b''
         for byte_segment in bytes_concat_array:
             output += byte_segment
@@ -142,12 +124,12 @@ class SkipFArchiveReader(FArchiveReader):
             return self.orig_data[offset:].find(self.encode(property_name) + type_start) + offset
         return self.orig_data[offset:].rfind(self.encode(property_name) + type_start) + offset
     def load_section(self, property_name, type_start=STRUCT_START, path='.worldSaveData', reverse=False):
-        find_timer = time()
+        find_timer = time.time()
         start_index = self.find_property_start(property_name, type_start, reverse=reverse)
         self.data.seek(start_index, 0)
-        start_timer = time()
+        start_timer = time.time()
         prop = self.curr_property(path=path)
-        end_timer = time()
+        end_timer = time.time()
         print(f"Property {property_name} loaded in {end_timer - start_timer} seconds, total time including find: {end_timer - find_timer}")
         return prop, (start_index, self.data.tell())
     def load_sections(self, prop_types, path='.worldSaveData', reverse=False):
@@ -155,14 +137,14 @@ class SkipFArchiveReader(FArchiveReader):
         end_idx = 0
         section_ranges = []
         for prop, type_start in prop_types:
-            find_timer = time()
+            find_timer = time.time()
             start_idx = self.find_property_start(prop, type_start, offset=end_idx, reverse=reverse)
             if start_idx == end_idx - 1:
                 raise ValueError(f"Property {prop} not found")
             self.data.seek(start_idx, 0)
-            start_timer = time()
+            start_timer = time.time()
             properties.update(self.curr_property(path=path))
-            end_timer = time()
+            end_timer = time.time()
             end_idx = self.data.tell()
             print(f"Property {prop} loaded in {end_timer - start_timer} seconds, total time including find: {end_timer - find_timer}")
             section_ranges.append((start_idx, end_idx))
@@ -212,23 +194,17 @@ def skip_encode(
                 writer, property_type, properties
             )
     if property_type == "ArrayProperty":
-        # del properties["custom_type"]
-        # del properties["skip_type"]
         writer.fstring(properties["array_type"])
         writer.optional_guid(properties.get("id", None))
         writer.write(properties["value"])
         return len(properties["value"])
     elif property_type == "MapProperty":
-        # del properties["custom_type"]
-        # del properties["skip_type"]
         writer.fstring(properties["key_type"])
         writer.fstring(properties["value_type"])
         writer.optional_guid(properties.get("id", None))
         writer.write(properties["value"])
         return len(properties["value"])
     elif property_type == "StructProperty":
-        # del properties["custom_type"]
-        # del properties["skip_type"]
         writer.fstring(properties["struct_type"])
         writer.guid(properties["struct_id"])
         writer.optional_guid(properties.get("id", None))
@@ -244,7 +220,6 @@ def decode_group(
     if type_name != "MapProperty":
         raise Exception(f"Expected MapProperty, got {type_name}")
     value = reader.property(type_name, size, path, nested_caller_path=path)
-    # Decode the raw bytes and replace the raw data
     group_map = value["value"]
     for group in group_map:
         group_type = group["value"]["GroupType"]["value"]["value"]
@@ -263,7 +238,7 @@ def decode_bytes(
         parent_reader: SkipFArchiveReader, group_bytes: Sequence[int], group_type: str
 ) -> dict[str, Any]:
     reader = parent_reader.internal_copy(group_bytes, debug=False)
-    reader.skip(4)  # Number of bytes skipped.
+    reader.skip(4)
     group_data = {
         "group_type": group_type,
         "group_id": reader.guid(),
@@ -347,8 +322,7 @@ def encode_bytes(p: dict[str, Any]) -> bytes:
     outer_writer.write(encoded_bytes)
     return outer_writer.bytes()
 PALWORLD_CUSTOM_PROPERTIES[".worldSaveData.CharacterSaveParameterMap.Value.RawData"] = (skip_decode, skip_encode)
-PALWORLD_CUSTOM_PROPERTIES[".worldSaveData.DynamicItemSaveData.DynamicItemSaveData.RawData"] = (
-    skip_decode, skip_encode)
+PALWORLD_CUSTOM_PROPERTIES[".worldSaveData.DynamicItemSaveData.DynamicItemSaveData.RawData"] = (skip_decode, skip_encode)
 PALWORLD_CUSTOM_PROPERTIES[".worldSaveData.DynamicItemSaveData.DynamicItemSaveData.ID"] = (skip_decode, skip_encode)
 PALWORLD_CUSTOM_PROPERTIES[".worldSaveData.CharacterContainerSaveData.Value.Slots"] = (skip_decode, skip_encode)
 PALWORLD_CUSTOM_PROPERTIES[".worldSaveData.CharacterContainerSaveData.Value.RawData"] = (skip_decode, skip_encode)
@@ -591,8 +565,7 @@ of your save folder before continuing. Press Yes if you would like to continue.'
     if not keep_old_guild_id:
         for group_data in targ_lvl["GroupSaveDataMap"]["value"]:
             if group_data["value"]["GroupType"]["value"]["value"] == "EPalGroupType::Guild":
-                if targ_uid in [player_item['player_uid'] for player_item in
-                                group_data["value"]["RawData"]["value"]["players"]]:
+                if targ_uid in [player_item['player_uid'] for player_item in group_data["value"]["RawData"]["value"]["players"]]:
                     group_id = group_data["value"]["RawData"]["value"]['group_id']
                     guild_items_json = group_data["value"]["RawData"]["value"]["individual_character_handle_ids"]
                     break
@@ -698,27 +671,21 @@ of your save folder before continuing. Press Yes if you would like to continue.'
     for container in targ_lvl["CharacterContainerSaveData"]["value"]:
         container_id = container["key"]["ID"]["value"]
         if container_id == inv_pals["value"]["ID"]["value"]:
-            target_slot_data_starts = find_all_occurrences_with_prefix(container['value']['Slots']['value'],
-                                                                       PalSlotDataPrefix)
-            source_slot_data_starts = find_all_occurrences_with_prefix(host_pals['value']['Slots']['value'],
-                                                                       PalSlotDataPrefix)
+            target_slot_data_starts = find_all_occurrences_with_prefix(container['value']['Slots']['value'], PalSlotDataPrefix)
+            source_slot_data_starts = find_all_occurrences_with_prefix(host_pals['value']['Slots']['value'], PalSlotDataPrefix)
             target_slot_bytearray = bytearray(container['value']['Slots']['value'])
             source_slot_bytearray = bytearray(host_pals['value']['Slots']['value'])
             for target_start, source_start in zip(target_slot_data_starts, source_slot_data_starts):
-                target_slot_bytearray[target_start:target_start + 33] = source_slot_bytearray[
-                                                                        source_start:source_start + 33]
+                target_slot_bytearray[target_start:target_start + 33] = source_slot_bytearray[source_start:source_start + 33]
             container['value']['Slots']['value'] = bytes(target_slot_bytearray)
             count += 1
         elif container_id == inv_otomo["value"]["ID"]["value"]:
-            target_slot_data_starts = find_all_occurrences_with_prefix(container['value']['Slots']['value'],
-                                                                       PalSlotDataPrefix)
-            source_slot_data_starts = find_all_occurrences_with_prefix(host_otomo['value']['Slots']['value'],
-                                                                       PalSlotDataPrefix)
+            target_slot_data_starts = find_all_occurrences_with_prefix(container['value']['Slots']['value'], PalSlotDataPrefix)
+            source_slot_data_starts = find_all_occurrences_with_prefix(host_otomo['value']['Slots']['value'], PalSlotDataPrefix)
             target_slot_bytearray = bytearray(container['value']['Slots']['value'])
             source_slot_bytearray = bytearray(host_otomo['value']['Slots']['value'])
             for target_start, source_start in zip(target_slot_data_starts, source_slot_data_starts):
-                target_slot_bytearray[target_start:target_start + 33] = source_slot_bytearray[
-                                                                        source_start:source_start + 33]
+                target_slot_bytearray[target_start:target_start + 33] = source_slot_bytearray[source_start:source_start + 33]
             container['value']['Slots']['value'] = bytes(target_slot_bytearray)
             count += 1
         if count >= 2:
@@ -763,16 +730,11 @@ of your save folder before continuing. Press Yes if you would like to continue.'
                         target_dynamic_containers[i] = dynamic_container
                         repeated_indices.add(j)
                         break
-    targ_lvl['DynamicItemSaveData']['value']['values'] += [container for i, (container, local_id) in
-                                                           enumerate(level_additional_dynamic_containers) if
-                                                           i not in repeated_indices]
+    targ_lvl['DynamicItemSaveData']['value']['values'] += [container for i, (container, local_id) in enumerate(level_additional_dynamic_containers) if i not in repeated_indices]
     print("Transferred all Dynamic containers, writing to output...")
     WORLDSAVESIZEPREFIX = b'\x0e\x00\x00\x00worldSaveData\x00\x0f\x00\x00\x00StructProperty\x00'
     size_idx = target_raw_gvas.find(WORLDSAVESIZEPREFIX) + len(WORLDSAVESIZEPREFIX)
-    output_data = SkipFArchiveWriter(custom_properties=PALWORLD_CUSTOM_PROPERTIES).write_sections(targ_lvl,
-                                                                                                  target_section_ranges,
-                                                                                                  target_raw_gvas,
-                                                                                                  size_idx)
+    output_data = SkipFArchiveWriter(custom_properties=PALWORLD_CUSTOM_PROPERTIES).write_sections(targ_lvl, target_section_ranges, target_raw_gvas, size_idx)
     targ_json_gvas.properties = targ_json
     t_host_sav_path = os.path.join(os.path.dirname(t_level_sav_path), 'Players', selected_target_player + '.sav')
     if not os.path.exists(t_host_sav_path):
@@ -781,17 +743,14 @@ of your save folder before continuing. Press Yes if you would like to continue.'
     gvas_to_sav(t_level_sav_path, output_data)
     gvas_to_sav(t_host_sav_path, targ_json_gvas.write())
     print("Saved all data successfully. PLEASE DON'T BREAK")
-    messagebox.showinfo(
-        message='Transfer finished! You may continue transferring more players or close the windows now.')
+    messagebox.showinfo(message='Transfer finished! You may continue transferring more players or close the windows now.')
 def sav_to_gvas(file):
     with open(file, 'rb') as f:
         data = f.read()
         raw_gvas, save_type = decompress_sav_to_gvas(data)
     return raw_gvas, save_type
 def gvas_to_sav(file, gvas_data):
-    sav_file_data = compress_gvas_to_sav(
-        gvas_data, target_save_type
-    )
+    sav_file_data = compress_gvas_to_sav(gvas_data, target_save_type)
     with open(file, 'wb') as out:
         out.write(sav_file_data)
 def select_file():
@@ -844,8 +803,7 @@ def load_all_source_sections_async(group_save_section, reader):
         ('ItemContainerSaveData', MAP_START),
         ('DynamicItemSaveData', ARRAY_START),
         ('CharacterContainerSaveData', MAP_START)],
-        path='.worldSaveData'
-    )
+        path='.worldSaveData')
     level_json.update(group_save_section)
 def source_level_file():
     global level_sav_path, source_level_path_label, level_json, selected_source_player, source_section_load_handle
@@ -874,8 +832,7 @@ def load_all_target_sections_async(group_save_section, group_save_section_range,
         ('ItemContainerSaveData', MAP_START),
         ('DynamicItemSaveData', ARRAY_START),
         ('CharacterContainerSaveData', MAP_START)],
-        path='.worldSaveData'
-    )
+        path='.worldSaveData')
     targ_lvl.update(group_save_section)
     target_section_ranges.append(group_save_section_range)
 def target_level_file():
@@ -941,7 +898,6 @@ root.columnconfigure(0, weight=3)
 root.columnconfigure(1, weight=1)
 root.rowconfigure(3, weight=1)
 root.rowconfigure(5, weight=1)
-
 Button(
     root,
     text='Select Source Level File',
@@ -974,8 +930,7 @@ target_player_list.column(0, width=100)
 target_player_list.column(1, width=100)
 target_player_list.column(2, width=100)
 target_player_list.bind('<<TreeviewSelect>>', on_selection_of_target_player)
-current_selection_label = Label(root, text=f"source: {selected_source_player}, target: {selected_target_player}",
-                                wraplength=600)
+current_selection_label = Label(root, text=f"source: {selected_source_player}, target: {selected_target_player}", wraplength=600)
 current_selection_label.grid(row=6, column=0, padx=10, pady=20, sticky="ew")
 Button(
     root,
