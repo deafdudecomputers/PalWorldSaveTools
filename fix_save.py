@@ -1,4 +1,7 @@
 from internal_libs.import_libs import *
+with open("version.txt", "r") as file:
+    version = file.read().strip()
+print(f"PalWorldTools Version: {version}")
 def set_console_title(title):
     try:
         if platform.system() == "Windows":
@@ -590,7 +593,4 @@ def Save(exit_now=True):
     if exit_now:
         sys.exit(0)
 if __name__ == "__main__":
-    with open("version.txt", "r") as file:
-        version = file.read().strip()
-    print(f"PalWorldTools Version: {version}")
     main_editor()
