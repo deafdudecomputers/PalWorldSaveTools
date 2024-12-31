@@ -8,8 +8,11 @@
 
 ## Prerequisites:
 - Saves that were updated on/after current patch.
-- Official version of [Python](https://www.python.org/downloads). 
-- [VS build tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/). *Make sure to tick the option that says: Desktop development with C++ as shown below.*
+- Official version of [Python](https://www.python.org/downloads). *Before clicking **Install Now**, **CHECK** the box at the bottom that says:  
+  **"Add Python to PATH"** 🟩  
+  (*This is what makes Python accessible from the command line!*)
+  ![Add Python to PATH checkbox](https://i.imgur.com/SCJEkdJ.png)
+- [VS build tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/). *Before clicking **Install**, **CHECK** the box that says: *Desktop development with C++** 🟩 (*This is what makes cityhash installable!*)
 ![CityHash Screenshot](https://i.imgur.com/RZGZ9So.png)
 
 ## Current Features:
