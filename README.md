@@ -48,7 +48,7 @@ If you're playing Palworld through Xbox Game Pass, you'll need to extract and co
 
 ---
 
-## XGP-save-extractor
+# XGP-save-extractor
 - [XGP-save-extractor GitHub Repository](https://github.com/Z1ni/XGP-save-extractor)
 
 ---
