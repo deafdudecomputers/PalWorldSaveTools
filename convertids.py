@@ -1,4 +1,7 @@
 from internal_libs.import_libs import *
+with open("version.txt", "r") as file:
+    version = file.read().strip()
+print(f"PalWorldSaveTools Version: {version}")
 steam_input = input("Enter Steam ID (with or without 'steam_' or full URL): ")
 if "steamcommunity.com/profiles/" in steam_input:
     steam_input = steam_input.split("steamcommunity.com/profiles/")[1].split("/")[0]
