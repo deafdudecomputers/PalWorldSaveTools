@@ -6,16 +6,24 @@
 - **Map Pictures Provided by:** Kozejin 
 - **Testers/Helpers:** Lethe
 
-## Prerequisites:
-- Saves that were updated on/after current patch.
-- Official version of [Python](https://www.python.org/downloads). *Before clicking **Install Now**, **CHECK** the box at the bottom that says:  
-  **"Add Python to PATH"** 🟩  
-  (*This is what makes Python accessible from the command line!*)
-  ![Add Python to PATH checkbox](https://i.imgur.com/SCJEkdJ.png)
-- [VS build tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/). *Before clicking **Install**, **CHECK** the box that says: 
-  **"Desktop development with C++"** 🟩 
-  (*This is what makes cityhash installable!*)
-![CityHash Screenshot](https://i.imgur.com/RZGZ9So.png)
+## Prerequisites
+
+1. **Saves that were updated on/after the current patch.**
+
+2. **[Official Python Installation](https://www.python.org/downloads)**
+   - Download Python from the official website.
+   - Before clicking **Install Now**, **CHECK** the box at the bottom that says:  
+     **"Add Python to PATH"** 🟩  
+     (*This is what makes Python accessible from the command line!*)  
+     ![Add Python to PATH checkbox](https://i.imgur.com/SCJEkdJ.png)
+
+3. **[VS Build Tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/)**
+   - Download and install Visual Studio Build Tools.
+   - During installation, **CHECK** the box that says:  
+     **"Desktop development with C++"** 🟩  
+     (*This is what makes `cityhash` installable!*)  
+     ![CityHash Screenshot](https://i.imgur.com/RZGZ9So.png)
+
 
 ## Current Features:
 - **Fast parsing/reading tool**—one of the quickest out there.
