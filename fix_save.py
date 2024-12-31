@@ -318,7 +318,7 @@ def ShowPlayers():
             try:
                 with open(sav_file, "rb") as file:
                     data = file.read()
-                    raw_gvas, _ = decompress_sav_to_gvas(data)
+                    raw_gvas, _, cnk_header = decompress_sav_to_gvas(data)
                 gvas_file = ProgressGvasFile.read(raw_gvas, PALWORLD_TYPE_HINTS, SKP_PALWORLD_CUSTOM_PROPERTIES)
                 json_data = json.loads(json.dumps(gvas_file.dump(), cls=CustomEncoder))
                 pal_capture_count_list = json_data.get('properties', {}).get('SaveData', {}).get('value', {}).get('RecordData', {}).get('value', {}).get('PalCaptureCount', {}).get('value', [])
