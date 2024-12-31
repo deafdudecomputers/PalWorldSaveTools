@@ -12,7 +12,9 @@
   **"Add Python to PATH"** 🟩  
   (*This is what makes Python accessible from the command line!*)
   ![Add Python to PATH checkbox](https://i.imgur.com/SCJEkdJ.png)
-- [VS build tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/). *Before clicking **Install**, **CHECK** the box that says: *Desktop development with C++** 🟩 (*This is what makes cityhash installable!*)
+- [VS build tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/). *Before clicking **Install**, **CHECK** the box that says: 
+  **"Desktop development with C++"** 🟩 
+  (*This is what makes cityhash installable!*)
 ![CityHash Screenshot](https://i.imgur.com/RZGZ9So.png)
 
 ## Current Features:
