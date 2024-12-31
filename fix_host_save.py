@@ -73,6 +73,17 @@ def json_to_sav(json_data, output_filepath):
     print(f"Writing SAV file to {output_filepath}")
     with open(output_filepath, "wb") as f:
         f.write(sav_file)
+def extract_player_data(log_file):
+    players = {}
+    with open(log_file, 'r', encoding='utf-8') as f:
+        log_data = f.read()
+    player_pattern = r"Player: (\w+)\s+\| UID: ([a-f0-9\-]+)"
+    matches = re.findall(player_pattern, log_data)
+    for match in matches:
+        player_name, player_uid = match
+        player_uid = player_uid.replace("-", "").upper() 
+        players[player_uid] = player_name
+    return players
 def main():
     sg.theme('Dark')
     layout = [
@@ -86,7 +97,9 @@ def main():
         [sg.ProgressBar(100, orientation='h', size=(20, 20), key='progressbar')],
         [sg.Text("", key='progressbarText')],
     ]
-    window = sg.Window("GUID Migration Tool", layout)    
+    window = sg.Window("GUID Migration Tool", layout)
+    player_files = []
+    players = {}
     while True:
         event, values = window.read()
         if event == sg.WIN_CLOSED or event == "Cancel":
@@ -104,20 +117,60 @@ def main():
                         sg.popup("There should be at least two different saves in the Players folder to proceed.", text_color='lightcoral')
                         window.close()
                         sys.exit(1)
-                    window['old_guid'].update(values=player_files)
-                    window['new_guid'].update(values=player_files)
+                    try:
+                        LoadFile(file_path)
+                        ShowPlayers()
+                    except Exception as e:
+                        sg.popup(f"Error loading the file: {e}", text_color='lightcoral')
+                    log_file = 'players.log'
+                    players = extract_player_data(log_file)
+                    player_files_with_names = []
+                    for save in player_files:
+                        save_uid = save.replace("-", "").upper()
+                        if save_uid in players:
+                            player_files_with_names.append(f"{players[save_uid]} ({save_uid})")
+                        else:
+                            player_files_with_names.append(f"Unknown ({save_uid})")
+                    window['old_guid'].update(values=player_files_with_names)
+                    window['new_guid'].update(values=player_files_with_names)
                 else:
                     sg.popup("No Players folder found.", text_color='lightcoral')
+        if event == "old_guid":
+            old_guid_name = values["old_guid"]
+            old_guid = re.search(r'\((.*?)\)', old_guid_name).group(1)
+            available_new_guids = [guid for guid in player_files if guid != old_guid]
+            player_files_with_names = []
+            for save in available_new_guids:
+                save_uid = save.replace("-", "").upper()
+                if save_uid in players:
+                    player_files_with_names.append(f"{players[save_uid]} ({save_uid})")
+                else:
+                    player_files_with_names.append(f"Unknown ({save_uid})")
+            window['new_guid'].update(values=player_files_with_names)
+        if event == "new_guid":
+            new_guid_name = values["new_guid"]
+            new_guid = re.search(r'\((.*?)\)', new_guid_name).group(1)
+            available_old_guids = [guid for guid in player_files if guid != new_guid]
+            player_files_with_names = []
+            for save in available_old_guids:
+                save_uid = save.replace("-", "").upper()
+                if save_uid in players:
+                    player_files_with_names.append(f"{players[save_uid]} ({save_uid})")
+                else:
+                    player_files_with_names.append(f"Unknown ({save_uid})")
+            window['old_guid'].update(values=player_files_with_names)
         if event == "button_migrate":
-            new_guid = values['new_guid']
-            old_guid = values['old_guid']
+            new_guid_name = values['new_guid']
+            old_guid_name = values['old_guid']
             file_path = values["file_path"]
+            old_guid = re.search(r'\((.*?)\)', old_guid_name).group(1)
+            new_guid = re.search(r'\((.*?)\)', new_guid_name).group(1)
             if not new_guid or not old_guid:
                 sg.popup("Both GUID fields are required!", text_color='lightcoral')
             else:
                 window['progressbarText'].update("Validating and migrating save files...")
                 window['progressbar'].update_bar(30)
-                window.refresh()                
+                window.refresh()
                 try:
                     fix_save(folder_path, new_guid, old_guid)
                     window['progressbarText'].update("Migration successful!")
@@ -128,4 +181,7 @@ def main():
                     sg.popup(f"Error: {e}", text_color='lightcoral')
     window.close()
 if __name__ == "__main__":
+    file_path = 'players.log'
+    if os.path.exists(file_path):
+        with open(file_path, 'w'): pass
     main()
