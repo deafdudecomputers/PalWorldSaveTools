@@ -18,8 +18,7 @@ log_file = "fix_save.log"
 logging.basicConfig(level=logging.INFO, format='%(message)s',
                     handlers=[
                         logging.FileHandler(log_file, encoding='utf-8'), 
-                        logging.StreamHandler(sys.stdout) 
-                    ])
+                        logging.StreamHandler(sys.stdout)])
 player_log_file = "players.log"
 player_logger = logging.getLogger('playerLogger')
 player_logger.setLevel(logging.INFO)
@@ -84,9 +83,7 @@ class ProgressGvasFile(GvasFile):
             gvas_file.properties = reader.properties_until_end()
             gvas_file.trailer = reader.read_to_end()
             if gvas_file.trailer != b"\x00\x00\x00\x00":
-                print(
-                    f"{len(gvas_file.trailer)} bytes of trailer data, file may not have fully parsed"
-                )
+                print(f"{len(gvas_file.trailer)} bytes of trailer data, file may not have fully parsed")
         return gvas_file
 def parse_item(properties, skip_path):
     if isinstance(properties, dict):
@@ -138,18 +135,16 @@ def main_editor():
     print("Total time taken: %.2fs" % (time.time() - t1))
     print("\n")
     output_path = args.filename
-    #Save(args.filename)
     return None
 def LoadFile(filename):
     global filetime, gvas_file, wsd, MappingCache, backup_path
     print(f"Loading {filename}...", end="", flush=True)
     filetime = os.stat(filename).st_mtime
-    backup_path = os.path.join(os.path.dirname(os.path.abspath(filename)),
-                               "backup/%s" % datetime.datetime.now().strftime("%Y%m%d-%H%M%S"))
+    backup_path = os.path.join(os.path.dirname(os.path.abspath(filename)), "backup/%s" % datetime.datetime.now().strftime("%Y%m%d-%H%M%S"))
     with open(filename, "rb") as f:
         start_time = time.time()
         data = f.read()
-        raw_gvas, _ = decompress_sav_to_gvas(data)
+        raw_gvas, save_type, cnk_header = decompress_sav_to_gvas(data)
         print("Done in %.2fs." % (time.time() - start_time))
         print(f"Parsing {filename}...", end="", flush=True)
         start_time = time.time()
@@ -293,8 +288,7 @@ def ShowPlayers():
             player_key = str(item['key']['PlayerUId']['value'])
             playerMapping[player_key] = {
                 **{k: v['value'] for k, v in item['value']['RawData']['value']['object']['SaveParameter']['value'].items()},
-                'InstanceId': item['key']['InstanceId']['value']
-            }
+                'InstanceId': item['key']['InstanceId']['value']}
         progress = (i + 1) * 100 // total_items
         print(f"\rNow mapping the players... {progress}%", end="")
     elapsed_time = time.time() - start_time
@@ -379,8 +373,7 @@ def ShowPlayers():
                             "PalCaughtCount": player_pal_caught_count.get(player_uid, 0),
                             "PalCaughtUnique": player_pal_caught_unique.get(player_uid, 0),
                             "PalEncounterCount": player_pal_encounter_count.get(player_uid, 0),
-                            "LastOnline": ""
-                        }
+                            "LastOnline": ""}
                         updated_values.append(raw_data_value_list)
                         is_player = True
                         total_players += 1
@@ -435,8 +428,7 @@ def ShowPlayers():
                 "instanceid": playerMeta.get('InstanceId', 'Unknown'),
                 "PalCount": player_pals_count.get(playerUId, 0),
                 "LastOnlineLocal": last_online_local,
-                "LastOnlineHuman": last_online_human
-            }
+                "LastOnlineHuman": last_online_human}
             total_pals += player_pals_count.get(playerUId, 0)
         except Exception as e:
             logging.error(f"Error processing player data: {e}")
@@ -456,8 +448,7 @@ def ShowPlayers():
                 'character_count': len(mapObjectMeta.get('individual_character_handle_ids', [])),
                 'base_camps': [(base_id, srcGuildMapping.BaseCampMapping.get(toUUID(base_id))) for base_id in item.get('base_ids', [])],
                 'map_object_instance_ids_base_camp_points': item.get('map_object_instance_ids_base_camp_points', []),
-                'players': guild_players
-            }
+                'players': guild_players}
             total_bases += len(guild_data[group_id]['base_camps'])
             guild_player_count[group_id] = len(guild_players)            
             for base_id in item.get('base_ids', []):
@@ -469,8 +460,7 @@ def ShowPlayers():
                     base_locations[base_id] = (
                         f"Old: {old_coords[0]}, {old_coords[1]} | "
                         f"New: {new_coords[0]}, {new_coords[1]} | "
-                        f"RawData: {offset['x']}, {offset['y']}, {offset['z']}"
-                    )
+                        f"RawData: {offset['x']}, {offset['y']}, {offset['z']}")
                 else:
                     base_locations[base_id] = "Unknown, Unknown"
         else:
@@ -489,14 +479,12 @@ def ShowPlayers():
                 logging.info(
                     f"\nGuild: {guild['name']} | Guild Leader: {guild['admin_name']} | Guild ID: {guild['group_id']}\n"
                     f"Base Locations: {base_locations_count}\n{base_locations_str}\n"
-                    f"Guild Players: {guild_player_count[group_id]}"
-                )
+                    f"Guild Players: {guild_player_count[group_id]}")
             else:
                 logging.info(
                     f"\nGuild: {guild['name']} | Guild Leader: {guild['admin_name']} | Guild ID: {guild['group_id']}\n"
                     f"Base Locations: {base_locations_count}\n"
-                    f"Guild Players: {guild_player_count[group_id]}"
-                )
+                    f"Guild Players: {guild_player_count[group_id]}")
             for player in guild['players']:
                 player_data = playerMapping.get(player['player_uid'])
                 if player_data:
@@ -525,8 +513,7 @@ def ShowPlayers():
         f"Total Initial Guilds: {initial_guild_count} | "        
         f"Total Inactive Guilds: {deleted_guilds_count} | "
         f"Total Active Guilds: {total_guilds} | "
-        f"Total Bases: {total_bases} \n"
-    )
+        f"Total Bases: {total_bases} \n")
     resort_player_log('players.log', header_line)
     header_line = (
         f"Total Players: {total_players} \n"
@@ -537,8 +524,7 @@ def ShowPlayers():
         f"Total Initial Guilds: {initial_guild_count} \n"        
         f"Total Inactive Guilds: {deleted_guilds_count} \n"
         f"Total Active Guilds: {total_guilds} \n"
-        f"Total Bases: {total_bases} \n"
-    )
+        f"Total Bases: {total_bases} \n")
     logging.info(header_line)
 def resort_player_log(file_path, header_line):
     try:
@@ -551,7 +537,6 @@ def resort_player_log(file_path, header_line):
         file.write(header_line)
         file.writelines(lines)
 def sanitize_filename(filename):
-    #return re.sub(r'[<>:"/\\|?*\x00-\x1F]', '_', filename)
     return re.sub(r'[<>:"/\\|?*]', '_', filename)
 def TickToHuman(tick):
     seconds = (wsd['GameTimeSaveData']['value']['RealDateTimeTicks']['value'] - tick) / 1e7

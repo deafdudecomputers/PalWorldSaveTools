@@ -73,8 +73,7 @@ def convert_sav_to_json(
     force=False,
     minify=False,
     allow_nan=True,
-    custom_properties_keys=["all"],
-):
+    custom_properties_keys=["all"],):
     print(f"Converting {filename} to JSON, saving to {output_path}")
     if os.path.exists(output_path):
         print(f"{output_path} already exists, this will overwrite the file")
@@ -84,7 +83,7 @@ def convert_sav_to_json(
     print(f"Decompressing sav file")
     with open(filename, "rb") as f:
         data = f.read()
-        raw_gvas, _ = decompress_sav_to_gvas(data)
+        raw_gvas, save_type, cnk_header = decompress_sav_to_gvas(data)
     print(f"Loading GVAS file")
     custom_properties = {}
     if len(custom_properties_keys) > 0 and custom_properties_keys[0] == "all":
@@ -93,15 +92,11 @@ def convert_sav_to_json(
         for prop in PALWORLD_CUSTOM_PROPERTIES:
             if prop in custom_properties_keys:
                 custom_properties[prop] = PALWORLD_CUSTOM_PROPERTIES[prop]
-    gvas_file = GvasFile.read(
-        raw_gvas, PALWORLD_TYPE_HINTS, custom_properties, allow_nan=allow_nan
-    )
+    gvas_file = GvasFile.read(raw_gvas, PALWORLD_TYPE_HINTS, custom_properties, allow_nan=allow_nan)
     print(f"Writing JSON to {output_path}")
     with open(output_path, "w", encoding="utf8") as f:
         indent = None if minify else "\t"
-        json.dump(
-            gvas_file.dump(), f, indent=indent, cls=CustomEncoder, allow_nan=allow_nan
-        )
+        json.dump(gvas_file.dump(), f, indent=indent, cls=CustomEncoder, allow_nan=allow_nan)
 def convert_json_to_sav(filename, output_path, force=False):
     print(f"Converting {filename} to SAV, saving to {output_path}")
     if os.path.exists(output_path):
@@ -121,9 +116,7 @@ def convert_json_to_sav(filename, output_path, force=False):
         save_type = 0x32
     else:
         save_type = 0x31
-    sav_file = compress_gvas_to_sav(
-        gvas_file.write(PALWORLD_CUSTOM_PROPERTIES), save_type
-    )
+    sav_file = compress_gvas_to_sav(gvas_file.write(PALWORLD_CUSTOM_PROPERTIES), save_type)
     print(f"Writing SAV file to {output_path}")
     with open(output_path, "wb") as f:
         f.write(sav_file)
