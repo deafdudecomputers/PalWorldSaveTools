@@ -1,7 +1,7 @@
 from internal_libs.import_libs import *
 with open("version.txt", "r") as file:
     version = file.read().strip()
-print(f"PalWorldTools Version: {version}")
+print(f"PalWorldSaveTools Version: {version}")
 def set_console_title(title):
     try:
         if platform.system() == "Windows":
