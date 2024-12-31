@@ -48,7 +48,7 @@
 
 ## Transferring Between Servers/Worlds (Single/Coop)
 
-- Ensure you disable private locks on the "host" chests before transferring saves.
+- Ensure you disable private locks on the "source" chests before transferring saves.
 
 ---
 
