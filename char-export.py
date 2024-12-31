@@ -527,10 +527,8 @@ of your save folder before continuing. Press Yes if you would like to continue.'
         targ_json["SaveData"]["value"]["bossTechnologyPoint"] = host_json["SaveData"]["value"]["bossTechnologyPoint"]
     elif "bossTechnologyPoint" in targ_json["SaveData"]["value"]:
         targ_json["SaveData"]["value"]["bossTechnologyPoint"]["value"] = 0
-    targ_json["SaveData"]["value"]["UnlockedRecipeTechnologyNames"] = host_json["SaveData"]["value"][
-        "UnlockedRecipeTechnologyNames"]
-    targ_json["SaveData"]["value"]["PlayerCharacterMakeData"] = host_json["SaveData"]["value"][
-            "PlayerCharacterMakeData"]
+    targ_json["SaveData"]["value"]["UnlockedRecipeTechnologyNames"] = host_json["SaveData"]["value"]["UnlockedRecipeTechnologyNames"]
+    targ_json["SaveData"]["value"]["PlayerCharacterMakeData"] = host_json["SaveData"]["value"]["PlayerCharacterMakeData"]
     if 'RecordData' in host_json["SaveData"]["value"]:
         targ_json["SaveData"]["value"]["RecordData"] = host_json["SaveData"]["value"]["RecordData"]
     elif 'RecordData' in targ_json["SaveData"]:
