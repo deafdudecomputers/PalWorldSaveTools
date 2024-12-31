@@ -1,7 +1,7 @@
 from internal_libs.import_libs import *
 with open("version.txt", "r") as file:
     version = file.read().strip()
-print(f"PalWorldTools Version: {version}")
+print(f"PalWorldSaveTools Version: {version}")
 STRUCT_START = b'\x0f\x00\x00\x00StructProperty\x00'
 MAP_START = b'\x0c\x00\x00\x00MapProperty\x00'
 ARRAY_START = b'\x0e\x00\x00\x00ArrayProperty\x00'
