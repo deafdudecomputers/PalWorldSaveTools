@@ -12,12 +12,8 @@ def fix_save(save_path, new_guid, old_guid, guild_fix=True):
     if new_guid == old_guid:
         print('ERROR: You\'re using the same GUID for both the <new_guid> and <old_guid>.')
         sys.exit(1)
-    new_guid_formatted = '{}-{}-{}-{}-{}'.format(
-        new_guid[:8], new_guid[8:12], new_guid[12:16], new_guid[16:20], new_guid[20:]
-    ).lower()
-    old_guid_formatted = '{}-{}-{}-{}-{}'.format(
-        old_guid[:8], old_guid[8:12], old_guid[12:16], old_guid[16:20], old_guid[20:]
-    ).lower()
+    new_guid_formatted = '{}-{}-{}-{}-{}'.format(new_guid[:8], new_guid[8:12], new_guid[12:16], new_guid[16:20], new_guid[20:]).lower()
+    old_guid_formatted = '{}-{}-{}-{}-{}'.format(old_guid[:8], old_guid[8:12], old_guid[12:16], old_guid[16:20], old_guid[20:]).lower()
     level_sav_path = os.path.join(save_path, 'Level.sav')
     old_sav_path = os.path.join(save_path, 'Players', old_guid + '.sav')
     new_sav_path = os.path.join(save_path, 'Players', new_guid + '.sav')
@@ -59,7 +55,7 @@ def sav_to_json(filepath):
     print("Decompressing sav file")
     with open(filepath, "rb") as f:
         data = f.read()
-        raw_gvas, _ = decompress_sav_to_gvas(data)
+        raw_gvas, save_type, cnk_header = decompress_sav_to_gvas(data)
     print("Loading GVAS file")
     gvas_file = ProgressGvasFile.read(raw_gvas, PALWORLD_TYPE_HINTS, SKP_PALWORLD_CUSTOM_PROPERTIES)
     json_data = gvas_file.dump()
@@ -95,8 +91,7 @@ def main():
         [sg.Combo([], key='new_guid', size=(40, 1))],
         [sg.Button("Migrate", key='button_migrate')],
         [sg.ProgressBar(100, orientation='h', size=(20, 20), key='progressbar')],
-        [sg.Text("", key='progressbarText')],
-    ]
+        [sg.Text("", key='progressbarText')],]
     window = sg.Window("GUID Migration Tool", layout)
     player_files = []
     players = {}
