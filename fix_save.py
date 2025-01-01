@@ -1,13 +1,10 @@
 from internal_libs.import_libs import *
-with open("version.txt", "r") as file:
-    version = file.read().strip()
-print(f"PalWorldSaveTools Version: {version}")
 def set_console_title(title):
     try:
         if platform.system() == "Windows":
             import ctypes
             ctypes.windll.kernel32.SetConsoleTitleW(title)
-        elif platform.system() == "Darwin":  # macOS
+        elif platform.system() == "Darwin":
             raise PermissionError("Setting console title is not supported on macOS.")
         else:
             os.system(f"echo -ne '\033]0;{title}\007'")
