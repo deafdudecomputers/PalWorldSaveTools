@@ -19,8 +19,7 @@ class SkipFArchiveWriter(FArchiveWriter):
     def __init__(
             self,
             custom_properties: dict[str, tuple[Callable, Callable]] = {},
-            debug: bool = os.environ.get("DEBUG", "0") == "1",
-    ):
+            debug: bool = os.environ.get("DEBUG", "0") == "1",):
         self.data = io.BytesIO()
         self.custom_properties = custom_properties
         self.debug = debug
@@ -75,8 +74,7 @@ class SkipFArchiveReader(FArchiveReader):
             type_hints: dict[str, str] = {},
             custom_properties: dict[str, tuple[Callable, Callable]] = {},
             debug=False,
-            allow_nan=True
-    ):
+            allow_nan=True):
         self.size = len(data)
         self.orig_data = data
         self.data = io.BytesIO(data)
@@ -97,8 +95,7 @@ class SkipFArchiveReader(FArchiveReader):
             self.type_hints,
             self.custom_properties,
             debug=debug,
-            allow_nan=self.allow_nan,
-        )
+            allow_nan=self.allow_nan,)
     def skip(self, size: int) -> None:
         self.data.seek(size, 1)
     def properties_until_end(self, path: str = "") -> dict[str, Any]:
@@ -159,8 +156,7 @@ def skip_decode(
             "array_type": array_type,
             "id": reader.optional_guid(),
             "value": reader.read(size),
-            "size": size
-        }
+            "size": size}
     elif type_name == "MapProperty":
         key_type = reader.fstring()
         value_type = reader.fstring()
@@ -170,20 +166,16 @@ def skip_decode(
             "key_type": key_type,
             "value_type": value_type,
             "id": _id,
-            "value": reader.read(size),
-        }
+            "value": reader.read(size),}
     elif type_name == "StructProperty":
         value = {
             "skip_type": type_name,
             "struct_type": reader.fstring(),
             "struct_id": reader.guid(),
             "id": reader.optional_guid(),
-            "value": reader.read(size),
-        }
+            "value": reader.read(size),}
     else:
-        raise Exception(
-            f"Expected ArrayProperty or MapProperty or StructProperty, got {type_name} in {path}"
-        )
+        raise Exception(f"Expected ArrayProperty or MapProperty or StructProperty, got {type_name} in {path}")
     return value
 def skip_encode(
         writer: FArchiveWriter, property_type: str, properties: dict[str, Any]
@@ -191,8 +183,7 @@ def skip_encode(
     if "skip_type" not in properties:
         if properties['custom_type'] in PALWORLD_CUSTOM_PROPERTIES is not None:
             return PALWORLD_CUSTOM_PROPERTIES[properties["custom_type"]][1](
-                writer, property_type, properties
-            )
+                writer, property_type, properties)
     if property_type == "ArrayProperty":
         writer.fstring(properties["array_type"])
         writer.optional_guid(properties.get("id", None))
@@ -211,9 +202,7 @@ def skip_encode(
         writer.write(properties["value"])
         return len(properties["value"])
     else:
-        raise Exception(
-            f"Expected ArrayProperty or MapProperty or StructProperty, got {property_type}"
-        )
+        raise Exception(f"Expected ArrayProperty or MapProperty or StructProperty, got {property_type}")
 def decode_group(
         reader: SkipFArchiveReader, type_name: str, size: int, path: str
 ) -> dict[str, Any]:
@@ -225,15 +214,10 @@ def decode_group(
         group_type = group["value"]["GroupType"]["value"]["value"]
         if group_type == "EPalGroupType::Guild":
             group_bytes = group["value"]["RawData"]["value"]
-            group["value"]["RawData"]["value"] = decode_bytes(
-                reader, group_bytes, group_type
-            )
+            group["value"]["RawData"]["value"] = decode_bytes(reader, group_bytes, group_type)
     return value
 def instance_id_reader(reader):
-    return {
-        "guid": reader.guid(),
-        "instance_id": reader.guid(),
-    }
+    return {"guid": reader.guid(), "instance_id": reader.guid(),}
 def decode_bytes(
         parent_reader: SkipFArchiveReader, group_bytes: Sequence[int], group_type: str
 ) -> dict[str, Any]:
@@ -243,34 +227,27 @@ def decode_bytes(
         "group_type": group_type,
         "group_id": reader.guid(),
         "group_name": reader.fstring(),
-        "individual_character_handle_ids": reader.tarray(instance_id_reader),
-    }
+        "individual_character_handle_ids": reader.tarray(instance_id_reader),}
     org = {
         "org_type": reader.byte(),
-        "base_ids": reader.tarray(uuid_reader),
-    }
+        "base_ids": reader.tarray(uuid_reader),}
     group_data |= org
     guild: dict[str, Any] = {
         "base_camp_level": reader.i32(),
         "map_object_instance_ids_base_camp_points": reader.tarray(uuid_reader),
-        "guild_name": reader.fstring(),
-    }
+        "guild_name": reader.fstring(),}
     group_data |= guild
     guild = {
-        "unknown_field_1": reader.i64(),
-        "unknown_field_2": reader.i64(),
+        "unknown_bytes": reader.byte_list(16),
         "admin_player_uid": reader.guid(),
-        "players": [],
-    }
+        "players": [],}
     player_count = reader.i32()
     for _ in range(player_count):
         player = {
             "player_uid": reader.guid(),
             "player_info": {
                 "last_online_real_time": reader.i64(),
-                "player_name": reader.fstring(),
-            },
-        }
+                "player_name": reader.fstring(),},}
         guild["players"].append(player)
     group_data |= guild
     if not reader.eof():
@@ -309,8 +286,7 @@ def encode_bytes(p: dict[str, Any]) -> bytes:
     writer.i32(p["base_camp_level"])
     writer.tarray(uuid_writer, p["map_object_instance_ids_base_camp_points"])
     writer.fstring(p["guild_name"])
-    writer.i64(p["unknown_field_1"])
-    writer.i64(p["unknown_field_2"])
+    writer.write(bytes(p["unknown_bytes"]))
     writer.guid(p["admin_player_uid"])
     writer.i32(len(p["players"]))
     for i in range(len(p["players"])):
