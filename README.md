@@ -40,7 +40,8 @@
 - Logs and sorts players by the number of pals owned.  
 - Deletes players with fewer than a specified number of pals.  
 - Includes double-click functionality for file save versions.  
-- Provides a **base map view** via `bases.cmd`.  
+- Provides a **base map view** via `bases.cmd`.
+- Provides automated killnearestbase commands to be used with palguard for inactive bases.
 - Transfers saves between dedicated servers and single/coop worlds.  
 - Includes Steam ID conversion with `convertids`.  
 
