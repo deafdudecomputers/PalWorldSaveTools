@@ -1,4 +1,4 @@
-# PalWorldSaveTools: Working as of v0.4.12 Patch
+# PalWorldSaveTools: Working as of v0.4.13 Patch
 
 - **Author:** MagicBear and cheahjs  
 - **License:** MIT License  
