@@ -207,7 +207,7 @@ def count_pals_found(data, player_pals_count):
         passive_skills_str = ", Skills: " + ", ".join(passive_skills) if passive_skills else ""
         rank_hp = int(extract_value(raw_data, "Rank_HP", 0)) * 3
         rank_attack = int(extract_value(raw_data, "Rank_Attack", 0)) * 3
-        rank_defense = int(extract_value(raw_data, "Rank_Defense", 0)) * 3
+        rank_defense = int(extract_value(raw_data, "Rank_Defence", 0)) * 3
         rank_craft_speed = int(extract_value(raw_data, "Rank_CraftSpeed", 0)) * 3
         talents_str = (
             f"HP IV: {extract_value(raw_data, 'Talent_HP', '0')}({rank_hp}%), "
