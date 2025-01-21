@@ -90,6 +90,10 @@ echo.
 echo.  WARNING: ALWAYS BACKUP YOUR SAVES BEFORE USING THIS TOOL!
 echo.
 echo ==================================================================================
+echo.
+echo Some options makes use of PalWorldSave folder, so please place your saves inside PalWorldSave folder.
+echo.
+pause
 title PalWorldSaveTools v!tools_version!
 set "intMenuCounter=0"
 :objMenuLoop
