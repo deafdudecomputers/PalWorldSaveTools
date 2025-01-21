@@ -29,17 +29,17 @@ set strName[3]=Convert Player files to the json file format
 set strName[4]=Convert Player files back to sav file format
 set strName[5]=Convert Game Pass Save to Steam Save
 set strName[6]=Convert Steam Save to Game Pass Save
-set strName[7]=Modify your Palworld Save file
-set strName[8]=Scan Save file
-set strName[9]=Generate a Image of your Palworld World Map
-set strName[10]=Fix Host Save (Convert host save to regular save and vice versa)
+set strName[7]=Modify Save File
+set strName[8]=Scan Save file(PalWorldSave)
+set strName[9]=Generate Map
+set strName[10]=Fix Host Save(PalWorldSave)
 set strName[11]=Transfer Character(Server to Server)
 set strName[12]=Convert Steam ID to two different save IDs
 set strName[13]=Convert .sav to in-game coordinates and vice versa
 set strName[14]=Delete Inactive Players Saves
 set strName[15]=Delete -NoSteam Player Saves
 set strName[16]=Delete -Steam Player Saves
-set strName[17]=Delete Players by Pals amount
+set strName[17]=Delete Players Saves by Pals amount
 set strName[18]=Generate palguard killnearestbase commands
 set strName[19]=Clean up generated files
 set strName[20]=PalWorldSaveTools Package Manager
@@ -90,6 +90,7 @@ echo.
 echo.  WARNING: ALWAYS BACKUP YOUR SAVES BEFORE USING THIS TOOL!
 echo.
 echo ==================================================================================
+title PalWorldSaveTools v!tools_version!
 set "intMenuCounter=0"
 :objMenuLoop
 if %intMenuCounter% == 0 (
