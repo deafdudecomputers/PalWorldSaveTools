@@ -78,9 +78,14 @@ set "Message="
 :objMenu
 cls
 echo.%Message%
+set "version_file=version.txt"
+set "tools_version="
+set "game_version="
+for /f "tokens=2 delims==" %%a in ('findstr "ToolsVersion" %version_file%') do set "tools_version=%%a"
+for /f "tokens=2 delims==" %%a in ('findstr "GameVersion" %version_file%') do set "game_version=%%a"
 echo ==================================================================================
 echo.
-echo.  PalWorldSaveTools 1.0.1 (Working as of v0.4.13 Patch)
+echo.  PalWorldSaveTools v!tools_version! (Working as of v!game_version! Patch)
 echo.
 echo.  WARNING: ALWAYS BACKUP YOUR SAVES BEFORE USING THIS TOOL!
 echo.
