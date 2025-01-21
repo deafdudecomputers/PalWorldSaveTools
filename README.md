@@ -1,4 +1,5 @@
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 # PalWorldSaveTools: Working as of v0.4.13 Patch
 
 - **Author:** MagicBear and cheahjs  
@@ -121,6 +122,8 @@ Follow these steps to delete inactive players based on your criteria (e.g., inac
 - **Level:** Deletes players below a specified level (e.g., level 30 or lower).  
 - **Pals:** Deletes players with fewer than a specified number of pals (e.g., 10 or fewer).  
 =======
+=======
+>>>>>>> Stashed changes
 # PalWorldSaveTools: Working as of v0.4.13 Patch
 
 - **Author:** MagicBear and cheahjs  
@@ -240,5 +243,9 @@ Follow these steps to delete inactive players based on your criteria (e.g., inac
 
 - **Days:** Deletes players inactive for a specified number of days (e.g., 30 days).  
 - **Level:** Deletes players below a specified level (e.g., level 30 or lower).  
+<<<<<<< Updated upstream
+- **Pals:** Deletes players with fewer than a specified number of pals (e.g., 10 or fewer).  
+>>>>>>> Stashed changes
+=======
 - **Pals:** Deletes players with fewer than a specified number of pals (e.g., 10 or fewer).  
 >>>>>>> Stashed changes
