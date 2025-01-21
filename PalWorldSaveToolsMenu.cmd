@@ -80,7 +80,7 @@ cls
 echo.%Message%
 echo ==================================================================================
 echo.
-echo.  PalWorldSaveTools 1.0.1 (Working as of v0.4.13 Patch)
+echo.  PalWorldSaveTools 1.0.2 (Working as of v0.4.13 Patch)
 echo.
 echo.  WARNING: ALWAYS BACKUP YOUR SAVES BEFORE USING THIS TOOL!
 echo.
