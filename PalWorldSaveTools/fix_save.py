@@ -137,10 +137,11 @@ def main_editor():
     output_path = args.filename
     return None
 def LoadFile(filename):
-    global filetime, gvas_file, wsd, MappingCache, backup_path
+    global filetime, gvas_file, wsd, MappingCache, backup_path, players_path
     print(f"Loading {filename}...", end="", flush=True)
     filetime = os.stat(filename).st_mtime
     backup_path = os.path.join(os.path.dirname(os.path.abspath(filename)), "backup/%s" % datetime.datetime.now().strftime("%Y%m%d-%H%M%S"))
+    players_path = os.path.join(os.path.dirname(filename), "Players")
     with open(filename, "rb") as f:
         start_time = time.time()
         data = f.read()
@@ -363,7 +364,7 @@ def ShowPlayers():
                         player_level = extract_value(raw_data_value_value["value"]["object"]["SaveParameter"]["value"], "Level", 0)
                         playerPalCount = player_pals_count.get(player_uid, 0)
                         playerPalCaughtCount = player_pal_caught_count.get(player_uid, 0)
-                        process_player_file(player_uid, nickname, 'Players')
+                        process_player_file(player_uid, nickname, players_path)
                         player_data[player_uid] = {
                             "name": nickname,
                             "Level": player_level,
