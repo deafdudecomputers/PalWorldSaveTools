@@ -5,7 +5,7 @@
 - **Updated by:** Pylar and Techdude  
 - **Map Pictures Provided by:** Kozejin  
 - **Testers/Helpers:** Lethe and xKillerMaverick
-- **Contact me at Discord: Pylar1991**
+- **Contact me on Discord: Pylar1991**
 
 ---
 
