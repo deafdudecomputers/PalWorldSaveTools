@@ -4,7 +4,7 @@
 - **License:** MIT License  
 - **Updated by:** Pylar and Techdude  
 - **Map Pictures Provided by:** Kozejin  
-- **Testers/Helpers:** Lethe  
+- **Testers/Helpers:** Lethe and xkillermaverick
 
 ---
 
