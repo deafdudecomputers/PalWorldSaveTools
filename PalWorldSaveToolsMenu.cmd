@@ -29,8 +29,8 @@ set strName[3]=Convert Player files to the json file format
 set strName[4]=Convert Player files back to sav file format
 set strName[5]=Convert Game Pass Save to Steam Save
 set strName[6]=Convert Steam Save to Game Pass Save
-set strName[7]=Modify Save File
-set strName[8]=Scan Save file(PalWorldSave)
+set strName[7]=Modify Save
+set strName[8]=Scan Save(PalWorldSave)
 set strName[9]=Generate Map
 set strName[10]=Fix Host Save(PalWorldSave)
 set strName[11]=Transfer Character(Server to Server)
@@ -74,10 +74,8 @@ set "strRequest[22]=%strName[22]%"
 set "strRequest[23]=%strName[23]%"
 
 :: Display the Menu
-set "Message="
 :objMenu
 cls
-echo.%Message%
 set "version_file=version.txt"
 set "tools_version="
 set "game_version="
@@ -91,9 +89,8 @@ echo.  WARNING: ALWAYS BACKUP YOUR SAVES BEFORE USING THIS TOOL!
 echo.
 echo ==================================================================================
 echo.
-echo Some options makes use of PalWorldSave folder, so please place your saves inside PalWorldSave folder.
+echo   Some options makes use of PalWorldSave folder, so please place your saves inside PalWorldSave folder.
 echo.
-pause
 title PalWorldSaveTools v!tools_version!
 set "intMenuCounter=0"
 :objMenuLoop
@@ -481,4 +478,3 @@ goto :eof
 :End
 endlocal
 pause >nul
-
