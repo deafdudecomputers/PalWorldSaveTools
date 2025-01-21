@@ -641,27 +641,19 @@ of your save folder before continuing. Press Yes if you would like to continue.'
     targ_lvl["CharacterSaveParameterMap"]["value"] = new_character_save_param_map
     print(f"Removed {removed} pals from the original character in the target world")
     print(f"Appended {len(param_maps)} pals of data from the source character")
-    count = 0
+    count = 0    
     for container in targ_lvl["CharacterContainerSaveData"]["value"]:
         container_id = container["key"]["ID"]["value"]
         if container_id == inv_pals["value"]["ID"]["value"]:
-            target_slot_data_starts = find_all_occurrences_with_prefix(container['value']['Slots']['value'], PalSlotDataPrefix)
-            source_slot_data_starts = find_all_occurrences_with_prefix(host_pals['value']['Slots']['value'], PalSlotDataPrefix)
-            target_slot_bytearray = bytearray(container['value']['Slots']['value'])
-            source_slot_bytearray = bytearray(host_pals['value']['Slots']['value'])
-            for target_start, source_start in zip(target_slot_data_starts, source_slot_data_starts):
-                target_slot_bytearray[target_start:target_start + 33] = source_slot_bytearray[source_start:source_start + 33]
-            container['value']['Slots']['value'] = bytes(target_slot_bytearray)
+            target_slot_data = container['value']['Slots']['value']
+            source_slot_data = host_pals['value']['Slots']['value']            
+            container['value']['Slots']['value'] = source_slot_data                      
             count += 1
         elif container_id == inv_otomo["value"]["ID"]["value"]:
-            target_slot_data_starts = find_all_occurrences_with_prefix(container['value']['Slots']['value'], PalSlotDataPrefix)
-            source_slot_data_starts = find_all_occurrences_with_prefix(host_otomo['value']['Slots']['value'], PalSlotDataPrefix)
-            target_slot_bytearray = bytearray(container['value']['Slots']['value'])
-            source_slot_bytearray = bytearray(host_otomo['value']['Slots']['value'])
-            for target_start, source_start in zip(target_slot_data_starts, source_slot_data_starts):
-                target_slot_bytearray[target_start:target_start + 33] = source_slot_bytearray[source_start:source_start + 33]
-            container['value']['Slots']['value'] = bytes(target_slot_bytearray)
-            count += 1
+            target_slot_data = container['value']['Slots']['value']
+            source_slot_data = host_otomo['value']['Slots']['value']
+            container['value']['Slots']['value'] = source_slot_data                  
+            count += 1            
         if count >= 2:
             print("Found all pal containers")
             break
