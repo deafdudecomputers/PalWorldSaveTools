@@ -120,3 +120,28 @@ Follow these steps to delete inactive players based on your criteria (e.g., inac
 - **Days:** Deletes players inactive for a specified number of days (e.g., 30 days).  
 - **Level:** Deletes players below a specified level (e.g., level 30 or lower).  
 - **Pals:** Deletes players with fewer than a specified number of pals (e.g., 10 or fewer).  
+
+
+Try this: 
+
+# Restore Your Map in Palworld
+
+Follow the steps below to restore your map from an old server/world ID to a new one.
+
+## Steps to Restore Your Map
+
+### 1. Find the Old Server/World ID
+- Open File Explorer and run the search for:  
+  `%localappdata%\Pal\Saved\SaveGames\`
+- Look for a folder with a **random ID** (this should be your **Steam ID**).
+- Open that folder, then find the folder that matches your **old server/world ID** (e.g., `FCC47F5F4DD6AC48D3C0E2B30059973D`).
+- **Copy** the `LocalData.sav` file from this folder.
+
+### 2. Find the New Server/World ID
+- After copying `LocalData.sav`, go back and find a **different folder** (this is your **new server/world ID**).
+- Open that folder and **paste** the copied `LocalData.sav` file from the old server/world ID into this folder.
+
+### 3. Restore Your Map
+- Now go into your **new server/world** and your map should be restored.
+
+Done! Your map is back in your **new server/world**!
