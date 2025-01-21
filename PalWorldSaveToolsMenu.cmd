@@ -445,10 +445,15 @@ if "%strRequest%" EQU "%strName[21]%" (
 )
 if "%strRequest%" EQU "%strName[22]%" (
     title About PalWorldSaveTools
-	cls
-	echo The UI was made by xKillerMaverick.
-	pause
-	goto objMenu
+    cls
+    echo Author: MagicBear and cheahjs
+    echo License: MIT License
+    echo Updated by: Pylar and Techdude
+    echo Map Pictures Provided by: Kozejin
+    echo Testers/Helpers: Lethe and xKillerMaverick
+    echo The UI was made by xKillerMaverick
+    pause
+    goto objMenu
 )
 if "%strRequest%" EQU "%strName[23]%" (
     title Closing PalWorldSaveTools...
