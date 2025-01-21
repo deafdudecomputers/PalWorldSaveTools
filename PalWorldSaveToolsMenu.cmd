@@ -45,6 +45,8 @@ set strName[19]=PalWorldSaveTools Package Manager
 set strName[20]=Update PalWorldSaveTools
 set strName[21]=About PalWorldSaveTools
 set strName[22]=Exit PalWorldSaveTools
+set strName[23]=Convert .sav to in-game coordinates and vice versa
+
 
 :: Menu Options
 set "strRequest[1]=%strName[1]%"
@@ -68,7 +70,8 @@ set "strRequest[18]=%strName[18]%"
 set "strRequest[19]=%strName[19]%"
 set "strRequest[20]=%strName[20]%"
 set "strRequest[21]=%strName[21]%"
-set "strRequest[21]=%strName[22]%"
+set "strRequest[22]=%strName[22]%"
+set "strRequest[23]=%strName[23]%"
 
 :: Display the Menu
 set "Message="
@@ -415,6 +418,47 @@ if "%strRequest%" EQU "%strName[22]%" (
     title Closing PalWorldSaveTools...
     exit
 )
+
+:: objProcess strInput
+...
+if "%strRequest%" EQU "%strName[23]%" (  :: Add case for new option
+    title Loading Pylar's Convert Tool
+    cls
+    :: Run your batch script for coordinate conversion
+    call :coordinate_conversion_tool
+    pause
+    goto objMenu
+)
+
+:coordinate_conversion_tool
+set "transl_x=123888"
+set "transl_y=158000"
+set "scale=459"
+echo --- Convert .sav to In-Game Coordinates ---
+set /p "sav_x=Enter .sav X coordinate: "
+set /p "sav_y=Enter .sav Y coordinate: "
+
+set /a "temp_x= sav_x + transl_x"
+set /a "temp_y= sav_y - transl_y"
+
+for /f "tokens=* usebackq" %%a in (`powershell -command "[math]::Round((%temp_y% / %scale%), 0)"`) do set "in_game_x=%%a"
+for /f "tokens=* usebackq" %%a in (`powershell -command "[math]::Round((%temp_x% / %scale%), 0)"`) do set "in_game_y=%%a"
+
+echo In-game coordinates: X = %in_game_x%, Y = %in_game_y%
+echo.
+
+echo --- Convert In-Game to .sav Coordinates ---
+set /p "game_x=Enter in-game X coordinate: "
+set /p "game_y=Enter in-game Y coordinate: "
+
+set /a "temp_x_sav = game_x * scale"
+set /a "temp_y_sav = game_y * scale"
+
+for /f "tokens=* usebackq" %%a in (`powershell -command "[math]::Round((%temp_y_sav% - %transl_x%), 0)"`) do set "sav_x_out=%%a"
+for /f "tokens=* usebackq" %%a in (`powershell -command "[math]::Round((%temp_x_sav% + %transl_y%), 0)"`) do set "sav_y_out=%%a"
+
+echo .sav coordinates: X = %sav_x_out%, Y = %sav_y_out%
+echo.
 
 :: Prevent the command from being processed twice if listed twice.
 set "strRequest[%1]="
