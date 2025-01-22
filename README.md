@@ -132,16 +132,17 @@ Follow the steps below to restore your map from an old server/world ID to a new 
 - Open File Explorer and run the search for:  
   `%localappdata%\Pal\Saved\SaveGames\`
 - Look for a folder with a **random ID** (this should be your **Steam ID**).
-- Open that folder, then find the folder that matches your **old server/world ID** (e.g., `FCC47F5F4DD6AC48D3C0E2B30059973D`).
-- **Check the "Last Modified" date** of the folders in that location. The folder from your **old server** should have a recent modification timestamp.
-- Once you've found the correct folder, **copy** the `LocalData.sav` file from this folder.
+- Open that folder and look for the folder that matches your **old server/world ID** (e.g., `FCC47F5F4DD6AC48D3C0E2B30059973D`).
+- **Check the "Last Modified" date** of the folders inside this Steam ID folder. The folder with the most recent modification date should correspond to your **old server/world**.
+- Once you've found the correct folder, **copy** the `LocalData.sav` file from it.
 
 ### 2. Find the New Server/World ID
 - **Join your new server/world**.
 - Go back to the same folder path:  
   `%localappdata%\Pal\Saved\SaveGames\`
-- Look for the folder that matches your **new server/world ID** (this will be a different folder from the old one).
-- Again, check the "Last Modified" date for the correct folder.
+- Look for a folder with a **random ID** (this should be your **Steam ID**).
+- Open that folder and look for the folder that matches your **new server/world ID**.
+- Again, check the "Last Modified" date to ensure you are in the correct folder.
 - Open the folder and **paste** the `LocalData.sav` file from the old server/world ID into this folder.
 
 ### 3. Restore Your Map
