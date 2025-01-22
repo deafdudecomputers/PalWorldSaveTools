@@ -88,17 +88,17 @@ If you're playing Palworld through Xbox Game Pass, you must extract and convert 
    - Unzip the **PalWorldSaveTools** folder.
 
 5. **Move the Save File**  
-   - Move the renamed `Level.sav` file into the **PalWorldSaveTools** folder.
+   - Move the renamed `Level.sav` file into the **PalWorldSave** folder.
 
 6. **Convert Save to JSON**  
-   - Drag `Level.sav` onto the `convert-sav-to-json.cmd` file.  
+   - Select Convert Level.sav file to Level.json.
    - A new file named `Level.sav.json` will be created in the same folder.
 
 7. **Delete the Original Save**  
    - Delete the `Level.sav` file you moved earlier.
 
 8. **Convert JSON Back to Save**  
-   - Drag `Level.sav.json` onto the `convert-json-to-sav.cmd` file.  
+   - Select Convert Level.json file back to Level.sav.  
    - You should now have a newly converted `Level.sav` file ready to use.
 
 ---
@@ -107,10 +107,10 @@ If you're playing Palworld through Xbox Game Pass, you must extract and convert 
 
 Follow these steps to delete inactive players based on your criteria (e.g., inactivity, level, or number of pals):
 
-1. Copy all files from your server (`\Pal\Saved\SaveGames\0\RANDOMSERVERID\`) to the same location within the tool (`PalworldSaveTools\`).  
-2. Run `fix_save.cmd`.  
-3. Run `sort_players.cmd` and/or `delete_pals_save.cmd`.  
-4. Copy the `Players` folder from the tool.  
+1. Copy all files from your server (`\Pal\Saved\SaveGames\0\RANDOMSERVERID\`) to the same location within the tool (`PalWorldSave`).  
+2. Select Delete Inactive Players Saves.
+3. Input your desired requirements, then let it finish.  
+4. Copy the `Players` folder from the `PalWorldSave` folder.  
 5. Delete the original `Players` folder from the server (`\Pal\Saved\SaveGames\0\RANDOMSERVERID\`).  
 6. Paste the copied `Players` folder into the server folder.  
 7. Restart the server:  
