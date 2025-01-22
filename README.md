@@ -49,8 +49,7 @@ ______     _ _    _            _     _ _____               _____           _
 - Logs players and their data into `players.log`.  
 - Sorts and deletes players based on level and inactivity.  
 - Logs and sorts players by the number of pals owned.  
-- Deletes players with fewer than a specified number of pals.  
-- Includes double-click functionality for file save versions.  
+- Deletes players with fewer than a specified number of pals.   
 - Provides a **base map view**.
 - Provides automated killnearestbase commands to be used with palguard for inactive bases.
 - Transfers saves between dedicated servers and single/coop worlds.  
