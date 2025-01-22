@@ -214,17 +214,22 @@ if "%strRequest%" EQU "%strName[7]%" (
 )
 if "%strRequest%" EQU "%strName[8]%" (
     title Loading Pylar's Save Tool 
-	cls
+    cls
     :: Delete old files from previous runs
-	if exist "fix_save.log" del "fix_save.log"
-	if exist "players.log" del "players.log"
-	if exist "sort_players.log" del "sort_players.log"
-	if exist "Pal Logger" rmdir /s /q "Pal Logger"
-	if exist "import_lock.txt" del "import_lock.txt"
-	:: Run the fix_save.py with Level.sav
-	python fix_save_location_finder.py
-	pause
-	goto objMenu
+    if exist "fix_save.log" del "fix_save.log"
+    if exist "players.log" del "players.log"
+    if exist "sort_players.log" del "sort_players.log"
+    if exist "Pal Logger" rmdir /s /q "Pal Logger"
+    if exist "import_lock.txt" del "import_lock.txt"    
+    :: Check if the file exists before running the script
+    if exist "PalWorldSave/Level.sav" (
+        :: Run the fix_save.py with Level.sav
+        python fix_save.py PalWorldSave/Level.sav
+    ) else (
+        echo Error: PalWorldSave/Level.sav not found!
+    )
+    pause
+    goto objMenu
 )
 if "%strRequest%" EQU "%strName[9]%" (
     title Loading Pylar's Map Maker Tool...
