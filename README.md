@@ -120,12 +120,6 @@ Follow these steps to delete inactive players based on your criteria (e.g., inac
 
 ---
 
-## Additional Notes
-
-- **Days:** Deletes players inactive for a specified number of days (e.g., 30 days).  
-- **Level:** Deletes players below a specified level (e.g., level 30 or lower).  
-- **Pals:** Deletes players with fewer than a specified number of pals (e.g., 10 or fewer).  
-
 # Restore your map
 
 Follow the steps below to restore your map from an old server/world ID to a new one.
