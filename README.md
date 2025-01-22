@@ -108,7 +108,7 @@ If you're playing Palworld through Xbox Game Pass, you must extract and convert 
 Follow these steps to delete inactive players based on your criteria (e.g., inactivity, level, or number of pals):
 
 1. Copy all files from your server (`\Pal\Saved\SaveGames\0\RANDOMSERVERID\`) to the same location within the tool (`PalWorldSave`).  
-2. Select Delete Inactive Players Saves.
+2. Select Delete Inactive Players Saves via PalWorldSaveToolsMenu.cmd.
 3. Input your desired requirements, then let it finish.  
 4. Copy the `Players` folder from the `PalWorldSave` folder.  
 5. Delete the original `Players` folder from the server (`\Pal\Saved\SaveGames\0\RANDOMSERVERID\`).  
