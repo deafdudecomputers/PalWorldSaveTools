@@ -132,8 +132,8 @@ Follow the steps below to restore your map from an old server/world ID to a new 
 - Open File Explorer and run the search for:  
   `%localappdata%\Pal\Saved\SaveGames\`
 - Look for a folder with a **random ID** (this should be your **Steam ID**).
-- Open that folder and look for the folder that matches your **old server/world ID** (e.g., `FCC47F5F4DD6AC48D3C0E2B30059973D`).
-- **Check the "Last Modified" date** of the folders inside this Steam ID folder. The folder with the most recent modification date should correspond to your **old server/world**.
+- Open that folder and **sort the subfolders by the "Last Modified" date**.
+- Look for the folder that matches your **old server/world ID** (e.g., `FCC47F5F4DD6AC48D3C0E2B30059973D`). The folder with the most recent modification date is typically the one for your **old server/world**.
 - Once you've found the correct folder, **copy** the `LocalData.sav` file from it.
 
 ### 2. Find the New Server/World ID
@@ -141,9 +141,10 @@ Follow the steps below to restore your map from an old server/world ID to a new 
 - Go back to the same folder path:  
   `%localappdata%\Pal\Saved\SaveGames\`
 - Look for a folder with a **random ID** (this should be your **Steam ID**).
-- Open that folder and look for the folder that matches your **new server/world ID**.
-- Again, check the "Last Modified" date to ensure you are in the correct folder.
-- Open the folder and **paste** the `LocalData.sav` file from the old server/world ID into this folder.
+- Open that folder and **sort the subfolders by the "Last Modified" date**.
+- Look for the folder that matches your **new server/world ID**.
+- Once you've found the correct folder, **paste** the `LocalData.sav` file from the old server/world ID into this folder.
+- If the `LocalData.sav` file already exists in the new folder, **confirm the overwrite** when prompted to replace the existing file.
 
 ### 3. Restore Your Map
 - Now, go into your **new server/world**, and your map should be restored with the old world data.
