@@ -1,4 +1,3 @@
-```
 ______     _ _    _            _     _ _____               _____           _     
 | ___ \   | | |  | |          | |   | /  ___|             |_   _|         | |    
 | |_/ /_ _| | |  | | ___  _ __| | __| \ `--.  __ ___   _____| | ___   ___ | |___ 
@@ -6,17 +5,16 @@ ______     _ _    _            _     _ _____               _____           _
 | | | (_| | \  /\  / (_) | |  | | (_| /\__/ / (_| |\ V /  __/ | (_) | (_) | \__ \
 \_|  \__,_|_|\/  \/ \___/|_|  |_|\__,_\____/ \__,_| \_/ \___\_/\___/ \___/|_|___/
                                                                                  
-                                                                                 
-```
 ---
+
 # Working as of v0.4.13 Patch
 
 - **Author:** MagicBear and cheahjs  
 - **License:** MIT License  
 - **Updated by:** Pylar and Techdude  
 - **Map Pictures Provided by:** Kozejin  
-- **Testers/Helpers:** Lethe and xKillerMaverick
-- **Contact me on Discord: Pylar1991**
+- **Testers/Helpers:** Lethe and xKillerMaverick  
+- **Contact me on Discord:** Pylar1991
 
 ---
 
@@ -59,7 +57,7 @@ ______     _ _    _            _     _ _____               _____           _
 
 ---
 
-## Transferring Between Servers/Worlds (Single/Coop)
+## [Transferring Saves Between Servers/Worlds (Single/Coop)](https://github.com/your-username/Transferring-Saves-Guide)
 
 - Ensure you disable private locks on the "source" chests before transferring saves.
 
@@ -69,13 +67,7 @@ ______     _ _    _            _     _ _____               _____           _
 
 If you're playing Palworld through Xbox Game Pass, you must extract and convert your save files using the **XGP-save-extractor** and **PalWorldSaveTools**. Follow these steps:
 
----
-
-### XGP-save-extractor
-
-- [XGP-save-extractor GitHub Repository](https://github.com/Z1ni/XGP-save-extractor)
-
----
+### [XGP-save-extractor GitHub Repository](https://github.com/Z1ni/XGP-save-extractor)
 
 ### Steps
 
@@ -132,7 +124,7 @@ Follow these steps to delete inactive players based on your criteria (e.g., inac
 - **Level:** Deletes players below a specified level (e.g., level 30 or lower).  
 - **Pals:** Deletes players with fewer than a specified number of pals (e.g., 10 or fewer).  
 
-# Restore Your Map in Palworld
+# [Restore Your Map in Palworld](https://github.com/your-username/Restore-Map-Guide)
 
 Follow the steps below to restore your map from an old server/world ID to a new one.
 
