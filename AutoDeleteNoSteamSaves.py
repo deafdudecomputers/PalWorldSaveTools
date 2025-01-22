@@ -1,5 +1,5 @@
 from internal_libs.import_libs import *
-players_folder = "LocalWorldSave/Players"
+players_folder = "PalWorldSave/Players"
 def sanitize_uid(uid):
     return uid.replace("-", "")
 def extract_uid_from_sav(save_file):
