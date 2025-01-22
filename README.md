@@ -121,9 +121,6 @@ Follow these steps to delete inactive players based on your criteria (e.g., inac
 - **Level:** Deletes players below a specified level (e.g., level 30 or lower).  
 - **Pals:** Deletes players with fewer than a specified number of pals (e.g., 10 or fewer).  
 
-
-Try this: 
-
 # Restore Your Map in Palworld
 
 Follow the steps below to restore your map from an old server/world ID to a new one.
@@ -131,17 +128,23 @@ Follow the steps below to restore your map from an old server/world ID to a new 
 ## Steps to Restore Your Map
 
 ### 1. Find the Old Server/World ID
+- **Join your old server/world**.
 - Open File Explorer and run the search for:  
   `%localappdata%\Pal\Saved\SaveGames\`
 - Look for a folder with a **random ID** (this should be your **Steam ID**).
 - Open that folder, then find the folder that matches your **old server/world ID** (e.g., `FCC47F5F4DD6AC48D3C0E2B30059973D`).
-- **Copy** the `LocalData.sav` file from this folder.
+- **Check the "Last Modified" date** of the folders in that location. The folder from your **old server** should have a recent modification timestamp.
+- Once you've found the correct folder, **copy** the `LocalData.sav` file from this folder.
 
 ### 2. Find the New Server/World ID
-- After copying `LocalData.sav`, go back and find a **different folder** (this is your **new server/world ID**).
-- Open that folder and **paste** the copied `LocalData.sav` file from the old server/world ID into this folder.
+- **Join your new server/world**.
+- Go back to the same folder path:  
+  `%localappdata%\Pal\Saved\SaveGames\`
+- Look for the folder that matches your **new server/world ID** (this will be a different folder from the old one).
+- Again, check the "Last Modified" date for the correct folder.
+- Open the folder and **paste** the `LocalData.sav` file from the old server/world ID into this folder.
 
 ### 3. Restore Your Map
-- Now go into your **new server/world** and your map should be restored.
+- Now, go into your **new server/world**, and your map should be restored with the old world data.
 
 Done! Your map is back in your **new server/world**!
