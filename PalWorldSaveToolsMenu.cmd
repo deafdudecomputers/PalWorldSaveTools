@@ -422,9 +422,9 @@ if "%strRequest%" EQU "%strName[18]%" (
 )
 if "%strRequest%" EQU "%strName[19]%" (
     title Updating PalWorldSaveTools...
-	cls
-	:: Ensures pip is installed after checking python is installed already.
-	python -m ensurepip --upgrade >nul 2>&1
+    cls
+    :: Ensures pip is installed after checking python is installed already.
+    python -m ensurepip --upgrade >nul 2>&1
     git init >nul 2>&1
     git remote remove origin >nul 2>&1
     git remote add origin https://github.com/deafdudecomputers/PalWorldSaveTools.git
@@ -433,8 +433,13 @@ if "%strRequest%" EQU "%strName[19]%" (
     git reset --hard origin/main
     git clean -fdx
     echo Update complete. All files have been replaced.
+    
+    :: Launches a new instance of the script and exits the old one.
+    start "" "%~f0"
+    exit
+    
     pause
-	goto objMenu
+    goto objMenu
 )
 if "%strRequest%" EQU "%strName[20]%" (
     title About PalWorldSaveTools
