@@ -120,11 +120,7 @@ Follow these steps to delete inactive players based on your criteria (e.g., inac
 
 ---
 
-# Restore your map
-
-Follow the steps below to restore your map from an old server/world ID to a new one.
-
-## Steps to Restore Your Map
+## Steps to Restore Your Map(Fog and icons)
 
 ### 1. Find the Old Server/World ID
 - **Join your old server/world**.
