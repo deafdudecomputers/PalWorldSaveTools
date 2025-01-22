@@ -1,8 +1,9 @@
-from convert import *
-import xgp_save_extract
+import os
+import shutil
 import zipfile
 import glob
-import shutil
+from convert import *
+import xgp_save_extract
 def delete_converted_save_backups(root_dir, partial_name):
     for dirpath, dirnames, filenames in os.walk(root_dir):
         for dirname in dirnames:
@@ -11,6 +12,8 @@ def delete_converted_save_backups(root_dir, partial_name):
                 print(f"Deleting: {full_path}")
                 shutil.rmtree(full_path)
 def xbox_save_zip(directory, partial_name, extract_to):
+    if not os.path.exists(extract_to):
+        os.makedirs(extract_to)
     for root, _, files in os.walk(directory):
         for file in files:
             if file.endswith('.zip') and partial_name in file:
