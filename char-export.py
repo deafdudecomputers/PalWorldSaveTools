@@ -480,15 +480,8 @@ of your save folder before continuing. Press Yes if you would like to continue.'
             break
     dynamic_guids.discard(b'\x00' * 16)
     dynamic_container_level_json = level_json['DynamicItemSaveData']['value']['values']
-    level_additional_dynamic_containers = []
-    for dynamic_container in dynamic_container_level_json:
-            container_id = dynamic_container.get('ID')
-            if container_id is None:
-                continue
-            print("found value in source dynamic_container")
-            LocalIdInCreatedWorld = find_id_match_prefix(container_id['value'], LocalIdSearchPrefix)
-            if LocalIdInCreatedWorld in dynamic_guids:
-                level_additional_dynamic_containers.append((dynamic_container, LocalIdInCreatedWorld))
+    level_additional_dynamic_containers = [(dynamic_container, dynamic_container.get('ID', {}).get('value')) for dynamic_container in dynamic_container_level_json]
+    print(f"Copied {len(level_additional_dynamic_containers)} containers to target")
     if count < expected_containers:
         print("Missing container info! Only found " + str(count))
         messagebox.showerror(message="Missing container info! Only found " + str(count))
