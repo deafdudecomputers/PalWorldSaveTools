@@ -62,46 +62,6 @@ ______     _ _    _            _     _ _____               _____           _
 
 - Ensure you disable private locks on the "source" chests before transferring saves.
 
----
-
-## Gamepass Saves
-
-If you're playing Palworld through Xbox Game Pass, you must extract and convert your save files using the **XGP-save-extractor** and **PalWorldSaveTools**. Follow these steps:
-
-### [XGP-save-extractor GitHub Repository](https://github.com/Z1ni/XGP-save-extractor)
-
-### Steps
-
-1. **Extract the Save Files**  
-   - Download and unzip the **XGP-save-extractor**.  
-   - Run the program, follow the prompts in the command prompt, and it will output a ZIP file containing your Xbox Game Pass Palworld save files.
-
-2. **Locate the Save File**  
-   - Unzip the exported file.  
-   - Navigate to the nested folder named `Level` and locate the file named `01.sav`.
-
-3. **Rename the Save File**  
-   - Rename `01.sav` to `Level.sav`.
-
-4. **Prepare the Save Tools**  
-   - Unzip the **PalWorldSaveTools** folder.
-
-5. **Move the Save File**  
-   - Move the renamed `Level.sav` file into the **PalWorldSave** folder.
-
-6. **Convert Save to JSON**  
-   - Select Convert Level.sav file to Level.json.
-   - A new file named `Level.sav.json` will be created in the same folder.
-
-7. **Delete the Original Save**  
-   - Delete the `Level.sav` file you moved earlier.
-
-8. **Convert JSON Back to Save**  
-   - Select Convert Level.json file back to Level.sav.  
-   - You should now have a newly converted `Level.sav` file ready to use.
-
----
-
 ## Automatically Delete Player Saves Based on Inactivity
 
 Follow these steps to delete inactive players based on your criteria (e.g., inactivity, level, or number of pals):
