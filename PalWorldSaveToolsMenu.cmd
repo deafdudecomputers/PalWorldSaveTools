@@ -29,21 +29,22 @@ set strName[3]=Convert Player files to the json file format
 set strName[4]=Convert Player files back to sav file format
 set strName[5]=Convert Game Pass Save to Steam Save
 set strName[6]=Convert Steam Save to Game Pass Save
-set strName[7]=Modify Save
-set strName[8]=Scan Save
-set strName[9]=Generate Map
-set strName[10]=Fix Host Save
-set strName[11]=Transfer Character
-set strName[12]=Convert Steam ID
-set strName[13]=Convert Coordinates
-set strName[14]=Delete Inactive Players Saves
-set strName[15]=Delete Players Saves by Pals amount
-set strName[16]=Generate palguard killnearestbase commands
-set strName[17]=Clean up generated files
-set strName[18]=PalWorldSaveTools Package Manager
-set strName[19]=Update PalWorldSaveTools
-set strName[20]=About PalWorldSaveTools
-set strName[21]=Exit PalWorldSaveTools
+set strName[7]=Slot Injector
+set strName[8]=Modify Save
+set strName[9]=Scan Save
+set strName[10]=Generate Map
+set strName[11]=Fix Host Save
+set strName[12]=Transfer Character
+set strName[13]=Convert Steam ID
+set strName[14]=Convert Coordinates
+set strName[15]=Delete Inactive Players Saves
+set strName[16]=Delete Players Saves by Pals amount
+set strName[17]=Generate palguard killnearestbase commands
+set strName[18]=Clean up generated files
+set strName[19]=PalWorldSaveTools Package Manager
+set strName[20]=Update PalWorldSaveTools
+set strName[21]=About PalWorldSaveTools
+set strName[22]=Exit PalWorldSaveTools
 
 :: Menu Options
 set "strRequest[1]=%strName[1]%"
@@ -67,6 +68,7 @@ set "strRequest[18]=%strName[18]%"
 set "strRequest[19]=%strName[19]%"
 set "strRequest[20]=%strName[20]%"
 set "strRequest[21]=%strName[21]%"
+set "strRequest[22]=%strName[22]%"
 
 :: Display the Menu
 :objMenu
@@ -102,12 +104,12 @@ if defined strRequest[%intMenuCounter%] (
         echo   Save Management Tools
         echo ==================================================================================
     )
-    if %intMenuCounter% == 13 (
+    if %intMenuCounter% == 14 (
         echo ==================================================================================
         echo   Save Cleaning Tools
         echo ==================================================================================
     )
-    if %intMenuCounter% == 16 (
+    if %intMenuCounter% == 17 (
         echo ==================================================================================
         echo   Program Management
         echo ==================================================================================
@@ -205,6 +207,14 @@ if "%strRequest%" EQU "%strName[6]%" (
 	goto objMenu
 )
 if "%strRequest%" EQU "%strName[7]%" (
+	title Loading Pylar's Save Tool...
+	cls
+	:: Run the slot_injector.py script
+	python slot_injector.py
+	pause
+	goto objMenu
+)
+if "%strRequest%" EQU "%strName[8]%" (
 	title Loading oMaN-Rod's Save Editor...
 	cls
 	:: Run the PSP.py script
@@ -212,7 +222,7 @@ if "%strRequest%" EQU "%strName[7]%" (
 	pause
 	goto objMenu
 )
-if "%strRequest%" EQU "%strName[8]%" (
+if "%strRequest%" EQU "%strName[9]%" (
     title Loading Pylar's Save Tool 
     cls
     :: Delete old files from previous runs
@@ -231,7 +241,7 @@ if "%strRequest%" EQU "%strName[8]%" (
     pause
     goto objMenu
 )
-if "%strRequest%" EQU "%strName[9]%" (
+if "%strRequest%" EQU "%strName[10]%" (
     title Loading Pylar's Map Maker Tool...
 	cls
     :: Run the internal_libs.base.py
@@ -246,7 +256,7 @@ if "%strRequest%" EQU "%strName[9]%" (
 	pause
 	goto objMenu
 )
-if "%strRequest%" EQU "%strName[10]%" (
+if "%strRequest%" EQU "%strName[11]%" (
     title Loading Pylar's Save Tool...
 	cls
     :: Run the fix_host_save.py with PalWorldSave
@@ -254,7 +264,7 @@ if "%strRequest%" EQU "%strName[10]%" (
 	pause
 	goto objMenu
 )
-if "%strRequest%" EQU "%strName[11]%" (
+if "%strRequest%" EQU "%strName[12]%" (
 	title Loading Pylar's Save Tool...
 	cls
 	:: Run the char-export.py script
@@ -262,7 +272,7 @@ if "%strRequest%" EQU "%strName[11]%" (
 	pause
 	goto objMenu
 )
-if "%strRequest%" EQU "%strName[12]%" (
+if "%strRequest%" EQU "%strName[13]%" (
     title Loading Pylar's Save Tool...
 	cls
     :: Run the convertids.py script
@@ -270,7 +280,7 @@ if "%strRequest%" EQU "%strName[12]%" (
 	pause
 	goto objMenu
 )
-if "%strRequest%" EQU "%strName[13]%" (
+if "%strRequest%" EQU "%strName[14]%" (
     title Loading Pylar's Convert Tool
     cls
     set "transl_x=123888"
@@ -306,7 +316,7 @@ if "%strRequest%" EQU "%strName[13]%" (
 )
 
 
-if "%strRequest%" EQU "%strName[14]%" (
+if "%strRequest%" EQU "%strName[15]%" (
     title Loading Pylar's Save Tool...
 	cls
 	:: Execute sort_players.py using the Python from the virtual environment
@@ -314,7 +324,7 @@ if "%strRequest%" EQU "%strName[14]%" (
 	pause
 	goto objMenu
 )
-if "%strRequest%" EQU "%strName[15]%" (
+if "%strRequest%" EQU "%strName[16]%" (
     title  Loading Pylar's Save Tool 
 	cls
 	:: Execute delete_pals_save.py using the Python from the virtual environment
@@ -322,14 +332,14 @@ if "%strRequest%" EQU "%strName[15]%" (
 	pause
 	goto objMenu
 )
-if "%strRequest%" EQU "%strName[16]%" (
+if "%strRequest%" EQU "%strName[17]%" (
     title Loading Pylar's Save Tool...
 	cls
     :: Run the AutoCheckBases.py script
 	python AutoCheckBases.py
 	pause
 )
-if "%strRequest%" EQU "%strName[17]%" (
+if "%strRequest%" EQU "%strName[18]%" (
     title Cleaning PalWorldSaveTools Directory...
 	cls
 	:: Clean up all .log files
@@ -398,7 +408,7 @@ if "%strRequest%" EQU "%strName[17]%" (
 	pause
 	goto objMenu
 )
-if "%strRequest%" EQU "%strName[18]%" (
+if "%strRequest%" EQU "%strName[19]%" (
     title PalWorldSaveTools Package Manager
 	cls
 	echo To Delete all Downloaded files Press any button to continue else close the Command Prompt
@@ -420,7 +430,7 @@ if "%strRequest%" EQU "%strName[18]%" (
 	pause
 	goto objMenu
 )
-if "%strRequest%" EQU "%strName[19]%" (
+if "%strRequest%" EQU "%strName[20]%" (
     title Updating PalWorldSaveTools...
     cls
     :: Ensures pip is installed after checking python is installed already.
@@ -441,7 +451,7 @@ if "%strRequest%" EQU "%strName[19]%" (
     pause
     goto objMenu
 )
-if "%strRequest%" EQU "%strName[20]%" (
+if "%strRequest%" EQU "%strName[21]%" (
     title About PalWorldSaveTools
     cls
     echo Author: MagicBear and cheahjs
@@ -453,7 +463,7 @@ if "%strRequest%" EQU "%strName[20]%" (
     pause
     goto objMenu
 )
-if "%strRequest%" EQU "%strName[21]%" (
+if "%strRequest%" EQU "%strName[22]%" (
     title Closing PalWorldSaveTools...
     exit
 )
