@@ -58,7 +58,7 @@ ______     _ _    _            _     _ _____               _____           _
 
 ---
 
-## [Transferring Saves Between Servers/Worlds (Single/Coop)](https://github.com/your-username/Transferring-Saves-Guide)
+## Transferring Saves Between Servers/Worlds
 
 - Ensure you disable private locks on the "source" chests before transferring saves.
 
@@ -125,7 +125,7 @@ Follow these steps to delete inactive players based on your criteria (e.g., inac
 - **Level:** Deletes players below a specified level (e.g., level 30 or lower).  
 - **Pals:** Deletes players with fewer than a specified number of pals (e.g., 10 or fewer).  
 
-# [Restore Your Map in Palworld](https://github.com/your-username/Restore-Map-Guide)
+# Restore your map
 
 Follow the steps below to restore your map from an old server/world ID to a new one.
 
