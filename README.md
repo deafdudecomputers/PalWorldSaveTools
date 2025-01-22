@@ -55,6 +55,7 @@ ______     _ _    _            _     _ _____               _____           _
 - Transfers saves between dedicated servers and single/coop worlds.  
 - Includes Steam ID conversion.
 - Includes coords conversion.  
+- Includes GamePass ⇔ Steam conversion.
 
 ---
 
