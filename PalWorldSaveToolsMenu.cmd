@@ -34,18 +34,16 @@ set strName[8]=Scan Save
 set strName[9]=Generate Map
 set strName[10]=Fix Host Save
 set strName[11]=Transfer Character
-set strName[12]=Convert Steam ID to two different save IDs
-set strName[13]=Convert .sav to in-game coordinates and vice versa
+set strName[12]=Convert Steam ID
+set strName[13]=Convert Coordinates
 set strName[14]=Delete Inactive Players Saves
-set strName[15]=Delete NoSteam Player Saves
-set strName[16]=Delete Steam Player Saves
-set strName[17]=Delete Players Saves by Pals amount
-set strName[18]=Generate palguard killnearestbase commands
-set strName[19]=Clean up generated files
-set strName[20]=PalWorldSaveTools Package Manager
-set strName[21]=Update PalWorldSaveTools
-set strName[22]=About PalWorldSaveTools
-set strName[23]=Exit PalWorldSaveTools
+set strName[15]=Delete Players Saves by Pals amount
+set strName[16]=Generate palguard killnearestbase commands
+set strName[17]=Clean up generated files
+set strName[18]=PalWorldSaveTools Package Manager
+set strName[19]=Update PalWorldSaveTools
+set strName[20]=About PalWorldSaveTools
+set strName[21]=Exit PalWorldSaveTools
 
 :: Menu Options
 set "strRequest[1]=%strName[1]%"
@@ -69,8 +67,6 @@ set "strRequest[18]=%strName[18]%"
 set "strRequest[19]=%strName[19]%"
 set "strRequest[20]=%strName[20]%"
 set "strRequest[21]=%strName[21]%"
-set "strRequest[22]=%strName[22]%"
-set "strRequest[23]=%strName[23]%"
 
 :: Display the Menu
 :objMenu
@@ -101,21 +97,21 @@ if %intMenuCounter% == 0 (
 set /a "intMenuCounter+=1"
 if defined strRequest[%intMenuCounter%] (
     call echo   %intMenuCounter%. %%strRequest[%intMenuCounter%]%%
-	if %intMenuCounter% == 6 (
-		echo ==================================================================================
-		echo   Save Management Tools
-		echo ==================================================================================
-	)
-		if %intMenuCounter% == 13 (
-		echo ==================================================================================
-		echo   Save Cleaning Tools
-		echo ==================================================================================
-	)
-		if %intMenuCounter% == 18 (
-		echo ==================================================================================
-		echo   Program Management
-		echo ==================================================================================
-	)
+    if %intMenuCounter% == 6 (
+        echo ==================================================================================
+        echo   Save Management Tools
+        echo ==================================================================================
+    )
+    if %intMenuCounter% == 13 (
+        echo ==================================================================================
+        echo   Save Cleaning Tools
+        echo ==================================================================================
+    )
+    if %intMenuCounter% == 16 (
+        echo ==================================================================================
+        echo   Program Management
+        echo ==================================================================================
+    )
     goto objMenuLoop
 )
 echo.
@@ -314,22 +310,6 @@ if "%strRequest%" EQU "%strName[14]%" (
 	goto objMenu
 )
 if "%strRequest%" EQU "%strName[15]%" (
-    title Loading Pylar's Save Tool...
-	cls
-    :: Run the AutoDeleteNoSteamSaves.py script
-	python AutoDeleteNoSteamSaves.py
-	pause
-	goto objMenu
-)
-if "%strRequest%" EQU "%strName[16]%" (
-    title Loading Pylar's Save Tool...
-	cls
-    :: Run the AutoDeleteNoXboxSaves.py script
-	python AutoDeleteNoXboxSaves.py
-	pause
-	goto objMenu
-)
-if "%strRequest%" EQU "%strName[17]%" (
     title  Loading Pylar's Save Tool 
 	cls
 	:: Execute delete_pals_save.py using the Python from the virtual environment
@@ -337,14 +317,14 @@ if "%strRequest%" EQU "%strName[17]%" (
 	pause
 	goto objMenu
 )
-if "%strRequest%" EQU "%strName[18]%" (
+if "%strRequest%" EQU "%strName[16]%" (
     title Loading Pylar's Save Tool...
 	cls
     :: Run the AutoCheckBases.py script
 	python AutoCheckBases.py
 	pause
 )
-if "%strRequest%" EQU "%strName[19]%" (
+if "%strRequest%" EQU "%strName[17]%" (
     title Cleaning PalWorldSaveTools Directory...
 	cls
 	:: Clean up all .log files
@@ -413,7 +393,7 @@ if "%strRequest%" EQU "%strName[19]%" (
 	pause
 	goto objMenu
 )
-if "%strRequest%" EQU "%strName[20]%" (
+if "%strRequest%" EQU "%strName[18]%" (
     title PalWorldSaveTools Package Manager
 	cls
 	echo To Delete all Downloaded files Press any button to continue else close the Command Prompt
@@ -435,7 +415,7 @@ if "%strRequest%" EQU "%strName[20]%" (
 	pause
 	goto objMenu
 )
-if "%strRequest%" EQU "%strName[21]%" (
+if "%strRequest%" EQU "%strName[19]%" (
     title Updating PalWorldSaveTools...
 	cls
 	:: Ensures pip is installed after checking python is installed already.
@@ -451,7 +431,7 @@ if "%strRequest%" EQU "%strName[21]%" (
     pause
 	goto objMenu
 )
-if "%strRequest%" EQU "%strName[22]%" (
+if "%strRequest%" EQU "%strName[20]%" (
     title About PalWorldSaveTools
     cls
     echo Author: MagicBear and cheahjs
@@ -463,7 +443,7 @@ if "%strRequest%" EQU "%strName[22]%" (
     pause
     goto objMenu
 )
-if "%strRequest%" EQU "%strName[23]%" (
+if "%strRequest%" EQU "%strName[21]%" (
     title Closing PalWorldSaveTools...
     exit
 )
