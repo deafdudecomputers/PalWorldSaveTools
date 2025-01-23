@@ -335,9 +335,10 @@ if "%strRequest%" EQU "%strName[16]%" (
 if "%strRequest%" EQU "%strName[17]%" (
     title Loading Pylar's Save Tool...
 	cls
-    :: Run the AutoCheckBases.py script
-	python AutoCheckBases.py
+    :: Run the palguard-bases.py script
+	python palguard-bases.py
 	pause
+        goto objMenu
 )
 if "%strRequest%" EQU "%strName[18]%" (
     title Cleaning PalWorldSaveTools Directory...
