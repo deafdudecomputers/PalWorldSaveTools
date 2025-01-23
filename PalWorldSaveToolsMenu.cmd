@@ -142,7 +142,6 @@ call :objValidate %strInput%
 call :objProcess %strInput%
 goto End
 
-
 :objValidate
 set "objNext=%2"
 if not defined strRequest[%1] (
@@ -151,7 +150,6 @@ if not defined strRequest[%1] (
 )
 if defined objNext shift & goto objValidate
 goto :eof
-
 
 :objProcess
 set "objNext=%2"
@@ -283,39 +281,11 @@ if "%strRequest%" EQU "%strName[13]%" (
 if "%strRequest%" EQU "%strName[14]%" (
     title Loading Pylar's Convert Tool
     cls
-    set "transl_x=123888"
-    set "transl_y=158000"
-    set "scale=459"
-    echo --- Convert .sav to In-Game Coordinates ---
-    set /p "sav_x=Enter .sav X coordinate: "
-    set /p "sav_y=Enter .sav Y coordinate: "
-
-    set /a "temp_x= sav_x + transl_x"
-    set /a "temp_y= sav_y - transl_y"
-
-    for /f "tokens=* usebackq" %%a in (`powershell -command "[math]::Round((%temp_y% / %scale%), 0)"`) do set "in_game_x=%%a"
-    for /f "tokens=* usebackq" %%a in (`powershell -command "[math]::Round((%temp_x% / %scale%), 0)"`) do set "in_game_y=%%a"
-
-    echo In-game coordinates: X = %in_game_x%, Y = %in_game_y%
-    echo.
-
-    echo --- Convert In-Game to .sav Coordinates ---
-    set /p "game_x=Enter in-game X coordinate: "
-    set /p "game_y=Enter in-game Y coordinate: "
-
-    set /a "temp_x_sav = game_x * scale"
-    set /a "temp_y_sav = game_y * scale"
-
-    for /f "tokens=* usebackq" %%a in (`powershell -command "[math]::Round((%temp_y_sav% - %transl_x%), 0)"`) do set "sav_x_out=%%a"
-    for /f "tokens=* usebackq" %%a in (`powershell -command "[math]::Round((%temp_x_sav% + %transl_y%), 0)"`) do set "sav_y_out=%%a"
-
-    echo .sav coordinates: X = %sav_x_out%, Y = %sav_y_out%
-    echo.
+    :: Run the coords.py script
+    python coords.py
     pause
     goto objMenu
 )
-
-
 if "%strRequest%" EQU "%strName[15]%" (
     title Loading Pylar's Save Tool...
 	cls
@@ -443,14 +413,10 @@ if "%strRequest%" EQU "%strName[20]%" (
     git fetch --all
     git reset --hard origin/main
     git clean -fdx
-    echo Update complete. All files have been replaced.
-    
+    echo Update complete. All files have been replaced.    
     :: Launches a new instance of the script and exits the old one.
     start "" "%~f0"
     exit
-    
-    pause
-    goto objMenu
 )
 if "%strRequest%" EQU "%strName[21]%" (
     title About PalWorldSaveTools
@@ -468,7 +434,6 @@ if "%strRequest%" EQU "%strName[22]%" (
     title Closing PalWorldSaveTools...
     exit
 )
-
 
 :: Prevent the command from being processed twice if listed twice.
 set "strRequest[%1]="
