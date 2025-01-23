@@ -199,8 +199,8 @@ if "%strRequest%" EQU "%strName[5]%" (
 if "%strRequest%" EQU "%strName[6]%" (
 	title Loading Fr33dan's Game Pass Save Converter...
 	cls
-	:: Run the GPSaveConverter.py script
-	python GPSaveConverter.py
+	:: Run the gamepass_save_converter.py script
+	python gamepass_save_converter.py
 	pause
 	goto objMenu
 )
