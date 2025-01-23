@@ -265,8 +265,8 @@ if "%strRequest%" EQU "%strName[11]%" (
 if "%strRequest%" EQU "%strName[12]%" (
 	title Loading Pylar's Save Tool...
 	cls
-	:: Run the char-export.py script
-	python char-export.py
+	:: Run the character_transfer.py script
+	python character_transfer.py
 	pause
 	goto objMenu
 )
