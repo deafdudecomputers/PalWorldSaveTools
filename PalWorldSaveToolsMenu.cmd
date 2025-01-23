@@ -215,8 +215,8 @@ if "%strRequest%" EQU "%strName[7]%" (
 if "%strRequest%" EQU "%strName[8]%" (
 	title Loading oMaN-Rod's Save Editor...
 	cls
-	:: Run the PSP.py script
-	python PSP.py
+	:: Run the palworld_save_pal.py script
+	python palworld_save_pal.py
 	pause
 	goto objMenu
 )
@@ -305,8 +305,8 @@ if "%strRequest%" EQU "%strName[16]%" (
 if "%strRequest%" EQU "%strName[17]%" (
     title Loading Pylar's Save Tool...
 	cls
-    :: Run the palguard-bases.py script
-	python palguard-bases.py
+    :: Run the palguard_bases.py script
+	python palguard_bases.py
 	pause
         goto objMenu
 )
