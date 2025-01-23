@@ -1,9 +1,5 @@
 {
     "games": [
-        // 1c1f
-        // 1 container, 1 file.
-        // Each container contains only one file which name will be the name of the container.
-        // Palworld
         {
             "name": "Palworld",
             "package": "PocketpairInc.Palworld_ad4psfrxyesvt",
