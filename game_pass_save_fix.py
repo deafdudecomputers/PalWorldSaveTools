@@ -1,7 +1,3 @@
-import os
-import shutil
-import zipfile
-import glob
 from convert import *
 import xgp_save_extract
 def delete_converted_save_backups(root_dir, partial_name):
@@ -50,5 +46,4 @@ def main():
         level_sav_output_path = specific_converted_level_file.replace("01.json", "Converted.sav")
         convert_json_to_sav(specific_converted_level_file, level_sav_output_path)
         move_and_rename_level_files(level_sav_output_path, "Level.sav")
-if __name__ == "__main__":
-    main()
+if __name__ == "__main__": main()
