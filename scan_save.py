@@ -590,5 +590,4 @@ def Save(exit_now=True):
             pass
     if exit_now:
         sys.exit(0)
-if __name__ == "__main__":
-    main_editor()
+if __name__ == "__main__": main_editor()
