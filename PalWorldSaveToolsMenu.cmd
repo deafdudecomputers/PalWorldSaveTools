@@ -58,7 +58,6 @@ echo.
 echo WARNING: ALWAYS BACKUP YOUR SAVES BEFORE USING THIS TOOL!
 echo.
 echo ==================================================================================
-echo.
 
 :: Dynamically group tools based on their range
 echo ==================================================================================
