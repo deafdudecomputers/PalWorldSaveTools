@@ -105,3 +105,51 @@ Follow these steps to delete inactive players based on your criteria (e.g., inac
 - Now, go into your **new server/world**, and your map should be restored with the old world data.
 
 Done! Your map is back in your **new server/world**!
+
+## Where to find the save-files
+
+The save files are usually located at
+C:\Users\<username>\AppData\Local\Pal\Saved\SaveGames\<SteamID>\<Original Server Folder>
+for co-op saves.
+
+For server saves, go to the dedicated server's file location through steam.
+
+You need at least 4 files to complete the transfer:
+
+- The source player character save file in Players folder
+- The source world's level.sav file
+- The target player character save file in Players folder
+- The target world's Level.sav file
+
+## How to use Transfer character
+
+Lets say we want to transfer the character from a coop world of a friend to our own world.
+The friend's world would be the source, our own world the destination.
+
+SaveGames-folder of our friend:
+```
+SaveGames
+└── <steam-id>
+    └── <source-world-id>
+        ├── backup
+        ├── Level.sav  ----------  <- The source world save-file
+        ├── LevelMeta.sav
+        ├── Players
+        │   ├── 00000...0001.sav
+        │   └── 12345...6789.sav   <- character save-file we want to transfer
+        └── WorldOption.sav
+```
+
+Our SaveGames-folder:
+```
+SaveGames
+└── <steam-id>
+    └── <destination-world-id>
+        ├── backup
+        ├── Level.sav  ----------  <- The target world save-file
+        ├── LevelMeta.sav
+        ├── Players
+        │   ├── 00000...0001.sav   <- the target player-placeholder save-file
+        │   └── 98765...4321.sav
+        └── WorldOption.sav
+```
