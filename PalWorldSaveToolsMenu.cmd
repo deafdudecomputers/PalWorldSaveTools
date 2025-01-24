@@ -1,6 +1,7 @@
 @echo off
 setlocal EnableExtensions EnableDelayedExpansion
 title PalWorldSaveTools
+echo Setting up your environment...
 
 :: Create necessary directories if they don't exist
 if not exist "PalWorldSave\Players" (
