@@ -1,5 +1,5 @@
 import argparse, code, collections, copy, ctypes, datetime, functools, gc, importlib.metadata, json, shutil, glob, requests
-import logging, multiprocessing, os, platform, pprint, re, subprocess, sys, tarfile, threading, cProfile, pickle
+import logging, multiprocessing, os, platform, pprint, re, subprocess, sys, tarfile, threading, cProfile, pickle, zipfile
 import time, traceback, uuid, io, pathlib, tkinter as tk, tkinter.font, pstats, hashlib, csv, urllib.request
 external_libs_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'external_libs'))
 os.makedirs(external_libs_path, exist_ok=True)
