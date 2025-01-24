@@ -159,7 +159,7 @@ if "%selected_tool%" == "!tools[1]!" (
     if exist "Pal Logger" rmdir /s /q "Pal Logger"
     if exist "import_lock.txt" del "import_lock.txt"
     if exist "PalWorldSave/Level.sav" (
-        python fix_save.py PalWorldSave/Level.sav
+        python scan_save.py PalWorldSave/Level.sav
     ) else (
         echo Error: PalWorldSave/Level.sav not found!
     )
