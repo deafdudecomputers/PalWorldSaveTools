@@ -108,12 +108,8 @@ Done! Your map is back in your **new server/world**!
 
 ## Where to find the save files:
 
-The save files are usually located at
-`C:\Users\YOURUSERNAME\AppData\Local\Pal\Saved\SaveGames\YOURSTEAMID\RANDOMID`
-for co-op saves.
-
+The save files are usually located at `C:\Users\YOURUSERNAME\AppData\Local\Pal\Saved\SaveGames\YOURSTEAMID\RANDOMID` for co-op saves.
 For server saves, go to the dedicated server's file location through steam.
-
 You need at least 4 files to complete the transfer:
 ```
 - The source player character save file in Players folder
