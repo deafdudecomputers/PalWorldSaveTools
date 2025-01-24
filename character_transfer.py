@@ -713,7 +713,7 @@ def gvas_to_sav(file, gvas_data):
     with open(file, 'wb') as out:
         out.write(sav_file_data)
 def select_file():
-    return askopenfilename(filetypes=[("Palworld Saves", "*.sav *.json")])
+    return filedialog.askopenfilename(filetypes=[("Palworld Saves", "*.sav *.json")])
 def ishex(s):
     try:
         int(s, 16)
@@ -754,7 +754,7 @@ def load_players(save_json, is_source):
     for guild_id, player_items in players.items():
         for player_item in player_items:
             playerUId = ''.join(str(UUID(player_item['player_uid'])).split('-')).upper()
-            list_box.insert('', END, values=(UUID(guild_id), playerUId, player_item['player_info']['player_name']))
+            list_box.insert('', tk.END, values=(UUID(guild_id), playerUId, player_item['player_info']['player_name']))
 def load_all_source_sections_async(group_save_section, reader):
     global level_json
     level_json, _ = reader.load_sections([
@@ -847,11 +847,11 @@ keep_old_guild_id, output_old_save_version = False, False
 TARGET_CNK_DATA_HEADER = None
 source_guild_dict, target_guild_dict = dict(), dict()
 source_section_load_handle, target_section_load_handle = None, None
-root = Tk()
+root = tk.Tk()
 root.title(f"PalTransfer")
 root.geometry("")
 root.minsize("800", "300")
-status_label = Label(root, text="Select files to transfer")
+status_label = tk.Label(root, text="Select files to transfer")
 status_label.grid(row=0, column=0, columnspan=2, pady=20, sticky="ew")
 root.columnconfigure(0, weight=3)
 root.columnconfigure(1, weight=1)
@@ -863,12 +863,12 @@ def sort_treeview_column(treeview, col_index, reverse):
     for index, (_, item) in enumerate(data):
         treeview.move(item, '', index)
     treeview.heading(col_index, command=lambda: sort_treeview_column(treeview, col_index, not reverse))
-Button(
+tk.Button(
     root,
     text='Select Source Level File',
     command=source_level_file
 ).grid(row=2, column=1, padx=10, pady=20, sticky="ew")
-source_level_path_label = Label(root, text="...", wraplength=600)
+source_level_path_label = tk.Label(root, text="...", wraplength=600)
 source_level_path_label.grid(row=2, column=0, padx=10, pady=20, sticky="ew")
 source_player_list = ttk.Treeview(root, columns=(0, 1, 2), show='headings')
 source_player_list.grid(row=3, column=0, columnspan=2, padx=10, pady=10, sticky='nsew')
@@ -879,12 +879,12 @@ source_player_list.column(0, width=100)
 source_player_list.column(1, width=100)
 source_player_list.column(2, width=100)
 source_player_list.bind('<<TreeviewSelect>>', on_selection_of_source_player)
-Button(
+tk.Button(
     root,
     text='Select Target Level File',
     command=target_level_file
 ).grid(row=4, column=1, padx=10, pady=20, sticky="ew")
-target_level_path_label = Label(root, text="...", wraplength=600)
+target_level_path_label = tk.Label(root, text="...", wraplength=600)
 target_level_path_label.grid(row=4, column=0, padx=10, pady=20, sticky="ew")
 target_player_list = ttk.Treeview(root, columns=(0, 1, 2), show='headings')
 target_player_list.grid(row=5, column=0, columnspan=2, padx=10, pady=10, sticky='nsew')
@@ -895,18 +895,18 @@ target_player_list.column(0, width=100)
 target_player_list.column(1, width=100)
 target_player_list.column(2, width=100)
 target_player_list.bind('<<TreeviewSelect>>', on_selection_of_target_player)
-current_selection_label = Label(root, text=f"source: {selected_source_player}, target: {selected_target_player}", wraplength=600)
+current_selection_label = tk.Label(root, text=f"source: {selected_source_player}, target: {selected_target_player}", wraplength=600)
 current_selection_label.grid(row=6, column=0, padx=10, pady=20, sticky="ew")
-Button(
+tk.Button(
     root,
     text='Start Transfer!',
     command=main
 ).grid(row=6, column=1, columnspan=2, pady=20, sticky="ew")
-checkbox_var = IntVar()
-keep_old_guild_check = Checkbutton(root, text="Keep Old Guild ID After Transfer", variable=checkbox_var, command=on_keep_old_guild_check)
+checkbox_var = tk.IntVar()
+keep_old_guild_check = tk.Checkbutton(root, text="Keep Old Guild ID After Transfer", variable=checkbox_var, command=on_keep_old_guild_check)
 keep_old_guild_check.grid(row=7, column=0, columnspan=2, sticky='w', padx=10, pady=5)
-save_version_var = IntVar()
-keep_old_guild_check = Checkbutton(root, text="Output Old Save Version", variable=save_version_var, command=on_output_old_save_version_check)
+save_version_var = tk.IntVar()
+keep_old_guild_check = tk.Checkbutton(root, text="Output Old Save Version", variable=save_version_var, command=on_output_old_save_version_check)
 keep_old_guild_check.grid(row=7, column=1, columnspan=2, sticky='w', padx=10, pady=5)
 root.protocol("WM_DELETE_WINDOW", on_exit)
 root.mainloop()
