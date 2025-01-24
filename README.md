@@ -154,6 +154,7 @@ SaveGames
 
 1. **Create a New Character**  
    - Use the same `Level.sav` file on the world or server after transferring it.
+   - Create new character.
 2. **Wait for Autosave**  
    - Autosave typically happens within 30 seconds. To be safe, wait at least 1 minute. You can trigger autosave by unlocking Fast Travel or picking up items.
 3. **Copy the Files**  
