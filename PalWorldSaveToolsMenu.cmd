@@ -153,7 +153,7 @@ if "%selected_tool%" == "!tools[1]!" (
 ) else if "%selected_tool%" == "!tools[11]!" (
     title Loading Pylar's Scan Save...
     cls
-    if exist "fix_save.log" del "fix_save.log"
+    if exist "scan_save.log" del "scan_save.log"
     if exist "players.log" del "players.log"
     if exist "sort_players.log" del "sort_players.log"
     if exist "Pal Logger" rmdir /s /q "Pal Logger"
