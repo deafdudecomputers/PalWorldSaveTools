@@ -1,4 +1,4 @@
-import json, sys, glob
+from fix_save import *
 from convert import convert_json_to_sav, convert_sav_to_json
 def search_file(pattern, directory): return glob.glob(f"{directory}/**/{pattern}", recursive=True)
 def edit_json(file_path, pages, slots):
