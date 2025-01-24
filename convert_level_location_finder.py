@@ -1,5 +1,4 @@
-from convert import *
-import glob, sys
+from convert import *; import os, sys
 def search_file(pattern, directory): return glob.glob(f"{directory}/**/{pattern}", recursive=True)
 def main():
     if len(sys.argv) != 2 or sys.argv[1] not in ["sav", "json"]: print("Usage: script.py <sav|json>"); exit(1)
