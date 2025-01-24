@@ -1,4 +1,4 @@
-from convert import *; import os, sys
+from convert import *
 def search_for_players_folders(search_name, root_path): return [os.path.join(root, dir_name) for root, dirs, _ in os.walk(root_path) for dir_name in dirs if dir_name == search_name]
 def main():
     if len(sys.argv) != 2 or sys.argv[1] not in ["sav", "json"]: print("Usage: script.py <sav|json>"); exit(1)
