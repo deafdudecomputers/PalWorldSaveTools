@@ -53,7 +53,7 @@ echo ===========================================================================
 echo.
 type logo.txt
 echo.
-echo v!tools_version! (Working as of v!game_version! Patch)
+echo v!tools_version! - Working as of v!game_version! Patch
 echo.
 echo WARNING: ALWAYS BACKUP YOUR SAVES BEFORE USING THIS TOOL!
 echo.
@@ -218,9 +218,16 @@ if "%selected_tool%" == "!tools[1]!" (
 ) else if "%selected_tool%" == "!tools[19]!" (
     title About PalWorldSaveTools...
     cls
+    echo ==================================================================================
+    echo.
     type logo.txt
-    echo PalWorldSaveTools - Save Converting, Management, and Cleaning Tools for PalWorld.
-    echo v!tools_version! (Working as of v!game_version! Patch)
+    echo.
+    echo v!tools_version! - Working as of v!game_version! Patch
+    echo.
+    echo WARNING: ALWAYS BACKUP YOUR SAVES BEFORE USING THIS TOOL!
+    echo.
+    echo ==================================================================================
+    echo PalWorldSaveTools, all in one tools that helps fix/transfer/edit/etc for PalWorld saves.
     echo Author: MagicBear and cheahjs
     echo License: MIT License
     echo Updated by: Pylar and Techdude
