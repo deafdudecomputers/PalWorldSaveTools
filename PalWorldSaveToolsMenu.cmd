@@ -200,20 +200,22 @@ if "%selected_tool%" == "!tools[1]!" (
     cls
     python palguard_bases.py
     pause
-) else if "%selected_tool%" == "!tools[18]!" (
-    title Reset/Updating PalWorldSaveTools...
-    cls
-    python -m ensurepip --upgrade >nul 2>&1
-    git init >nul 2>&1
-    git remote remove origin >nul 2>&1
-    git remote add origin https://github.com/deafdudecomputers/PalWorldSaveTools.git
-    echo Replacing all files in the current directory with the latest from GitHub...
-    git fetch --all
-    git reset --hard origin/main
-    git clean -fdx
-    echo Update complete. All files have been replaced.    
-    start "" "%~f0"
-    exit
+) else if "%selected_tool%" == "!tools[18]!" ( 
+    title Reset/Updating PalWorldSaveTools... 
+    cls 
+    python -m ensurepip --upgrade >nul 2>&1 
+    git init >nul 2>&1 
+    git remote remove origin >nul 2>&1 
+    git remote add origin https://github.com/deafdudecomputers/PalWorldSaveTools.git 
+    echo Replacing all files in the current directory with the latest from GitHub... 
+    git fetch --all 
+    git reset --hard origin/main 
+    git clean -fdx 
+    echo Update complete. All files have been replaced. 
+    rmdir /s /q .git 
+    start "" "%~f0" 
+    exit 
+)
 ) else if "%selected_tool%" == "!tools[19]!" (
     title About PalWorldSaveTools...
     cls
