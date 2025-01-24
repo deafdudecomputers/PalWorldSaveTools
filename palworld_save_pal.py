@@ -1,4 +1,4 @@
-from fix_save import *
+from internal_libs.import_libs import *
 def download_from_github(repo_owner, repo_name, version, file_name, download_path):
     url = f"https://github.com/{repo_owner}/{repo_name}/releases/download/{version}/{file_name}"
     response = requests.get(url, stream=True)
