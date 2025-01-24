@@ -12,7 +12,7 @@ if not exist "PalWorldSave\Players" (
 :: Set up virtual environment and install dependencies
 python -m venv venv
 call venv\Scripts\activate
-echo Installing required modules...
+echo Checking and installing required modules...
 python -m pip install -r requirements.txt
 
 :: Define tools
@@ -226,6 +226,7 @@ if "%selected_tool%" == "!tools[1]!" (
     echo Map Pictures Provided by: Kozejin
     echo Testers/Helpers: Lethe and xKillerMaverick
     echo The UI was made by xKillerMaverick
+    echo Contact me on Discord: Pylar1991
     pause
 ) else if "%selected_tool%" == "!tools[20]!" (
     exit
