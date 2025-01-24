@@ -1,4 +1,4 @@
-import os, re
+from fix_save import *
 from datetime import datetime, timedelta
 def parse_log(inactivity_days):
     log_file = "fix_save.log"
