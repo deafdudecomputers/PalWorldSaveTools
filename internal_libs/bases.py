@@ -61,7 +61,7 @@ def sanitize_text(text):
 def extract_info_from_log():
     print(f"Now extracting the info from log...")
     try:
-        with open('fix_save.log', 'r', encoding='utf-8') as file:
+        with open('scan_save.log', 'r', encoding='utf-8') as file:
             log_content = file.read()
     except UnicodeDecodeError:
         raise ValueError("Failed to read log file with utf-8 encoding.")
@@ -134,7 +134,7 @@ if __name__ == "__main__":
     start_time = time.time()
     script_dir = os.path.dirname(os.path.abspath(__file__))
     main_dir = os.path.dirname(script_dir)
-    log_file_path = os.path.join(main_dir, 'fix_save.log')
+    log_file_path = os.path.join(main_dir, 'scan_save.log')
     try:
         guild_data, base_keys = parse_logfile(log_file_path)
         write_csv(guild_data, base_keys, 'bases.csv')
