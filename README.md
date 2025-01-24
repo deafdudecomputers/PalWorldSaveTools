@@ -136,7 +136,7 @@ SaveGames
         │   └── 12345...6789.sav   <- character save-file we want to transfer
         └── WorldOption.sav
 ```
-Our SaveGames-folder:
+Our SaveGames folder:
 ```
 SaveGames
 └── <steam-id>
