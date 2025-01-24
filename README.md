@@ -38,7 +38,7 @@ ______     _ _    _            _     _ _____               _____           _
 
 ---
 
-## Features
+## Features:
 
 - **Fast parsing/reading** tool—one of the quickest available.  
 - Lists all players/guilds.  
@@ -58,11 +58,11 @@ ______     _ _    _            _     _ _____               _____           _
 
 ---
 
-## Transferring Saves Between Servers/Worlds
+## Transferring Saves Between Servers/Worlds:
 
 - Ensure you disable private locks on the "source" chests before transferring saves.
 
-## Automatically Delete Player Saves Based on Inactivity
+## Automatically Delete Player Saves Based on Inactivity:
 
 Follow these steps to delete inactive players based on your criteria (e.g., inactivity, level, or number of pals):
 
@@ -80,9 +80,9 @@ Follow these steps to delete inactive players based on your criteria (e.g., inac
 
 ---
 
-## Steps to Restore Your Map(Fog and icons)
+## Steps to Restore Your Map(Fog and icons):
 
-### 1. Find the Old Server/World ID
+### 1. Find the Old Server/World ID:
 - **Join your old server/world**.
 - Open File Explorer and run the search for:  
   `%localappdata%\Pal\Saved\SaveGames\`
@@ -91,7 +91,7 @@ Follow these steps to delete inactive players based on your criteria (e.g., inac
 - Look for the folder that matches your **old server/world ID** (e.g., `FCC47F5F4DD6AC48D3C0E2B30059973D`). The folder with the most recent modification date is typically the one for your **old server/world**.
 - Once you've found the correct folder, **copy** the `LocalData.sav` file from it.
 
-### 2. Find the New Server/World ID
+### 2. Find the New Server/World ID:
 - **Join your new server/world**.
 - Go back to the same folder path:  
   `%localappdata%\Pal\Saved\SaveGames\`
@@ -154,7 +154,7 @@ SaveGames
         └── WorldOption.sav
 ```
 
-### Transferring from Host to Server (or vice versa)
+### Transferring from Host to Server (or vice versa):
 
 1. **Create a New Character**  
    Use the same `Level.sav` file on the world or server after transferring it.
