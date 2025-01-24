@@ -28,14 +28,13 @@ set "tools[9]=Slot Injector"
 set "tools[10]=Modify Save"
 set "tools[11]=Scan Save"
 set "tools[12]=Generate Map"
-set "tools[13]=Fix Host Save"
-set "tools[14]=Transfer Character"
-set "tools[15]=Delete Inactive Players Saves"
-set "tools[16]=Delete Players Saves by Pals amount"
-set "tools[17]=Generate palguard killnearestbase commands"
-set "tools[18]=Reset/Update PalWorldSaveTools"
-set "tools[19]=About PalWorldSaveTools"
-set "tools[20]=Exit"
+set "tools[13]=Transfer Character"
+set "tools[14]=Delete Inactive Players Saves"
+set "tools[15]=Delete Players Saves by Pals amount"
+set "tools[16]=Generate palguard killnearestbase commands"
+set "tools[17]=Reset/Update PalWorldSaveTools"
+set "tools[18]=About PalWorldSaveTools"
+set "tools[19]=Exit"
 
 :: Main menu
 :mainMenu
@@ -67,15 +66,15 @@ for /L %%i in (1,1,8) do echo %%i. !tools[%%i]!
 echo ==================================================================================
 echo.                         Management Tools
 echo ==================================================================================
-for /L %%i in (9,1,14) do echo %%i. !tools[%%i]!
+for /L %%i in (9,1,13) do echo %%i. !tools[%%i]!
 echo ==================================================================================
 echo.                         Cleaning Tools
 echo ==================================================================================
-for /L %%i in (15,1,17) do echo %%i. !tools[%%i]!
+for /L %%i in (14,1,16) do echo %%i. !tools[%%i]!
 echo ==================================================================================
 echo.                         PalWorldSaveTools
 echo ==================================================================================
-for /L %%i in (18,1,20) do echo %%i. !tools[%%i]!
+for /L %%i in (17,1,19) do echo %%i. !tools[%%i]!
 echo ==================================================================================
 
 :: Automatically list max choices
@@ -176,31 +175,26 @@ if "%selected_tool%" == "!tools[1]!" (
     )
     pause
 ) else if "%selected_tool%" == "!tools[13]!" (
-    title Loading Pylar's Fix Host Save Tool...
-    cls
-    python fix_host_save.py
-    pause
-) else if "%selected_tool%" == "!tools[14]!" (
     title Loading Pylar's Transfer Character Tool...
     cls
     python character_transfer.py
     pause
-) else if "%selected_tool%" == "!tools[15]!" (
+) else if "%selected_tool%" == "!tools[14]!" (
     title Loading Pylar's Delete Inactive Players Saves Tool...
     cls
     python delete_inactive_players.py players.log
     pause
-) else if "%selected_tool%" == "!tools[16]!" (
+) else if "%selected_tool%" == "!tools[15]!" (
     title Loading Pylar's Delete Players Saves by Pals amount Tool...
     cls
     python delete_pals_save.py players.log
     pause
-) else if "%selected_tool%" == "!tools[17]!" (
+) else if "%selected_tool%" == "!tools[16]!" (
     title Loading Pylar's Generate Palguard Commands Tool...
     cls
     python palguard_bases.py
     pause
-) else if "%selected_tool%" == "!tools[18]!" (
+) else if "%selected_tool%" == "!tools[17]!" (
     title Reset/Updating PalWorldSaveTools...
     cls
     python -m ensurepip --upgrade >nul 2>&1
@@ -215,7 +209,7 @@ if "%selected_tool%" == "!tools[1]!" (
     echo Update complete. All files have been replaced.    
     start "" "%~f0"
     exit
-) else if "%selected_tool%" == "!tools[19]!" (
+) else if "%selected_tool%" == "!tools[18]!" (
     title About PalWorldSaveTools...
     cls
     echo ==================================================================================
@@ -236,7 +230,7 @@ if "%selected_tool%" == "!tools[1]!" (
     echo The UI was made by xKillerMaverick
     echo Contact me on Discord: Pylar1991
     pause
-) else if "%selected_tool%" == "!tools[20]!" (
+) else if "%selected_tool%" == "!tools[19]!" (
     exit
 )
 goto :eof
