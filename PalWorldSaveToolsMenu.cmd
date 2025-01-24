@@ -195,7 +195,7 @@ if "%selected_tool%" == "!tools[1]!" (
     python palguard_bases.py
     pause
 ) else if "%selected_tool%" == "!tools[17]!" (
-    title Reset/Updating PalWorldSaveTools...
+    title Resetting/Updating PalWorldSaveTools...
     cls
     python -m ensurepip --upgrade >nul 2>&1
     git init >nul 2>&1
