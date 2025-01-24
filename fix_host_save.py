@@ -1,4 +1,4 @@
-from fix_save import *
+from scan_save import *
 def fix_save(save_path, new_guid, old_guid, guild_fix=True):
     if new_guid[-4:] == '.sav' or old_guid[-4:] == '.sav':
         print('ERROR: You should be using only the GUID, not the entire file name.')
