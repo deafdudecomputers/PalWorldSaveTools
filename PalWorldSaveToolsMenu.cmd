@@ -33,10 +33,9 @@ set "tools[14]=Convert Coordinates"
 set "tools[15]=Delete Inactive Players Saves"
 set "tools[16]=Delete Players Saves by Pals amount"
 set "tools[17]=Generate palguard killnearestbase commands"
-set "tools[18]=Clean up generated files"
-set "tools[19]=Update PalWorldSaveTools"
-set "tools[20]=About PalWorldSaveTools"
-set "tools[21]=Exit"
+set "tools[18]=Update PalWorldSaveTools"
+set "tools[19]=About PalWorldSaveTools"
+set "tools[20]=Exit"
 
 :: Main menu
 :mainMenu
@@ -75,7 +74,7 @@ for /L %%i in (15,1,17) do echo %%i. !tools[%%i]!
 echo ==================================================================================
 echo.                         Program Management
 echo ==================================================================================
-for /L %%i in (18,1,21) do echo %%i. !tools[%%i]!
+for /L %%i in (18,1,20) do echo %%i. !tools[%%i]!
 echo ==================================================================================
 
 :: Automatically list max choices
@@ -201,44 +200,20 @@ if "%selected_tool%" == "!tools[1]!" (
     python palguard_bases.py
     pause
 ) else if "%selected_tool%" == "!tools[18]!" (
-    title Cleaning PalWorldSaveTools Directory...
-    cls
-    del /q *.log >nul 2>&1
-    echo All logs have been deleted.
-    if exist "Pal Logger" rmdir /s /q "Pal Logger" >nul 2>&1
-    echo Pal Logger folder and all contents within have been deleted.
-    if exist "Players" rmdir /s /q "Players" >nul 2>&1
-    echo Players folder and all contents within have been deleted.
-    if exist "external_libs" (
-        pushd "external_libs"
-        for /d %%D in (*) do (
-            if /i not "%%~nxD"=="palworld_save_tools" if /i not "%%~nxD"=="palworld_coord" (
-                rmdir /s /q "%%D" >nul 2>&1
-            )
-        )
-        for %%F in (*) do (
-            if /i not "%%~nxF"=="palworld_save_tools" if /i not "%%~nxF"=="palworld_coord" (
-                del /q "%%F" >nul 2>&1
-            )
-        )
-        popd
-        echo All contents except palworld_save_tools and palworld_coord have been deleted from external_libs.
-    )
-    if exist "PalWorldSave" rmdir /s /q "PalWorldSave" >nul 2>&1
-    echo LocalWorldSave folder and all contents within have been deleted.
-    mkdir "PalWorldSave"
-    echo New PalWorldSave folder has been created.    
-    mkdir "PalWorldSave/Players"
-    echo New Players folders has been created.
-    if exist "GamePassSave" rmdir /s /q "GamePassSave" >nul 2>&1
-    echo GamePassSave folder and all contents within have been deleted.
-    pause
-) else if "%selected_tool%" == "!tools[19]!" (
     title Updating PalWorldSaveTools...
     cls
-    git pull origin main
-    pause
-) else if "%selected_tool%" == "!tools[20]!" (
+    python -m ensurepip --upgrade >nul 2>&1
+    git init >nul 2>&1
+    git remote remove origin >nul 2>&1
+    git remote add origin https://github.com/deafdudecomputers/PalWorldSaveTools.git
+    echo Replacing all files in the current directory with the latest from GitHub...
+    git fetch --all
+    git reset --hard origin/main
+    git clean -fdx
+    echo Update complete. All files have been replaced.    
+    start "" "%~f0"
+    exit
+) else if "%selected_tool%" == "!tools[19]!" (
     title About PalWorldSaveTools...
     cls
     echo PalWorldSaveTools - Save Converting, Management, and Cleaning Tools for PalWorld.
@@ -249,7 +224,7 @@ if "%selected_tool%" == "!tools[1]!" (
     echo Testers/Helpers: Lethe and xKillerMaverick
     echo The UI was made by xKillerMaverick
     pause
-) else if "%selected_tool%" == "!tools[21]!" (
+) else if "%selected_tool%" == "!tools[20]!" (
     exit
 )
 goto :eof
