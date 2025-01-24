@@ -153,9 +153,9 @@ SaveGames
 ### Transferring from Host to Server (or vice versa):
 
 1. **Create a New Character**  
-   Use the same `Level.sav` file on the world or server after transferring it.
+   - Use the same `Level.sav` file on the world or server after transferring it.
 2. **Wait for Autosave**  
-   Autosave typically happens within 30 seconds. To be safe, wait at least 1 minute. You can trigger autosave by unlocking Fast Travel or picking up items.
+   - Autosave typically happens within 30 seconds. To be safe, wait at least 1 minute. You can trigger autosave by unlocking Fast Travel or picking up items.
 3. **Copy the Files**  
    - Copy the `Level.sav` and `Players` folder to a temporary folder.
 4. **Use the Transfer Character Tool**  
