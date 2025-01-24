@@ -33,7 +33,7 @@ set "tools[14]=Convert Coordinates"
 set "tools[15]=Delete Inactive Players Saves"
 set "tools[16]=Delete Players Saves by Pals amount"
 set "tools[17]=Generate palguard killnearestbase commands"
-set "tools[18]=Update PalWorldSaveTools"
+set "tools[18]=Reset/Update PalWorldSaveTools"
 set "tools[19]=About PalWorldSaveTools"
 set "tools[20]=Exit"
 
@@ -200,7 +200,7 @@ if "%selected_tool%" == "!tools[1]!" (
     python palguard_bases.py
     pause
 ) else if "%selected_tool%" == "!tools[18]!" (
-    title Updating PalWorldSaveTools...
+    title Reset/Updating PalWorldSaveTools...
     cls
     python -m ensurepip --upgrade >nul 2>&1
     git init >nul 2>&1

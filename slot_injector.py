@@ -19,7 +19,7 @@ def get_user_input():
         try:
             pages, slots = int(input("Enter the number of pages: ")), int(input("Enter the number of slots: "))
             total = pages * slots; print(f"The total is {total}.")
-            if input("Is this correct? (yes/no): ").strip().lower() == 'yes': return pages, slots
+            if input("Is this correct? (y/n): ").strip().lower() == 'y': return pages, slots
             else: print("Let's try again.")
         except ValueError: print("Invalid input. Please enter numeric values.")
 def main():
