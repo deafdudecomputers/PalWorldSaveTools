@@ -211,6 +211,7 @@ if "%selected_tool%" == "!tools[1]!" (
     git fetch --all
     git reset --hard origin/main
     git clean -fdx
+    rmdir /s /q .git
     echo Update complete. All files have been replaced.    
     start "" "%~f0"
     exit
