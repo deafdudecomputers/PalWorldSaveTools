@@ -1,7 +1,7 @@
 from internal_libs.import_libs import *
 from datetime import datetime, timedelta
 def parse_log(inactivity_days):
-    log_file = "fix_save.log"
+    log_file = "scan_save.log"
     if not os.path.exists(log_file): return print(f"Log file '{log_file}' not found in the current directory.")
     with open(log_file, 'r', encoding='utf-8', errors='ignore') as f: content = f.read()
     guilds, threshold_time, inactive_guilds, kill_commands = content.split("\n\n"), datetime.now() - timedelta(days=inactivity_days), [], []
