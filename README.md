@@ -159,8 +159,9 @@ SaveGames
 3. **Copy the Files**  
    - Copy the `Level.sav` and `Players` folder to a temporary folder.
 4. **Use the Transfer Character Tool**  
-   - Select the source (the old character).
-   - Select the target (the new character).   
+   - Load the exact same Level.sav for Source and Target.
+   - Select the old character as source.
+   - Select the new character as target.   
 5. **Optional: Keep Old Guild ID**  
    - If you want to keep old bases, tick the option **Keep Old Guild ID After Transfer**.
 6. **Start Transfer**  
