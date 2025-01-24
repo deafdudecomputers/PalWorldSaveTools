@@ -22,14 +22,14 @@ set "tools[3]=Convert Player files to json format"
 set "tools[4]=Convert Player files back to sav format"
 set "tools[5]=Convert Game Pass Save to Steam Save"
 set "tools[6]=Convert Steam Save to Game Pass Save"
-set "tools[7]=Slot Injector"
-set "tools[8]=Modify Save"
-set "tools[9]=Scan Save"
-set "tools[10]=Generate Map"
-set "tools[11]=Fix Host Save"
-set "tools[12]=Transfer Character"
-set "tools[13]=Convert Steam ID"
-set "tools[14]=Convert Coordinates"
+set "tools[7]=Convert Steam ID"
+set "tools[8]=Convert Coordinates"
+set "tools[9]=Slot Injector"
+set "tools[10]=Modify Save"
+set "tools[11]=Scan Save"
+set "tools[12]=Generate Map"
+set "tools[13]=Fix Host Save"
+set "tools[14]=Transfer Character"
 set "tools[15]=Delete Inactive Players Saves"
 set "tools[16]=Delete Players Saves by Pals amount"
 set "tools[17]=Generate palguard killnearestbase commands"
@@ -61,19 +61,19 @@ echo ===========================================================================
 
 :: Dynamically group tools based on their range
 echo ==================================================================================
-echo.                         Save Converting Tools
+echo.                         Converting Tools
 echo ==================================================================================
-for /L %%i in (1,1,6) do echo %%i. !tools[%%i]!
+for /L %%i in (1,1,8) do echo %%i. !tools[%%i]!
 echo ==================================================================================
-echo.                         Save Management Tools
+echo.                         Management Tools
 echo ==================================================================================
-for /L %%i in (7,1,14) do echo %%i. !tools[%%i]!
+for /L %%i in (9,1,14) do echo %%i. !tools[%%i]!
 echo ==================================================================================
-echo.                         Save Cleaning Tools
+echo.                         Cleaning Tools
 echo ==================================================================================
 for /L %%i in (15,1,17) do echo %%i. !tools[%%i]!
 echo ==================================================================================
-echo.                         Program Management
+echo.                         PalWorldSaveTools
 echo ==================================================================================
 for /L %%i in (18,1,20) do echo %%i. !tools[%%i]!
 echo ==================================================================================
@@ -111,17 +111,17 @@ if "%selected_tool%" == "!tools[1]!" (
     python convert_level_location_finder.py sav
     pause
 ) else if "%selected_tool%" == "!tools[3]!" (
-    title Loading Pylar's Convert Save Tool
+    title Loading Pylar's Convert Player Files Tool
     cls
     python convert_players_location_finder.py json
     pause
 ) else if "%selected_tool%" == "!tools[4]!" (
-    title Loading Pylar's Convert Save Tool
+    title Loading Pylar's Convert Player Files Tool
     cls
     python convert_players_location_finder.py sav
     pause
 ) else if "%selected_tool%" == "!tools[5]!" (
-    title Loading Pylar's Game Pass Save Convert Tool - Based on Z1ni Scripts...
+    title Loading Pylar's Game Pass Save Convert Tool
     cls
     python game_pass_save_fix.py
     pause
@@ -131,17 +131,27 @@ if "%selected_tool%" == "!tools[1]!" (
     python gamepass_save_converter.py
     pause
 ) else if "%selected_tool%" == "!tools[7]!" (
-    title Loading Pylar's Save Tool...
+    title Loading Pylar's Convert Steam ID Tool...
+    cls
+    python convertids.py
+    pause
+) else if "%selected_tool%" == "!tools[8]!" (
+    title Loading Pylar's Convert Coordinates Tool...
+    cls
+    python coords.py
+    pause
+) else if "%selected_tool%" == "!tools[9]!" (
+    title Loading Pylar's Slot Injector Tool...
     cls
     python slot_injector.py
     pause
-) else if "%selected_tool%" == "!tools[8]!" (
+) else if "%selected_tool%" == "!tools[10]!" (
     title Loading oMaN-Rod's Save Editor...
     cls
     python palworld_save_pal.py
     pause
-) else if "%selected_tool%" == "!tools[9]!" (
-    title Loading Pylar's Save Tool
+) else if "%selected_tool%" == "!tools[11]!" (
+    title Loading Pylar's Scan Save...
     cls
     if exist "fix_save.log" del "fix_save.log"
     if exist "players.log" del "players.log"
@@ -154,8 +164,8 @@ if "%selected_tool%" == "!tools[1]!" (
         echo Error: PalWorldSave/Level.sav not found!
     )
     pause
-) else if "%selected_tool%" == "!tools[10]!" (
-    title Loading Pylar's Map Maker Tool...
+) else if "%selected_tool%" == "!tools[12]!" (
+    title Loading Pylar's Generate Map Tool...
     cls
     python -m internal_libs.bases
     if exist "updated_worldmap.png" (
@@ -165,38 +175,28 @@ if "%selected_tool%" == "!tools[1]!" (
         echo updated_worldmap.png not found.
     )
     pause
-) else if "%selected_tool%" == "!tools[11]!" (
-    title Loading Pylar's Save Tool...
+) else if "%selected_tool%" == "!tools[13]!" (
+    title Loading Pylar's Fix Host Save Tool...
     cls
-    python fix_host_save.py PalWorldSave
+    python fix_host_save.py
     pause
-) else if "%selected_tool%" == "!tools[12]!" (
-    title Loading Pylar's Save Tool...
+) else if "%selected_tool%" == "!tools[14]!" (
+    title Loading Pylar's Transfer Character Tool...
     cls
     python character_transfer.py
     pause
-) else if "%selected_tool%" == "!tools[13]!" (
-    title Loading Pylar's Save Tool...
-    cls
-    python convertids.py
-    pause
-) else if "%selected_tool%" == "!tools[14]!" (
-    title Loading Pylar's Convert Tool
-    cls
-    python coords.py
-    pause
 ) else if "%selected_tool%" == "!tools[15]!" (
-    title Loading Pylar's Save Tool...
+    title Loading Pylar's Delete Inactive Players Saves Tool...
     cls
-    python sort_players.py players.log
+    python delete_inactive_players.py players.log
     pause
 ) else if "%selected_tool%" == "!tools[16]!" (
-    title Loading Pylar's Save Tool
+    title Loading Pylar's Delete Players Saves by Pals amount Tool...
     cls
     python delete_pals_save.py players.log
     pause
 ) else if "%selected_tool%" == "!tools[17]!" (
-    title Loading Pylar's Save Tool...
+    title Loading Pylar's Generate Palguard Commands Tool...
     cls
     python palguard_bases.py
     pause
