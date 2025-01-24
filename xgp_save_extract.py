@@ -97,61 +97,39 @@ def read_user_containers(user_wgs_dir: Path) -> Tuple[str, List[Dict[str, Any]]]
     containers_idx_path = containers_dir / "containers.index"
     containers = []
     with containers_idx_path.open("rb") as f:
-        # Unknown
         f.read(4)
         container_count = struct.unpack("<i", f.read(4))[0]
-        # Package display name seems to be available only on console saves
         pkg_display_name = read_utf16_str(f)
         store_pkg_name = read_utf16_str(f).split("!")[0]
-        # Creation date, FILETIME
         creation_date = read_filetime(f)
-        # print(f"  Container index created at {creation_date}")
-        # Unknown
         f.read(4)
         read_utf16_str(f)
-        # Unknown
         f.read(8)
         for _ in range(container_count):
-            # Container name
             container_name = read_utf16_str(f)
-            # Duplicate of the file name
             read_utf16_str(f)
-            # Unknown quoted hex number
             read_utf16_str(f)
-            # Container number
             container_num = struct.unpack("B", f.read(1))[0]
-            # Unknown
             f.read(4)
-            # Read container (folder) GUID
             container_guid = uuid.UUID(bytes_le=f.read(16))
-            # Creation date, FILETIME
             container_creation_date = read_filetime(f)
-            # print(f"Container created at {container_creation_date}")
-            # Unknown
             f.read(16)
             files = []
-            # Read the container file in the container directory
             container_path = containers_dir / container_guid.hex.upper()
             container_file_path = container_path / f"container.{container_num}"
             if not container_file_path.is_file():
                 print_sync_warning(f'Missing container "{container_name}"')
                 continue
             with container_file_path.open("rb") as cf:
-                # Unknown (always 04 00 00 00 ?)
                 cf.read(4)
-                # Number of files in this container
                 file_count = struct.unpack("<i", cf.read(4))[0]
                 for _ in range(file_count):
-                    # File name, 0x80 (128) bytes UTF-16 = 64 characters
                     file_name = read_utf16_str(cf, 64)
-                    # Read file GUID
                     file_guid = uuid.UUID(bytes_le=cf.read(16))
-                    # Read the copy of the GUID
                     file_guid_2 = uuid.UUID(bytes_le=cf.read(16))
                     if file_guid == file_guid_2:
                         file_path = container_path / file_guid.hex.upper()
                     else:
-                        # Check if one of the file paths exist
                         file_guid_1_path = container_path / file_guid.hex.upper()
                         file_guid_2_path = container_path / file_guid_2.hex.upper()
                         file_1_exists = file_guid_1_path.is_file()
@@ -161,7 +139,6 @@ def read_user_containers(user_wgs_dir: Path) -> Tuple[str, List[Dict[str, Any]]]
                         elif not file_1_exists and file_2_exists:
                             file_path = file_guid_2_path
                         elif file_1_exists and file_2_exists:
-                            # Which one to use?
                             print_sync_warning(
                                 f'Two files exist for container "{container_name}" file "{file_name}": {file_guid} and {file_guid_2}, can\'t choose one'
                             )
@@ -174,7 +151,6 @@ def read_user_containers(user_wgs_dir: Path) -> Tuple[str, List[Dict[str, Any]]]
                     files.append(
                         {
                             "name": file_name,
-                            # "guid": file_guid,
                             "path": file_path,
                         }
                     )
@@ -182,7 +158,6 @@ def read_user_containers(user_wgs_dir: Path) -> Tuple[str, List[Dict[str, Any]]]
                 {
                     "name": container_name,
                     "number": container_num,
-                    # "guid": container_guid,
                     "files": files,
                 }
             )
@@ -197,27 +172,22 @@ def get_save_paths(
     handler_name = supported_games[store_pkg_name]["handler"]
     handler_args = supported_games[store_pkg_name].get("handler_args") or {}
     if handler_name == "1c1f":
-        # "1 container, 1 file" (1c1f). Each container contains only one file which name will be the name of the container.
         file_suffix = handler_args.get("suffix")
         for container in containers:
             fname = container["name"]
             if file_suffix is not None:
-                # Add a suffix to the file name if configured
                 fname += file_suffix
             fpath = container["files"][0]["path"]
             save_meta.append((fname, fpath))
     elif handler_name == "1cnf":
-        # "1 container, n files" (1cnf). There's only one container that contains all the savefiles.
         file_suffix = handler_args.get("suffix")
         container = containers[0]
         for c_file in container["files"]:
             final_filename = c_file["name"]
             if file_suffix is not None:
-                # Add a suffix to the file name if configured
                 final_filename += file_suffix
             save_meta.append((final_filename, c_file["path"]))
     elif handler_name == "1cnf-folder":
-        # Each container represents one folder
         for container in containers:
             folder_name: str = container["name"]
             for file in container["files"]:
@@ -226,16 +196,8 @@ def get_save_paths(
                 fpath = file["path"]
                 save_meta.append((zip_fname, fpath))
     elif handler_name == "control":
-        # Handle Control saves
-        # Control uses container in a "n containers, n files" manner (ncnf),
-        # where the container represents a folder that has named files.
-        # Epic Games Store (and Steam?) use the same file names, but with a ".chunk" file extension.
-        # TODO: Are files named "meta" unnecessary?
         for container in containers:
             path = PurePath(container["name"])
-
-            # Create "--containerDisplayName.chunk" that contains the container name
-            # TODO: Does Control _need_ "--containerDisplayName.chunk"?
             temp_container_disp_name_path = (
                 Path(temp_dir.name)
                 / f"{container['name']}_--containerDisplayName.chunk"
@@ -245,29 +207,17 @@ def get_save_paths(
             save_meta.append(
                 (path / "--containerDisplayName.chunk", temp_container_disp_name_path)
             )
-
             for file in container["files"]:
                 save_meta.append((path / f"{file['name']}.chunk", file["path"]))
     elif handler_name == "starfield":
-        # Starfield
-        # The Steam version uses SFS ("Starfield save"?) files, whereas the Store version splits the SFS files into multiple files inside the containers.
-        # One container is one save.
-        # It seems that the "BETHESDAPFH" file is a header which is padded to the next 16 byte boundary with the string "padding\0", where \0 is NUL.
-        # The other files ("PnP", where n is a number starting from 0) are then concatenated into the SFS file, also with padding.
-
-        # As of at least Starfield version 1.9.51.0, the containers contain "toc" and one or more "BlobDataN" files (where N is a number starting from 0).
-        # The new format seems to already include the padding.
         temp_folder = Path(temp_dir.name) / "Starfield"
         temp_folder.mkdir()
         pad_str = "padding\0" * 2
         for container in containers:
             path = PurePath(container["name"])
-            # There can be other files than saves, e.g. files under "Settings/" path. Skip those.
             if path.parent.name != "Saves":
                 continue
-            # Strip out the parent folder name
             sfs_name = path.name
-            # Arrange the files: header as index 0, P0P as 1, P1P as 2, etc. (or BlobData0, ... for the new format)
             parts = {}
             is_new_format = "toc" in [f["name"] for f in container["files"]]
             for file in container["files"]:
@@ -281,7 +231,6 @@ def get_save_paths(
                     else:
                         idx = int(file["name"].strip("P")) + 1
                 parts[idx] = file["path"]
-            # Construct the SFS file
             sfs_path = temp_folder / sfs_name
             with sfs_path.open("wb") as sfs_f:
                 for idx, part_path in sorted(parts.items(), key=lambda t: t[0]):
@@ -293,24 +242,19 @@ def get_save_paths(
                         sfs_f.write(pad_str[:pad].encode("ascii"))
             save_meta.append((sfs_name, sfs_path))
     elif handler_name == "lies-of-p":
-        # Lies of P
         for container in containers:
             fname: str = container["name"]
-            # Lies of P prefixes the save file names with a numeric ID
-            # Filter the numbers out
             for i, c in enumerate(fname):
                 if c.isdigit():
                     continue
                 fname = fname[i:]
                 break
-            # The names also need a ".sav" suffix
             fname += ".sav"
             fpath = container["files"][0]["path"]
             save_meta.append((fname, fpath))
     elif handler_name == "palworld":
         for container in containers:
             fname = container["name"]
-            # Each "-" in the name is a directory separator
             fname = fname.replace("-", "/")
             fname += ".sav"
             fpath = container["files"][0]["path"]
@@ -356,31 +300,24 @@ def get_save_paths(
                 fpath = file["path"]
                 save_meta.append((zip_fname, fpath))
     elif handler_name == "forza":
-        # Container name is the filename prefix, file names inside container are appended to that after "."
         for container in containers:
             for file in container["files"]:
                 fname = f"{container['name']}.{file['name']}"
                 save_meta.append((fname, file["path"]))
     elif handler_name == "arcade-paradise":
-        # Arcade Paradise seems to save to one container with one file, which should be renamed to "RATSaveData.dat" for Steam
         fpath = containers[0]["files"][0]["path"]
         save_meta.append(("RATSaveData.dat", fpath))
     elif handler_name == "state-of-decay-2":
-        # This is otherwise identical to 1cnf, but we ignore the path in the file names
         for file in containers[0]["files"]:
             fname = file["name"].split("/")[-1] + ".sav"
             save_meta.append((fname, file["path"]))
     elif handler_name == "railway-empire-2":
-        # Each container is one file.
-        # The files inside the container are "savegame" and "description". It seems that we can ignore "description".
         for container in containers:
             for file in container["files"]:
                 if file["name"] != "savegame":
                     continue
                 save_meta.append((container["name"], file["path"]))
     elif handler_name == "coral-island":
-        # 1c1f with ".sav" suffix, but if the file name is prefixed with "Backup", we place it in a folder
-        # without the prefix.
         for container in containers:
             fname = f"{container['name']}.sav"
             if fname.startswith("Backup"):
@@ -400,7 +337,6 @@ def main():
         print("Press enter to quit")
         input()
         sys.exit(1)
-    # Discover supported games
     found_games = discover_games(games)
     if len(found_games) == 0:
         print("No supported games installed")
@@ -423,17 +359,13 @@ def main():
             for xbox_username_or_id, container_dir in user_containers:
                 read_result = read_user_containers(container_dir)
                 store_pkg_name, containers = read_result
-                # Create tempfile directory
-                # Some save files need this, as we need to create files that do not exist in the XGP save data
                 temp_dir = tempfile.TemporaryDirectory(ignore_cleanup_errors=True)
-                # Get save file paths
                 save_paths = get_save_paths(games, store_pkg_name, containers, temp_dir)
                 if len(save_paths) == 0:
                     continue
                 print(f"  Save files for user {xbox_username_or_id}:")
                 for file_name, _ in save_paths:
                     print(f"  - {file_name}")
-                # Create a ZIP file
                 formatted_game_name = (
                     name.replace(" ", "_")
                     .replace(":", "_")
