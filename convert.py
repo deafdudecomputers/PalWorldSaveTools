@@ -1,4 +1,4 @@
-from fix_save import *
+from internal_libs.import_libs import *
 def main():
     parser = argparse.ArgumentParser(
         prog="palworld-save-tools",

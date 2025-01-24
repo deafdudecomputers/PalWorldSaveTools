@@ -1,4 +1,4 @@
-from fix_save import *
+from internal_libs.import_libs import *
 from datetime import datetime, timedelta
 def get_number_in_range(min_value, max_value):
   while True:
