@@ -8,8 +8,6 @@ ______     _ _    _            _     _ _____               _____           _
 ```
 ---
 
-# Working as of v0.4.13 Patch
-
 - **Author:** MagicBear and cheahjs  
 - **License:** MIT License  
 - **Updated by:** Pylar and Techdude  
