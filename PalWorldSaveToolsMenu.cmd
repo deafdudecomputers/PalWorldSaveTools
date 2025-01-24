@@ -220,6 +220,7 @@ if "%selected_tool%" == "!tools[1]!" (
     cls
     type logo.txt
     echo PalWorldSaveTools - Save Converting, Management, and Cleaning Tools for PalWorld.
+    echo v!tools_version! (Working as of v!game_version! Patch)
     echo Author: MagicBear and cheahjs
     echo License: MIT License
     echo Updated by: Pylar and Techdude
