@@ -102,31 +102,32 @@ Follow these steps to delete inactive players based on your criteria (e.g., inac
 - If the `LocalData.sav` file already exists in the new folder, **confirm the overwrite** when prompted to replace the existing file.
 
 ### 3. Restore Your Map
-- Now, go into your **new server/world**, and your map should be restored with the old world data.
+- Now, go into your **new server/world**, and your map should be restored with the old server/world data.
 
 Done! Your map is back in your **new server/world**!
 
-## Where to find the save-files
+## Where to find the save files:
 
 The save files are usually located at
-C:\Users\<username>\AppData\Local\Pal\Saved\SaveGames\<SteamID>\<Original Server Folder>
+`C:\Users\YOURUSERNAME\AppData\Local\Pal\Saved\SaveGames\YOURSTEAMID\RANDOMID`
 for co-op saves.
 
 For server saves, go to the dedicated server's file location through steam.
 
 You need at least 4 files to complete the transfer:
-
+```
 - The source player character save file in Players folder
 - The source world's level.sav file
 - The target player character save file in Players folder
 - The target world's Level.sav file
+```
 
-## How to use Transfer character
+## How to use Transfer Character:
 
-Lets say we want to transfer the character from a coop world of a friend to our own world.
+Let's say we want to transfer the character from a coop world of a friend to our own world.
 The friend's world would be the source, our own world the destination.
 
-SaveGames-folder of our friend:
+SaveGames folder of our friend:
 ```
 SaveGames
 └── <steam-id>
@@ -139,7 +140,6 @@ SaveGames
         │   └── 12345...6789.sav   <- character save-file we want to transfer
         └── WorldOption.sav
 ```
-
 Our SaveGames-folder:
 ```
 SaveGames
@@ -153,3 +153,24 @@ SaveGames
         │   └── 98765...4321.sav
         └── WorldOption.sav
 ```
+
+### Transferring from Host to Server (or vice versa)
+
+1. **Create a New Character**  
+   Use the same `Level.sav` file on the world or server after transferring it.
+2. **Wait for Autosave**  
+   Autosave typically happens within 30 seconds. To be safe, wait at least 1 minute. You can trigger autosave by unlocking Fast Travel or picking up items.
+3. **Copy the Files**  
+   - Copy the `Level.sav` and `Players` folder to a temporary folder.
+4. **Use the Transfer Character Tool**  
+   - Select the source (the old character).
+   - Select the target (the new character).   
+5. **Optional: Keep Old Guild ID**  
+   - If you want to keep old bases, tick the option **Keep Old Guild ID After Transfer**.
+6. **Start Transfer**  
+   - Press **Start Transfer!** You can repeat this for multiple players if needed.
+7. **Copy Transferred Files**  
+   - Once transferred, copy the `Level.sav` and `Players` folder.
+8. **Paste Files into Target Folder**  
+   - Paste them into the destination world or server folder.
+Enjoy your old character!
