@@ -34,7 +34,9 @@ set "tools[15]=Delete Players Saves by Pals amount"
 set "tools[16]=Generate palguard killnearestbase commands"
 set "tools[17]=Reset/Update PalWorldSaveTools"
 set "tools[18]=About PalWorldSaveTools"
-set "tools[19]=Exit"
+set "tools[19]=PalWorldSaveTools Usage"
+set "tools[20]=PalWorldSaveTools Readme"
+set "tools[21]=Exit"
 
 :: Main menu
 :mainMenu
@@ -74,7 +76,7 @@ for /L %%i in (14,1,16) do echo %%i. !tools[%%i]!
 echo ==================================================================================
 echo.                         PalWorldSaveTools
 echo ==================================================================================
-for /L %%i in (17,1,19) do echo %%i. !tools[%%i]!
+for /L %%i in (17,1,21) do echo %%i. !tools[%%i]!
 echo ==================================================================================
 
 :: Automatically list max choices
@@ -230,6 +232,27 @@ if "%selected_tool%" == "!tools[1]!" (
     echo Contact me on Discord: Pylar1991
     pause
 ) else if "%selected_tool%" == "!tools[19]!" (
+    title PalWorldSaveTools Usage:
+    cls
+    echo ==================================================================================
+    echo.
+    type logo.txt
+    echo.
+    echo v!tools_version! - Working as of v!game_version! Patch
+    echo.
+    echo WARNING: ALWAYS BACKUP YOUR SAVES BEFORE USING THIS TOOL!
+    echo.
+    echo ==================================================================================
+    echo Some options may require you to use PalWorldSave folder, so place your saves in that folder.
+    echo If you encounter some errors, make sure to run Scan Save first.
+    echo Then repeat the previous option to see if it fixes the previous error.
+    echo If everything else fails, you may contact me on Discord: Pylar1991
+    echo Or raise an issue on my github: https://github.com/deafdudecomputers/PalWorldSaveTools
+    pause
+) else if "%selected_tool%" == "!tools[20]!" (
+    start README.md
+    pause
+) else if "%selected_tool%" == "!tools[21]!" (
     exit
 )
 goto :eof
