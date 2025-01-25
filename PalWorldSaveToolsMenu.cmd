@@ -251,7 +251,6 @@ if "%selected_tool%" == "!tools[1]!" (
     pause
 ) else if "%selected_tool%" == "!tools[20]!" (
     start README.md
-    pause
 ) else if "%selected_tool%" == "!tools[21]!" (
     exit
 )
