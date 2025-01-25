@@ -116,7 +116,7 @@ You need at least 4 files to complete the transfer:
 
 ## How to use Transfer Character:
 
- -Make sure to disable the private locks on the "source" chests before transferring saves.
+ - Make sure to disable the private locks on the "source" chests before transferring saves.
 
 Let's say we want to transfer the character from a coop world of a friend to our own world.
 The friend's world would be the source, our own world the destination.
