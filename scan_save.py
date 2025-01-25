@@ -438,7 +438,7 @@ def ShowPlayers():
         mapObjectMeta = {m_k: item[m_k] for m_k in item}
         admin_uid = str(mapObjectMeta['admin_player_uid'])
         guild_leader_name = playerMapping.get(admin_uid, {}).get('NickName', admin_uid)
-        guild_players = [player for player in mapObjectMeta.get('players', []) if player['player_uid'] in playerMapping]        
+        guild_players = [player for player in mapObjectMeta.get('players', []) if player['player_uid'] in playerMapping]
         if guild_players:
             guild_data[group_id] = {
                 'name': mapObjectMeta.get('guild_name', 'Unnamed Guild'),
@@ -451,7 +451,7 @@ def ShowPlayers():
                 'map_object_instance_ids_base_camp_points': item.get('map_object_instance_ids_base_camp_points', []),
                 'players': guild_players}
             total_bases += len(guild_data[group_id]['base_camps'])
-            guild_player_count[group_id] = len(guild_players)            
+            guild_player_count[group_id] = len(guild_players)
             for base_id in item.get('base_ids', []):
                 basecamp = srcGuildMapping.BaseCampMapping.get(toUUID(base_id))
                 if basecamp:
@@ -459,11 +459,11 @@ def ShowPlayers():
                     old_coords = palworld_coord.sav_to_map(offset['x'], offset['y'], new=False)
                     new_coords = palworld_coord.sav_to_map(offset['x'], offset['y'], new=True)
                     base_locations[base_id] = (
-                        f"Old: {old_coords[0]}, {old_coords[1]} | "
+                        f"Base ID: {base_id} | Old: {old_coords[0]}, {old_coords[1]} | "
                         f"New: {new_coords[0]}, {new_coords[1]} | "
                         f"RawData: {offset['x']}, {offset['y']}, {offset['z']}")
                 else:
-                    base_locations[base_id] = "Unknown, Unknown"
+                    base_locations[base_id] = f"Base ID: {base_id} | Unknown, Unknown"
         else:
             logging.info(f"Inactive Guild: {mapObjectMeta.get('guild_name', 'Unnamed Guild')} | Guild ID: {group_id} | Reason: No players found.")
             to_delete.append(group_id)
