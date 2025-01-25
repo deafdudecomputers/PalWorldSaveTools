@@ -49,10 +49,8 @@ def main():
         print(f"{args.filename} is not a file")
         exit(1)
     if args.to_json or args.filename.endswith(".sav"):
-        if not args.output:
-            output_path = args.filename + ".json"
-        else:
-            output_path = args.output
+        if not args.output: output_path = args.filename + ".json"
+        else: output_path = args.output
         convert_sav_to_json(
             args.filename,
             output_path,
@@ -62,10 +60,8 @@ def main():
             custom_properties_keys=args.custom_properties,
         )
     if args.from_json or args.filename.endswith(".json"):
-        if not args.output:
-            output_path = args.filename.replace(".json", "")
-        else:
-            output_path = args.output
+        if not args.output: output_path = args.filename.replace(".json", "")
+        else: output_path = args.output
         convert_json_to_sav(args.filename, output_path, force=args.force)
 def convert_sav_to_json(
     filename,
@@ -105,8 +101,7 @@ def convert_json_to_sav(filename, output_path, force=False):
             if not confirm_prompt("Are you sure you want to continue?"):
                 exit(1)
     print(f"Loading JSON from {filename}")
-    with open(filename, "r", encoding="utf8") as f:
-        data = json.load(f)
+    with open(filename, "r", encoding="utf8") as f: data = json.load(f)
     gvas_file = GvasFile.load(data)
     print(f"Compressing SAV file")
     if (
@@ -114,16 +109,13 @@ def convert_json_to_sav(filename, output_path, force=False):
         or "Pal.PalLocalWorldSaveGame" in gvas_file.header.save_game_class_name
     ):
         save_type = 0x32
-    else:
-        save_type = 0x31
+    else: save_type = 0x31
     sav_file = compress_gvas_to_sav(gvas_file.write(PALWORLD_CUSTOM_PROPERTIES), save_type)
     print(f"Writing SAV file to {output_path}")
-    with open(output_path, "wb") as f:
-        f.write(sav_file)
+    with open(output_path, "wb") as f: f.write(sav_file)
 def confirm_prompt(question: str) -> bool:
     reply = None
     while reply not in ("y", "n"):
         reply = input(f"{question} (y/n): ").casefold()
     return reply == "y"
-if __name__ == "__main__":
-    main()
+if __name__ == "__main__": main()
