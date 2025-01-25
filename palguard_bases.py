@@ -18,10 +18,11 @@ def parse_log(inactivity_days):
             kill_commands.extend([f"killnearestbase {raw_data.replace(',', '')}" for _, raw_data in bases])
     for inactive_guild, bases in inactive_guilds:
         guild_id = re.search(r"Guild ID: ([a-f0-9-]+)", inactive_guild).group(1)
-        print(f"Guild ID: {guild_id}\nBase Locations:\n" + "".join(f"  RawData: {raw_data}\n" for _, raw_data in bases) + "\n" + "-"*40 + "\n")
+        print(f"Guild ID: {guild_id}\nBase Locations:\n" + "".join(f"  Base ID: {base_id} | RawData: {raw_data}\n" for base_id, raw_data in bases) + "\n" + "-"*40 + "\n")
     print(f"\nFound {guild_count} guild(s) with {base_count} base(s).")
     if kill_commands:
         with open("palguard_bases.log", "w", encoding='utf-8') as log_file: log_file.writelines(f"{command}\n" for command in kill_commands)
         print(f"Successfully wrote {len(kill_commands)} kill commands to palguard_bases.log.")
     else: print("No kill commands were generated.")
+    print(f"Inactivity filter applied: {inactivity_days} day(s).")
 if __name__ == "__main__": parse_log(int(input("Enter the number of inactivity days to filter guilds: ")))
