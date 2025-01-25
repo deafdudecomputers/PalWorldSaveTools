@@ -131,7 +131,7 @@ SaveGames
         ├── LevelMeta.sav
         ├── Players
         │   ├── 00000...0001.sav
-        │   └── 12345...6789.sav   <- character save we want to transfer
+        │   └── 12345...6789.sav   <- The source player save
         └── WorldOption.sav
 ```
 Our SaveGames folder:
@@ -143,7 +143,7 @@ SaveGames
         ├── Level.sav  ----------  <- The target world save
         ├── LevelMeta.sav
         ├── Players
-        │   ├── 00000...0001.sav   <- the target player save
+        │   ├── 00000...0001.sav   <- The target player save
         │   └── 98765...4321.sav
         └── WorldOption.sav
 ```
@@ -169,4 +169,4 @@ SaveGames
    - Once transferred, copy the `Level.sav` and `Players` folder.
 8. **Paste Files into Target Folder**  
    - Paste them into the destination world or server folder.
-Enjoy your old character!
+   - Enjoy your old character!
