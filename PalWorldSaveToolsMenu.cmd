@@ -87,8 +87,7 @@ if defined tools[%index%] (
     goto countTools
 )
 
-echo Select what you want to do (1-%max_choice%):
-set /p "choice=Enter your choice: "
+set /p "choice=Select what you want to do (1-%max_choice%): "
 if not defined choice goto mainMenu
 
 :: Process user choice
