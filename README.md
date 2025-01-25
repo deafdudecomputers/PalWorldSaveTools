@@ -58,10 +58,6 @@ ______     _ _    _            _     _ _____               _____           _
 
 ---
 
-## Transferring Saves Between Servers/Worlds:
-
-- Ensure you disable private locks on the "source" chests before transferring saves.
-
 ## Automatically Delete Player Saves Based on Inactivity:
 
 Follow these steps to delete inactive players based on your criteria (e.g., inactivity, level, or number of pals):
@@ -112,13 +108,15 @@ The save files are usually located at `C:\Users\YOURUSERNAME\AppData\Local\Pal\S
 For server saves, go to the dedicated server's file location through steam.
 You need at least 4 files to complete the transfer:
 ```
-- The source player character save file in Players folder
-- The source world's level.sav file
-- The target player character save file in Players folder
-- The target world's Level.sav file
+- The source player character save in Players folder
+- The source world's Level.sav
+- The target player character save in Players folder
+- The target world's Level.sav
 ```
 
 ## How to use Transfer Character:
+
+⚠️WARNING⚠️: Make sure to disable the private locks on the "source" chests before transferring saves!!!
 
 Let's say we want to transfer the character from a coop world of a friend to our own world.
 The friend's world would be the source, our own world the destination.
@@ -129,11 +127,11 @@ SaveGames
 └── <steam-id>
     └── <source-world-id>
         ├── backup
-        ├── Level.sav  ----------  <- The source world save-file
+        ├── Level.sav  ----------  <- The source world save
         ├── LevelMeta.sav
         ├── Players
         │   ├── 00000...0001.sav
-        │   └── 12345...6789.sav   <- character save-file we want to transfer
+        │   └── 12345...6789.sav   <- character save we want to transfer
         └── WorldOption.sav
 ```
 Our SaveGames folder:
@@ -142,10 +140,10 @@ SaveGames
 └── <steam-id>
     └── <destination-world-id>
         ├── backup
-        ├── Level.sav  ----------  <- The target world save-file
+        ├── Level.sav  ----------  <- The target world save
         ├── LevelMeta.sav
         ├── Players
-        │   ├── 00000...0001.sav   <- the target player-placeholder save-file
+        │   ├── 00000...0001.sav   <- the target player-placeholder save
         │   └── 98765...4321.sav
         └── WorldOption.sav
 ```
