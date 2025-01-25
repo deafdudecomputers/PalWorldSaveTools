@@ -143,7 +143,7 @@ SaveGames
         ├── Level.sav  ----------  <- The target world save
         ├── LevelMeta.sav
         ├── Players
-        │   ├── 00000...0001.sav   <- the target player-placeholder save
+        │   ├── 00000...0001.sav   <- the target player save
         │   └── 98765...4321.sav
         └── WorldOption.sav
 ```
