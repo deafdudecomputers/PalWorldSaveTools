@@ -1,6 +1,6 @@
 import os, subprocess, sys
 from pathlib import Path
-def set_console_title(title): os.system(f'title {title}')
+def set_console_title(title): os.system(f'title {title}') if sys.platform == "win32" else print(f'\033]0;{title}\a', end='', flush=True)
 def setup_environment():
     os.system('cls' if os.name == 'nt' else 'clear')
     print("Setting up your environment...")
@@ -161,8 +161,9 @@ pws_tools = [
     "Exit"
 ]
 if __name__ == "__main__":
-    setup_environment()
     tools_version, game_version = get_versions()
+    set_console_title(f"PalWorldSaveTools v{tools_version} - Working as of v{game_version}")
+    setup_environment()    
     while True:
         set_console_title(f"PalWorldSaveTools v{tools_version} - Working as of v{game_version}")
         display_menu(tools_version, game_version)
