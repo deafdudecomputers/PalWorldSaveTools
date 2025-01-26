@@ -126,4 +126,5 @@ if __name__ == "__main__":
     elif filter_type == "3":
         inactivity_days = int(input("Enter the number of inactivity days to filter guilds: "))
         max_level = int(input("Enter the maximum player level to filter guilds: "))
+        print("-" * 40)
         parse_log(inactivity_days=inactivity_days, max_level=max_level)
