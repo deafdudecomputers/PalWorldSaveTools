@@ -9,7 +9,6 @@ def setup_environment():
         subprocess.run([sys.executable, "-m", "venv", "venv"])
     pip_executable = os.path.join("venv", "Scripts", "pip") if os.name == 'nt' else os.path.join("venv", "bin", "pip")
     subprocess.run([pip_executable, "install", "-r", "requirements.txt"])
-    installed_packages = subprocess.run([pip_executable, "freeze"], capture_output=True, text=True)
 def get_versions():
     tools_version = "1.0.14"
     game_version = "0.4.14"
