@@ -165,6 +165,7 @@ if __name__ == "__main__":
     set_console_title(f"PalWorldSaveTools v{tools_version} - Working as of v{game_version}")
     setup_environment()    
     while True:
+        tools_version, game_version = get_versions()
         set_console_title(f"PalWorldSaveTools v{tools_version} - Working as of v{game_version}")
         display_menu(tools_version, game_version)
         try:
