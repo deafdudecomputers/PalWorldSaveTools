@@ -2,6 +2,7 @@ import os, subprocess, sys
 from pathlib import Path
 def set_console_title(title): os.system(f'title {title}')
 def setup_environment():
+    os.system('cls' if os.name == 'nt' else 'clear')
     print("Setting up your environment...")
     os.makedirs("PalWorldSave/Players", exist_ok=True) 
     if not Path("venv").exists():
