@@ -22,7 +22,7 @@ set "tools[3]=Convert Player files to json format"
 set "tools[4]=Convert Player files back to sav format"
 set "tools[5]=Convert Game Pass Save to Steam Save"
 set "tools[6]=Convert Steam Save to Game Pass Save"
-set "tools[7]=Convert Steam ID"
+set "tools[7]=Convert SteamID"
 set "tools[8]=Convert Coordinates"
 set "tools[9]=Slot Injector"
 set "tools[10]=Modify Save"
@@ -131,7 +131,7 @@ if "%selected_tool%" == "!tools[1]!" (
     python gamepass_save_converter.py
     pause
 ) else if "%selected_tool%" == "!tools[7]!" (
-    title Loading Pylar's Convert Steam ID Tool...
+    title Loading Pylar's Convert SteamID Tool...
     cls
     python convertids.py
     pause
