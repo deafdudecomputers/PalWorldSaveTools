@@ -161,14 +161,24 @@ if __name__ == "__main__":
     tools_version, game_version = get_versions()
     set_console_title(f"PalWorldSaveTools v{tools_version} - Working as of v{game_version}")
     setup_environment()
-    while True:
-        tools_version, game_version = get_versions()
-        set_console_title(f"PalWorldSaveTools v{tools_version} - Working as of v{game_version}")
-        display_menu(tools_version, game_version)
+    os.system('cls' if os.name == 'nt' else 'clear')
+    if len(sys.argv) > 1:
         try:
-            choice = int(input("Select what you want to do: "))
-            os.system('cls' if os.name == 'nt' else 'clear')
+            choice = int(sys.argv[1])
+            tools_version, game_version = get_versions()
+            set_console_title(f"PalWorldSaveTools v{tools_version} - Working as of v{game_version}")
             run_tool(choice)
-            input("Press Enter to continue...")
         except ValueError:
-            print("Invalid input. Please enter a number.")
+            print("Invalid argument. Please pass a valid number.")
+    else:
+        while True:
+            tools_version, game_version = get_versions()
+            set_console_title(f"PalWorldSaveTools v{tools_version} - Working as of v{game_version}")
+            display_menu(tools_version, game_version)
+            try:
+                choice = int(input("Select what you want to do: "))
+                os.system('cls' if os.name == 'nt' else 'clear')
+                run_tool(choice)
+                input("Press Enter to continue...")
+            except ValueError:
+                print("Invalid input. Please enter a number.")
