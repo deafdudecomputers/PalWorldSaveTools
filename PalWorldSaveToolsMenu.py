@@ -103,10 +103,11 @@ def reset_update_tools():
     print("Replacing all files in the current directory with the latest from GitHub...")
     subprocess.run(["git", "fetch", "--all"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     subprocess.run(["git", "reset", "--hard", "origin/main"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    subprocess.run(["git", "clean", "-fdx"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     subprocess.run(["cmd", "/c", "rmdir", "/s", "/q", ".git"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     print("Update complete. All files have been replaced.")
     input("Press Enter to continue...")
-    os.execv(python_exe, [python_exe] + sys.argv)
+    #os.execv(python_exe, [python_exe] + sys.argv)
 def about_tools():
     display_logo()
     print("PalWorldSaveTools, all in one tool for fixing/transferring/editing/etc PalWorld saves.")
