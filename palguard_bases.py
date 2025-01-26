@@ -7,16 +7,19 @@ def parse_log(inactivity_days=None, max_level=None):
     guilds, threshold_time, inactive_guilds, kill_commands = content.split("\n\n"), None, {}, []
     guild_count = base_count = 0
     if inactivity_days: threshold_time = datetime.now() - timedelta(days=inactivity_days)
+    
     for guild in guilds:
         players_data = re.findall(r"Player: (.+?) \| UID: ([a-f0-9-]+) \| Level: (\d+) \| Caught: (\d+) \| Owned: (\d+) \| Encounters: (\d+) \| Uniques: (\d+) \| Last Online: (.+? \(\d+d:\d+h:\d+m:\d+s ago\))", guild)
         bases = re.findall(r"Base \d+: Base ID: ([a-f0-9-]+) \| Old: .+? \| New: .+? \| RawData: (.+)", guild)
         if not players_data or not bases: continue
+        
         guild_name = re.search(r"Guild: (.+?) \|", guild)
         guild_leader = re.search(r"Guild Leader: (.+?) \|", guild)
         guild_id = re.search(r"Guild ID: ([a-f0-9-]+)", guild)
         guild_name = guild_name.group(1) if guild_name else "Unnamed Guild"
         guild_leader = guild_leader.group(1) if guild_leader else "Unknown"
         guild_id = guild_id.group(1) if guild_id else "Unknown"
+        
         if inactivity_days and max_level:
             if all(
                 int(player[2]) <= max_level and 
@@ -99,6 +102,7 @@ def parse_log(inactivity_days=None, max_level=None):
                 guild_count += 1
                 base_count += len(bases)
                 kill_commands.extend([f"killnearestbase {raw_data.replace(',', '')}" for _, raw_data in bases])
+
     for guild_id, guild_info in inactive_guilds.items():
         print(f"Guild: {guild_info['guild_name']} | Guild Leader: {guild_info['guild_leader']} | Guild ID: {guild_id}")
         print(f"Guild Players: {len(guild_info['players'])}")
@@ -108,24 +112,40 @@ def parse_log(inactivity_days=None, max_level=None):
         for base_id, raw_data in guild_info["bases"]:
             print(f"  Base ID: {base_id} | RawData: {raw_data}")
         print("-" * 40)
+    
     print(f"\nFound {guild_count} guild(s) with {base_count} base(s).")
     if kill_commands:
         with open("palguard_bases.log", "w", encoding='utf-8') as log_file: log_file.writelines(f"{command}\n" for command in kill_commands)
         print(f"Successfully wrote {len(kill_commands)} kill commands to palguard_bases.log.")
-    else: print("No kill commands were generated.")
-    if inactivity_days: print(f"Inactivity filter applied: >= {inactivity_days} day(s).")
-    if max_level: print(f"Player level filter applied: <= {max_level} level(s).")
+    else: 
+        print("No kill commands were generated.")
+    
+    if inactivity_days: 
+        print(f"Inactivity filter applied: >= {inactivity_days} day(s).")
+    if max_level: 
+        print(f"Player level filter applied: <= {max_level} level(s).")
+
 if __name__ == "__main__":
-    filter_type = input("Choose filter type:\n1) Inactivity (filter guilds based on days since last activity)\n2) Level (filter guilds based on maximum player level)\n3) Both (apply both inactivity and level filters)\nEnter your choice (1, 2, or 3): ")
-    if filter_type == "1":
-        inactivity_days = int(input("Enter the number of inactivity days to filter guilds: "))
-        parse_log(inactivity_days=inactivity_days)
-    elif filter_type == "2":
-        max_level = int(input("Enter the maximum player level to filter guilds: "))
-        parse_log(max_level=max_level)
-    elif filter_type == "3":
-        inactivity_days = int(input("Enter the number of inactivity days to filter guilds: "))
-        max_level = int(input("Enter the maximum player level to filter guilds: "))
-        print()
-        print("-" * 40)
-        parse_log(inactivity_days=inactivity_days, max_level=max_level)
+    print("Filter options:")
+    print("1) Inactivity: Guilds qualify if all players exceed >= days.")
+    print("2) Level: Guilds qualify if all players are <= level.")
+    print("3) Both: Guilds qualify only if all players meet both inactivity and level.")
+    filter_type = input("Enter your choice (1 - 3): ")
+    try:
+        if filter_type == "1":
+            print("Inactivity filter: Guilds will qualify if all players have been inactive for the specified days or more.")
+            inactivity_days = int(input("Enter the number of inactivity days: "))
+            parse_log(inactivity_days=inactivity_days)
+        elif filter_type == "2":
+            print("Level filter: Guilds will qualify if all players are at or below the specified level.")
+            max_level = int(input("Enter the maximum player level: "))
+            parse_log(max_level=max_level)
+        elif filter_type == "3":
+            print("Both filters: Guilds will qualify only if all players meet both conditions.")
+            inactivity_days = int(input("Enter the number of inactivity days: "))
+            max_level = int(input("Enter the maximum player level: "))
+            parse_log(inactivity_days=inactivity_days, max_level=max_level)
+        else:
+            print("Invalid choice. Please select 1, 2, or 3.")
+    except ValueError:
+        print("Invalid input. Please enter numeric values where required.")
