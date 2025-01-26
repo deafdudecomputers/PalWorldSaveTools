@@ -11,8 +11,6 @@ def parse_log(inactivity_days=None, max_level=None):
         players_data = re.findall(r"Player: (.+?) \| UID: ([a-f0-9-]+) \| Level: (\d+) \| Caught: (\d+) \| Owned: (\d+) \| Encounters: (\d+) \| Uniques: (\d+) \| Last Online: (.+? \(\d+d:\d+h:\d+m:\d+s ago\))", guild)
         bases = re.findall(r"Base \d+: Base ID: ([a-f0-9-]+) \| Old: .+? \| New: .+? \| RawData: (.+)", guild)
         if not players_data or not bases: continue
-        player_last_online = [player_time for _, _, _, _, _, _, _, player_time in players_data if re.match(r"\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}", player_time)]
-        player_levels = [level for _, _, level, _, _, _, _, _ in players_data]
         guild_name = re.search(r"Guild: (.+?) \|", guild)
         guild_leader = re.search(r"Guild Leader: (.+?) \|", guild)
         guild_id = re.search(r"Guild ID: ([a-f0-9-]+)", guild)
@@ -20,7 +18,68 @@ def parse_log(inactivity_days=None, max_level=None):
         guild_leader = guild_leader.group(1) if guild_leader else "Unknown"
         guild_id = guild_id.group(1) if guild_id else "Unknown"
         if inactivity_days and max_level:
-            if all(last_online <= str(threshold_time) for last_online in player_last_online) and all(int(level) <= max_level for level in player_levels):
+            for player in players_data:
+                player_time_str = player[7]
+                match = re.search(r"(\d+)\s*d", player_time_str)
+                if match:
+                    player_days = int(match.group(1))
+                    level = int(player[2])
+                    if player_days >= inactivity_days and level <= max_level:
+                        if guild_id not in inactive_guilds:
+                            inactive_guilds[guild_id] = {
+                                "guild_name": guild_name,
+                                "guild_leader": guild_leader,
+                                "players": [],
+                                "bases": []
+                            }
+                        inactive_guilds[guild_id]["players"].append({
+                            "name": player[0],
+                            "uid": player[1],
+                            "level": player[2],
+                            "caught": player[3],
+                            "owned": player[4],
+                            "encounters": player[5],
+                            "uniques": player[6],
+                            "last_online": f"{player[7]}"
+                        })
+                        inactive_guilds[guild_id]["bases"].extend(bases)
+                        guild_count += 1
+                        base_count += len(bases)
+                        kill_commands.extend([f"killnearestbase {raw_data.replace(',', '')}" for _, raw_data in bases])
+        elif inactivity_days:
+            for player in players_data:
+                player_time_str = player[7]
+                match = re.search(r"(\d+)\s*d", player_time_str)
+                if match:
+                    player_days = int(match.group(1))
+                    if player_days >= inactivity_days:
+                        if guild_id not in inactive_guilds:
+                            inactive_guilds[guild_id] = {
+                                "guild_name": guild_name,
+                                "guild_leader": guild_leader,
+                                "players": [],
+                                "bases": []
+                            }
+                        inactive_guilds[guild_id]["players"].append({
+                            "name": player[0],
+                            "uid": player[1],
+                            "level": player[2],
+                            "caught": player[3],
+                            "owned": player[4],
+                            "encounters": player[5],
+                            "uniques": player[6],
+                            "last_online": f"{player[7]}"
+                        })
+                        inactive_guilds[guild_id]["bases"].extend(bases)
+                        guild_count += 1
+                        base_count += len(bases)
+                        kill_commands.extend([f"killnearestbase {raw_data.replace(',', '')}" for _, raw_data in bases])
+        elif max_level:
+            for player in players_data:
+                level = int(player[2])
+                if level > max_level:
+                    break
+            else:
                 if guild_id not in inactive_guilds:
                     inactive_guilds[guild_id] = {
                         "guild_name": guild_name,
@@ -29,7 +88,6 @@ def parse_log(inactivity_days=None, max_level=None):
                         "bases": []
                     }
                 for player in players_data:
-                    last_online_time = player[7]
                     inactive_guilds[guild_id]["players"].append({
                         "name": player[0],
                         "uid": player[1],
@@ -44,54 +102,6 @@ def parse_log(inactivity_days=None, max_level=None):
                 guild_count += 1
                 base_count += len(bases)
                 kill_commands.extend([f"killnearestbase {raw_data.replace(',', '')}" for _, raw_data in bases])
-        elif inactivity_days and all(last_online <= str(threshold_time) for last_online in player_last_online):
-            if guild_id not in inactive_guilds:
-                inactive_guilds[guild_id] = {
-                    "guild_name": guild_name,
-                    "guild_leader": guild_leader,
-                    "players": [],
-                    "bases": []
-                }
-            for player in players_data:
-                last_online_time = player[7]
-                inactive_guilds[guild_id]["players"].append({
-                        "name": player[0],
-                        "uid": player[1],
-                        "level": player[2],
-                        "caught": player[3],
-                        "owned": player[4],
-                        "encounters": player[5],
-                        "uniques": player[6],
-                        "last_online": f"{player[7]}"
-                    })
-            inactive_guilds[guild_id]["bases"].extend(bases)
-            guild_count += 1
-            base_count += len(bases)
-            kill_commands.extend([f"killnearestbase {raw_data.replace(',', '')}" for _, raw_data in bases])
-        elif max_level and all(int(level) <= max_level for level in player_levels):
-            if guild_id not in inactive_guilds:
-                inactive_guilds[guild_id] = {
-                    "guild_name": guild_name,
-                    "guild_leader": guild_leader,
-                    "players": [],
-                    "bases": []
-                }
-            for player in players_data:
-                last_online_time = player[7]
-                inactive_guilds[guild_id]["players"].append({
-                        "name": player[0],
-                        "uid": player[1],
-                        "level": player[2],
-                        "caught": player[3],
-                        "owned": player[4],
-                        "encounters": player[5],
-                        "uniques": player[6],
-                        "last_online": f"{player[7]}"
-                    })
-            inactive_guilds[guild_id]["bases"].extend(bases)
-            guild_count += 1
-            base_count += len(bases)
-            kill_commands.extend([f"killnearestbase {raw_data.replace(',', '')}" for _, raw_data in bases])
     for guild_id, guild_info in inactive_guilds.items():
         print(f"Guild: {guild_info['guild_name']} | Guild Leader: {guild_info['guild_leader']} | Guild ID: {guild_id}")
         print(f"Guild Players: {len(guild_info['players'])}")
