@@ -99,7 +99,7 @@ def reset_update_tools():
     subprocess.run(["git", "reset", "--hard", "origin/main"])
     subprocess.run(["git", "clean", "-fdx"])
     print("Update complete. All files replaced.")
-    os.execv(__file__, sys.argv)
+    os.execv(sys.executable, ['python'] + sys.argv)
 def about_tools():
     display_logo()
     print("PalWorldSaveTools, all in one tool for fixing/transferring/editing/etc PalWorld saves.")
