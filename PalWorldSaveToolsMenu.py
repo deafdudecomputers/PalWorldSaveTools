@@ -4,13 +4,12 @@ def set_console_title(title): os.system(f'title {title}')
 def setup_environment():
     os.system('cls' if os.name == 'nt' else 'clear')
     print("Setting up your environment...")
-    os.makedirs("PalWorldSave/Players", exist_ok=True) 
-    if not Path("venv").exists():
-        subprocess.run(["python", "-m", "venv", "venv"])
-    activate_command = ".\\venv\\Scripts\\activate.bat"
-    subprocess.run(activate_command, shell=True)    
-    subprocess.run(["python", "-m", "pip", "install", "-r", "requirements.txt"])
-    print("Dependencies installed.")
+    os.makedirs("PalWorldSave/Players", exist_ok=True)  
+    if not os.path.exists("venv"):
+        subprocess.run([sys.executable, "-m", "venv", "venv"])
+    pip_executable = os.path.join("venv", "Scripts", "pip") if os.name == 'nt' else os.path.join("venv", "bin", "pip")
+    subprocess.run([pip_executable, "install", "-r", "requirements.txt"])
+    installed_packages = subprocess.run([pip_executable, "freeze"], capture_output=True, text=True)
 def get_versions():
     tools_version = "1.0.14"
     game_version = "0.4.14"
@@ -52,23 +51,24 @@ def display_menu(tools_version, game_version):
         print(f"{i}. {tool}")
     print("=" * 80)
 def run_tool(choice):
+    python_exe = os.path.join("venv", "Scripts", "python.exe") if os.name == 'nt' else os.path.join("venv", "bin", "python")
     tool_mapping = {
-        1: lambda: subprocess.run(["python", "convert_level_location_finder.py", "json"]),
-        2: lambda: subprocess.run(["python", "convert_level_location_finder.py", "sav"]),
-        3: lambda: subprocess.run(["python", "convert_players_location_finder.py", "json"]),
-        4: lambda: subprocess.run(["python", "convert_players_location_finder.py", "sav"]),
-        5: lambda: subprocess.run(["python", "game_pass_save_fix.py"]),
-        6: lambda: subprocess.run(["python", "gamepass_save_converter.py"]),
-        7: lambda: subprocess.run(["python", "convertids.py"]),
-        8: lambda: subprocess.run(["python", "coords.py"]),
-        9: lambda: subprocess.run(["python", "slot_injector.py"]),
-        10: lambda: subprocess.run(["python", "palworld_save_pal.py"]),
+        1: lambda: subprocess.run([python_exe, "convert_level_location_finder.py", "json"]),
+        2: lambda: subprocess.run([python_exe, "convert_level_location_finder.py", "sav"]),
+        3: lambda: subprocess.run([python_exe, "convert_players_location_finder.py", "json"]),
+        4: lambda: subprocess.run([python_exe, "convert_players_location_finder.py", "sav"]),
+        5: lambda: subprocess.run([python_exe, "game_pass_save_fix.py"]),
+        6: lambda: subprocess.run([python_exe, "gamepass_save_converter.py"]),
+        7: lambda: subprocess.run([python_exe, "convertids.py"]),
+        8: lambda: subprocess.run([python_exe, "coords.py"]),
+        9: lambda: subprocess.run([python_exe, "slot_injector.py"]),
+        10: lambda: subprocess.run([python_exe, "palworld_save_pal.py"]),
         11: scan_save,
         12: generate_map,
-        13: lambda: subprocess.run(["python", "character_transfer.py"]),
-        14: lambda: subprocess.run(["python", "delete_inactive_players.py", "players.log"]),
-        15: lambda: subprocess.run(["python", "delete_pals_save.py", "players.log"]),
-        16: lambda: subprocess.run(["python", "palguard_bases.py"]),
+        13: lambda: subprocess.run([python_exe, "character_transfer.py"]),
+        14: lambda: subprocess.run([python_exe, "delete_inactive_players.py", "players.log"]),
+        15: lambda: subprocess.run([python_exe, "delete_pals_save.py", "players.log"]),
+        16: lambda: subprocess.run([python_exe, "palguard_bases.py"]),
         17: reset_update_tools,
         18: about_tools,
         19: usage_tools,
@@ -77,24 +77,27 @@ def run_tool(choice):
     }
     tool_mapping.get(choice, lambda: print("Invalid choice!"))()
 def scan_save():
+    python_exe = os.path.join("venv", "Scripts", "python.exe") if os.name == 'nt' else os.path.join("venv", "bin", "python")
     for file in ["scan_save.log", "players.log", "sort_players.log"]:
         Path(file).unlink(missing_ok=True)
     if Path("Pal Logger").exists():
         subprocess.run(["rmdir", "/s", "/q", "Pal Logger"], shell=True)
     if Path("PalWorldSave/Level.sav").exists():
-        subprocess.run(["python", "scan_save.py", "PalWorldSave/Level.sav"])
+        subprocess.run([python_exe, "scan_save.py", "PalWorldSave/Level.sav"])
     else:
         print("Error: PalWorldSave/Level.sav not found!")
 def generate_map():
-    subprocess.run(["python", "-m", "internal_libs.bases"])
+    python_exe = os.path.join("venv", "Scripts", "python.exe") if os.name == 'nt' else os.path.join("venv", "bin", "python")
+    subprocess.run([python_exe, "-m", "internal_libs.bases"])
     if Path("updated_worldmap.png").exists():
         print("Opening updated_worldmap.png...")
         subprocess.run(["start", "updated_worldmap.png"], shell=True)
     else:
         print("updated_worldmap.png not found.")
 def reset_update_tools():
+    python_exe = os.path.join("venv", "Scripts", "python.exe") if os.name == 'nt' else os.path.join("venv", "bin", "python")
     print("Resetting/Updating PalWorldSaveTools...")
-    subprocess.run(["python", "-m", "ensurepip", "--upgrade"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    subprocess.run([python_exe, "-m", "ensurepip", "--upgrade"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     subprocess.run(["git", "init"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     subprocess.run(["git", "remote", "remove", "origin"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     subprocess.run(["git", "remote", "add", "origin", "https://github.com/deafdudecomputers/PalWorldSaveTools.git"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
@@ -105,7 +108,7 @@ def reset_update_tools():
     subprocess.run(["cmd", "/c", "rmdir", "/s", "/q", ".git"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     print("Update complete. All files have been replaced.")
     input("Press Enter to continue...")
-    os.execv(sys.executable, ['python'] + sys.argv)
+    os.execv(python_exe, [python_exe] + sys.argv)
 def about_tools():
     display_logo()
     print("PalWorldSaveTools, all in one tool for fixing/transferring/editing/etc PalWorld saves.")
