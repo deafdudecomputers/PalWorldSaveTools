@@ -1,3 +1,3 @@
 @echo off
 title PalWorldSaveTools
-python PalWorldSaveToolsMenu.py
+python Menu.py

@@ -165,9 +165,9 @@ if __name__ == "__main__":
     if len(sys.argv) > 1:
         try:
             choice = int(sys.argv[1])
+            run_tool(choice)
             tools_version, game_version = get_versions()
             set_console_title(f"PalWorldSaveTools v{tools_version} - Working as of v{game_version}")
-            run_tool(choice)
         except ValueError:
             print("Invalid argument. Please pass a valid number.")
     else:
