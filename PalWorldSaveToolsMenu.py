@@ -103,7 +103,6 @@ def reset_update_tools():
     subprocess.run(["git", "clean", "-fdx"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     subprocess.run(["cmd", "/c", "rmdir", "/s", "/q", ".git"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     print("Update complete. All files have been replaced.")
-    input("Press Enter to continue...")
     os.execv(sys.executable, ['python'] + sys.argv)
 def about_tools():
     display_logo()
