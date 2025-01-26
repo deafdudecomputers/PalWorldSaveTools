@@ -2,6 +2,9 @@ import os, subprocess, sys
 from pathlib import Path
 def set_console_title(title): os.system(f'title {title}') if sys.platform == "win32" else print(f'\033]0;{title}\a', end='', flush=True)
 def setup_environment():
+    if sys.platform != "win32":
+        import resource
+        resource.setrlimit(resource.RLIMIT_NOFILE, (65535, 65535))
     os.system('cls' if os.name == 'nt' else 'clear')
     print("Setting up your environment...")
     os.makedirs("PalWorldSave/Players", exist_ok=True)  
@@ -76,22 +79,17 @@ def run_tool(choice):
     tool_mapping.get(choice, lambda: print("Invalid choice!"))()
 def scan_save():
     python_exe = os.path.join("venv", "Scripts", "python.exe") if os.name == 'nt' else os.path.join("venv", "bin", "python")
-    for file in ["scan_save.log", "players.log", "sort_players.log"]:
-        Path(file).unlink(missing_ok=True)
-    if Path("Pal Logger").exists():
-        subprocess.run(["rmdir", "/s", "/q", "Pal Logger"], shell=True)
-    if Path("PalWorldSave/Level.sav").exists():
-        subprocess.run([python_exe, "scan_save.py", "PalWorldSave/Level.sav"])
-    else:
-        print("Error: PalWorldSave/Level.sav not found!")
+    for file in ["scan_save.log", "players.log", "sort_players.log"]: Path(file).unlink(missing_ok=True)
+    if Path("Pal Logger").exists(): subprocess.run(["rmdir", "/s", "/q", "Pal Logger"], shell=True)
+    if Path("PalWorldSave/Level.sav").exists(): subprocess.run([python_exe, "scan_save.py", "PalWorldSave/Level.sav"])
+    else: print("Error: PalWorldSave/Level.sav not found!")
 def generate_map():
     python_exe = os.path.join("venv", "Scripts", "python.exe") if os.name == 'nt' else os.path.join("venv", "bin", "python")
     subprocess.run([python_exe, "-m", "internal_libs.bases"])
     if Path("updated_worldmap.png").exists():
         print("Opening updated_worldmap.png...")
         subprocess.run(["start", "updated_worldmap.png"], shell=True)
-    else:
-        print("updated_worldmap.png not found.")
+    else: print("updated_worldmap.png not found.")
 def reset_update_tools():
     python_exe = os.path.join("venv", "Scripts", "python.exe") if os.name == 'nt' else os.path.join("venv", "bin", "python")
     print("Resetting/Updating PalWorldSaveTools...")
@@ -127,10 +125,8 @@ def usage_tools():
 def readme_tools():
     display_logo()
     readme_path = Path("README.md")
-    if readme_path.exists():
-        subprocess.run(["start", str(readme_path)], shell=True)
-    else:
-        print("README.md not found.")
+    if readme_path.exists(): subprocess.run(["start", str(readme_path)], shell=True)
+    else: print("README.md not found.")
 converting_tools = [
     "Convert Level.sav file to Level.json",
     "Convert Level.json file back to Level.sav",
@@ -163,7 +159,7 @@ pws_tools = [
 if __name__ == "__main__":
     tools_version, game_version = get_versions()
     set_console_title(f"PalWorldSaveTools v{tools_version} - Working as of v{game_version}")
-    setup_environment()    
+    setup_environment()
     while True:
         tools_version, game_version = get_versions()
         set_console_title(f"PalWorldSaveTools v{tools_version} - Working as of v{game_version}")
