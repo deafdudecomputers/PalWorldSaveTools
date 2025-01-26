@@ -1,2 +1,0 @@
-ToolsVersion==1.0.13
-GameVersion==0.4.14
