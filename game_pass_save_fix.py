@@ -31,17 +31,17 @@ def check_xbox_zip(directory, partial_name):
 def main():
     if check_xbox_zip(".", "palworld"):
         print("Found palworld xbox save zip file! Extracting Now...")
-        xbox_save_zip(".", "palworld", "GamePassSave")
+        xbox_save_zip(".", "palworld", "PalWorldSave")
     else:
         print("Palworld zip file not found. Loading XGP Extractor...")
         xgp_save_extract.main()
-        xbox_save_zip(".", "palworld", "GamePassSave")
-    delete_converted_save_backups("GamePassSave", "Slot")
-    level_file_paths = glob.glob("GamePassSave/**/01.sav", recursive=True)
+        xbox_save_zip(".", "palworld", "PalWorldSave")
+    delete_converted_save_backups("PalWorldSave", "Slot")
+    level_file_paths = glob.glob("PalWorldSave/**/01.sav", recursive=True)
     for specific_level_file in level_file_paths:
         level_json_output_path = specific_level_file.replace(".sav", ".json")
         convert_sav_to_json(specific_level_file, level_json_output_path)
-    converted_level_file_paths = glob.glob("GamePassSave/**/01.json", recursive=True)
+    converted_level_file_paths = glob.glob("PalWorldSave/**/01.json", recursive=True)
     for specific_converted_level_file in converted_level_file_paths:
         level_sav_output_path = specific_converted_level_file.replace("01.json", "Converted.sav")
         convert_json_to_sav(specific_converted_level_file, level_sav_output_path)
