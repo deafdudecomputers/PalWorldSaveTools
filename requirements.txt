@@ -6,3 +6,5 @@ matplotlib==3.10.0
 pandas==2.2.3
 cityhash==0.4.7
 requests==2.32.3
+ijson
+customtkinter
