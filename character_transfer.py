@@ -848,7 +848,7 @@ TARGET_CNK_DATA_HEADER = None
 source_guild_dict, target_guild_dict = dict(), dict()
 source_section_load_handle, target_section_load_handle = None, None
 root = tk.Tk()
-root.title(f"Transfer Character")
+root.title(f"Character Transfer")
 root.geometry("")
 root.minsize("800", "300")
 root.iconbitmap(r"internal_libs\pal.ico")
