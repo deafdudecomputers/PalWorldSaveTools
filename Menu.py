@@ -63,20 +63,19 @@ def run_tool(choice):
         7: lambda: subprocess.run([python_exe, "convertids.py"]),
         8: lambda: subprocess.run([python_exe, "coords.py"]),
         9: lambda: subprocess.run([python_exe, "slot_injector.py"]),
-        10: lambda: subprocess.run([python_exe, "auto_update_save.py"]),
-        11: lambda: subprocess.run([python_exe, "palworld_save_pal.py"]),
-        12: scan_save,
-        13: generate_map,
-        14: lambda: subprocess.run([python_exe, "character_transfer.py"]),
-        15: lambda: subprocess.run([python_exe, "fix_host_save.py"]),
-        16: lambda: subprocess.run([python_exe, "delete_inactive_players.py", "players.log"]),
-        17: lambda: subprocess.run([python_exe, "delete_pals_save.py", "players.log"]),
-        18: lambda: subprocess.run([python_exe, "palguard_bases.py"]),
-        19: reset_update_tools,
-        20: about_tools,
-        21: usage_tools,
-        22: readme_tools,
-        23: sys.exit
+        10: lambda: subprocess.run([python_exe, "palworld_save_pal.py"]),
+        11: scan_save,
+        12: generate_map,
+        13: lambda: subprocess.run([python_exe, "character_transfer.py"]),
+        14: lambda: subprocess.run([python_exe, "fix_host_save.py"]),
+        15: lambda: subprocess.run([python_exe, "delete_inactive_players.py", "players.log"]),
+        16: lambda: subprocess.run([python_exe, "delete_pals_save.py", "players.log"]),
+        17: lambda: subprocess.run([python_exe, "palguard_bases.py"]),
+        18: reset_update_tools,
+        19: about_tools,
+        20: usage_tools,
+        21: readme_tools,
+        22: sys.exit
     }
     tool_mapping.get(choice, lambda: print("Invalid choice!"))()
 def scan_save():
@@ -143,7 +142,6 @@ converting_tools = [
 ]
 management_tools = [
     "Slot Injector",
-    "Update Save",
     "Modify Save",
     "Scan Save",
     "Generate Map",
