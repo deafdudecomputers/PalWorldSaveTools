@@ -6,7 +6,8 @@ ______     _ _    _            _     _ _____               _____           _
 | | | (_| | \  /\  / (_) | |  | | (_| /\__/ / (_| |\ V /  __/ | (_) | (_) | \__ \
 \_|  \__,_|_|\/  \/ \___/|_|  |_|\__,_\____/ \__,_| \_/ \___\_/\___/ \___/|_|___/
 ```
-![image](https://github.com/user-attachments/assets/aef9cf3f-8594-46b2-9f05-5b1a63d18dc2)
+![image](https://github.com/user-attachments/assets/17fbb152-48d5-4c99-96e6-0dde3b98a0f7)
+
 
 
 ---
