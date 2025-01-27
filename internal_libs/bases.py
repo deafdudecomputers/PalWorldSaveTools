@@ -87,7 +87,7 @@ def create_world_map():
     image = Image.open('internal_libs/worldmap.png').convert('RGBA')
     marker = Image.open('internal_libs/baseicon.png').convert('RGBA')
     font_path = 'internal_libs/NotoSans-Regular.ttf'
-    pil_font = ImageFont.truetype(font_path, 24)
+    pil_font = ImageFont.truetype(font_path, 14)
     df = pd.read_csv('bases.csv')
     marker_size = (64, 64)
     marker_resized = marker.resize(marker_size, Image.Resampling.LANCZOS)
