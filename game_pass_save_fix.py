@@ -152,18 +152,23 @@ def convert_JSON_sav(saveName):
         move_save_steam(saveName)
     except subprocess.CalledProcessError as e: print(f"Error executing command: {e}"); window.quit()
 def move_save_steam(saveName):
-    print("Moving save file to Steam...")
-    local_app_data_path = os.path.expandvars(r"%localappdata%\Pal\Saved\SaveGames")    
+    print("Moving save file to GamePassSave and Steam...")
+    main_directory = os.getcwd()
+    game_pass_save_path = os.path.join(main_directory, "GamePassSave")
+    local_app_data_path = os.path.expandvars(r"%localappdata%\Pal\Saved\SaveGames")
     try:
-        if not os.path.exists(local_app_data_path): raise FileNotFoundError(f"SaveGames directory does not exist at {local_app_data_path}")
-        subdirs = [d for d in os.listdir(local_app_data_path) if os.path.isdir(os.path.join(local_app_data_path, d))]        
-        if not subdirs: raise FileNotFoundError(f"No subdirectories found in {local_app_data_path}")        
-        target_folder = os.path.join(local_app_data_path, subdirs[0])
-        print(f"Detected target folder: {target_folder}")
+        if not os.path.exists(game_pass_save_path): os.makedirs(game_pass_save_path)
         source_folder = os.path.join("./saves", saveName)
-        shutil.copytree(source_folder, target_folder + "/" + saveName, dirs_exist_ok=True)
-        print(f"Save folder copied to {target_folder}")        
-        messagebox.showinfo("Success", f"Your save is migrated to your Steam game. Launch your game through Steam")
+        shutil.copytree(source_folder, os.path.join(game_pass_save_path, saveName), dirs_exist_ok=True)
+        print(f"Save folder copied to GamePassSave at {game_pass_save_path}")
+        if os.path.exists(local_app_data_path):
+            subdirs = [d for d in os.listdir(local_app_data_path) if os.path.isdir(os.path.join(local_app_data_path, d))]
+            if not subdirs: raise FileNotFoundError(f"No subdirectories found in {local_app_data_path}")
+            steam_target_folder = os.path.join(local_app_data_path, subdirs[0])
+            shutil.copytree(source_folder, os.path.join(steam_target_folder, saveName), dirs_exist_ok=True)
+            print(f"Save folder copied to Steam at {steam_target_folder}")
+        else: print(f"LocalAppData path does not exist: {local_app_data_path}. Skipping Steam save copy.")
+        messagebox.showinfo("Success", "Your save is migrated to GamePassSave and Steam (if available). Launch your game through your preferred platform.")
     except Exception as e:
         print(f"Error copying save folder: {e}")
         messagebox.showerror("Error", f"Failed to copy the save folder: {e}")
