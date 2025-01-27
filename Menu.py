@@ -12,7 +12,7 @@ def setup_environment():
     pip_executable = os.path.join("venv", "Scripts", "pip") if os.name == 'nt' else os.path.join("venv", "bin", "pip")
     subprocess.run([pip_executable, "install", "-r", "requirements.txt"])
 def get_versions():
-    tools_version = "1.0.16.beta"
+    tools_version = "1.0.16.beta.v1"
     game_version = "0.4.14"
     return tools_version, game_version
 def display_logo():
@@ -59,23 +59,22 @@ def run_tool(choice):
         3: lambda: subprocess.run([python_exe, "convert_players_location_finder.py", "json"]),
         4: lambda: subprocess.run([python_exe, "convert_players_location_finder.py", "sav"]),
         5: lambda: subprocess.run([python_exe, "game_pass_save_fix.py"]),
-        6: lambda: subprocess.run([python_exe, "gamepass_save_converter.py"]),
-        7: lambda: subprocess.run([python_exe, "convertids.py"]),
-        8: lambda: subprocess.run([python_exe, "coords.py"]),
-        9: lambda: subprocess.run([python_exe, "slot_injector.py"]),
-        10: lambda: subprocess.run([python_exe, "palworld_save_pal.py"]),
-        11: scan_save,
-        12: generate_map,
-        13: lambda: subprocess.run([python_exe, "character_transfer.py"]),
-        14: lambda: subprocess.run([python_exe, "fix_host_save.py"]),
-        15: lambda: subprocess.run([python_exe, "delete_inactive_players.py", "players.log"]),
-        16: lambda: subprocess.run([python_exe, "delete_pals_save.py", "players.log"]),
-        17: lambda: subprocess.run([python_exe, "palguard_bases.py"]),
-        18: reset_update_tools,
-        19: about_tools,
-        20: usage_tools,
-        21: readme_tools,
-        22: sys.exit
+        6: lambda: subprocess.run([python_exe, "convertids.py"]),
+        7: lambda: subprocess.run([python_exe, "coords.py"]),
+        8: lambda: subprocess.run([python_exe, "slot_injector.py"]),
+        9: lambda: subprocess.run([python_exe, "palworld_save_pal.py"]),
+        10: scan_save,
+        11: generate_map,
+        12: lambda: subprocess.run([python_exe, "character_transfer.py"]),
+        13: lambda: subprocess.run([python_exe, "fix_host_save.py"]),
+        14: lambda: subprocess.run([python_exe, "delete_inactive_players.py", "players.log"]),
+        15: lambda: subprocess.run([python_exe, "delete_pals_save.py", "players.log"]),
+        16: lambda: subprocess.run([python_exe, "palguard_bases.py"]),
+        17: reset_update_tools,
+        18: about_tools,
+        19: usage_tools,
+        20: readme_tools,
+        21: sys.exit
     }
     tool_mapping.get(choice, lambda: print("Invalid choice!"))()
 def scan_save():
@@ -136,7 +135,6 @@ converting_tools = [
     "Convert Player files to json format",
     "Convert Player files back to sav format",
     "Convert Game Pass Save to Steam Save",
-    "Convert Steam Save to Game Pass Save",
     "Convert SteamID",
     "Convert Coordinates"
 ]
@@ -162,7 +160,7 @@ pws_tools = [
 ]
 if __name__ == "__main__":
     tools_version, game_version = get_versions()
-    set_console_title(f"PalWorldSaveTools v{tools_version} - Working as of v{game_version}")
+    set_console_title(f"PalWorldSaveTools v{tools_version}")
     setup_environment()
     os.system('cls' if os.name == 'nt' else 'clear')
     if len(sys.argv) > 1:
@@ -170,13 +168,13 @@ if __name__ == "__main__":
             choice = int(sys.argv[1])
             run_tool(choice)
             tools_version, game_version = get_versions()
-            set_console_title(f"PalWorldSaveTools v{tools_version} - Working as of v{game_version}")
+            set_console_title(f"PalWorldSaveTools v{tools_version}")
         except ValueError:
             print("Invalid argument. Please pass a valid number.")
     else:
         while True:
             tools_version, game_version = get_versions()
-            set_console_title(f"PalWorldSaveTools v{tools_version} - Working as of v{game_version}")
+            set_console_title(f"PalWorldSaveTools v{tools_version}")
             display_menu(tools_version, game_version)
             try:
                 choice = int(input("Select what you want to do: "))
