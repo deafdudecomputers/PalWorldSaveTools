@@ -170,6 +170,7 @@ def move_save_steam(saveName):
         new_name = generate_random_name()
         new_target_folder = target_folder + "/" + saveName
         if os.path.exists(new_target_folder):
+            print(f"Original folder: {new_target_folder}")
             new_target_folder = target_folder + "/" + new_name
             print(f"Folder already exists in Steam. Renaming to: {new_target_folder}")
         shutil.copytree(source_folder, new_target_folder, dirs_exist_ok=True, ignore=ignore_folders)
@@ -181,6 +182,7 @@ def move_save_steam(saveName):
         print(f"Save folder copied to GamePassSave at {new_gamepass_target_folder}")
         messagebox.showinfo("Success", "Your save is migrated to Steam. You may go ahead and open Steam PalWorld.")
         shutil.rmtree("./saves")
+        window.quit()
     except Exception as e:
         print(f"Error copying save folder: {e}")
         messagebox.showerror("Error", f"Failed to copy the save folder: {e}")
