@@ -167,17 +167,18 @@ def move_save_steam(saveName):
         print(f"Detected Steam target folder: {target_folder}")
         source_folder = os.path.join("./saves", saveName)
         def ignore_folders(_, names): return {name for name in names if name in {"Level", "Slot1", "Slot2", "Slot3"}}
+        new_name = generate_random_name()
         new_target_folder = target_folder + "/" + saveName
         if os.path.exists(new_target_folder):
-            new_name = generate_random_name()
             new_target_folder = target_folder + "/" + new_name
-            print(f"Folder already exists. Renaming to: {new_target_folder}")
+            print(f"Folder already exists in Steam. Renaming to: {new_target_folder}")
         shutil.copytree(source_folder, new_target_folder, dirs_exist_ok=True, ignore=ignore_folders)
-        print(f"Save folder copied to Steam at {new_target_folder}")        
+        print(f"Save folder copied to Steam at {new_target_folder}")
         game_pass_save_path = os.path.join(os.getcwd(), "GamePassSave")
-        if not os.path.exists(game_pass_save_path): os.makedirs(game_pass_save_path)
-        shutil.copytree(source_folder, os.path.join(game_pass_save_path, saveName), dirs_exist_ok=True, ignore=ignore_folders)
-        print(f"Save folder copied to GamePassSave at {game_pass_save_path}")
+        if not os.path.exists(game_pass_save_path): os.makedirs(game_pass_save_path)        
+        new_gamepass_target_folder = os.path.join(game_pass_save_path, new_name)
+        shutil.copytree(source_folder, new_gamepass_target_folder, dirs_exist_ok=True, ignore=ignore_folders)
+        print(f"Save folder copied to GamePassSave at {new_gamepass_target_folder}")
         messagebox.showinfo("Success", "Your save is migrated to Steam. You may go ahead and open Steam PalWorld.")
         shutil.rmtree("./saves")
     except Exception as e:
