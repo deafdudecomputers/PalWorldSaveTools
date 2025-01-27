@@ -12,7 +12,7 @@ def setup_environment():
     pip_executable = os.path.join("venv", "Scripts", "pip") if os.name == 'nt' else os.path.join("venv", "bin", "pip")
     subprocess.run([pip_executable, "install", "-r", "requirements.txt"])
 def get_versions():
-    tools_version = "1.0.16.beta.v1"
+    tools_version = "1.0.16.beta.v2"
     game_version = "0.4.14"
     return tools_version, game_version
 def display_logo():
@@ -27,7 +27,9 @@ ______     _ _    _            _     _ _____               _____           _
 \_|  \__,_|_|\/  \/ \___/|_|  |_|\__,_\____/ \__,_| \_/ \___\_/\___/ \___/|_|___/
     """)
     print(f"\nv{tools_version} - Working as of v{game_version} Patch\n")
-    print("WARNING: ALWAYS BACKUP YOUR SAVES BEFORE USING THIS TOOL!\n")
+    print("\033[91mWARNING: ALWAYS BACKUP YOUR SAVES BEFORE USING THIS TOOL!\n\033[0m")
+    print(f"\033[91mMAKE SURE TO UPDATE YOUR SAVES ON/AFTER THE v{game_version} PATCH!\n\033[0m")
+    print("\033[91mIF YOU DO NOT UPDATE YOUR SAVES, YOU WILL GET ERRORS!\n\033[0m")
     print("=" * 80)
 def display_menu(tools_version, game_version):
     display_logo()
