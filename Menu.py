@@ -12,7 +12,7 @@ def setup_environment():
     pip_executable = os.path.join("venv", "Scripts", "pip") if os.name == 'nt' else os.path.join("venv", "bin", "pip")
     subprocess.run([pip_executable, "install", "-r", "requirements.txt"])
 def get_versions():
-    tools_version = "1.0.15"
+    tools_version = "1.0.16: beta"
     game_version = "0.4.14"
     return tools_version, game_version
 def display_logo():
@@ -67,14 +67,15 @@ def run_tool(choice):
         11: scan_save,
         12: generate_map,
         13: lambda: subprocess.run([python_exe, "character_transfer.py"]),
-        14: lambda: subprocess.run([python_exe, "delete_inactive_players.py", "players.log"]),
-        15: lambda: subprocess.run([python_exe, "delete_pals_save.py", "players.log"]),
-        16: lambda: subprocess.run([python_exe, "palguard_bases.py"]),
-        17: reset_update_tools,
-        18: about_tools,
-        19: usage_tools,
-        20: readme_tools,
-        21: sys.exit
+        14: lambda: subprocess.run([python_exe, "fix_host_save.py"]),
+        15: lambda: subprocess.run([python_exe, "delete_inactive_players.py", "players.log"]),
+        16: lambda: subprocess.run([python_exe, "delete_pals_save.py", "players.log"]),
+        17: lambda: subprocess.run([python_exe, "palguard_bases.py"]),
+        18: reset_update_tools,
+        19: about_tools,
+        20: usage_tools,
+        21: readme_tools,
+        22: sys.exit
     }
     tool_mapping.get(choice, lambda: print("Invalid choice!"))()
 def scan_save():
@@ -143,7 +144,8 @@ management_tools = [
     "Modify Save",
     "Scan Save",
     "Generate Map",
-    "Transfer Character"
+    "Transfer Character",
+    "Fix Host Save"
 ]
 cleaning_tools = [
     "Delete Inactive Players Saves",
