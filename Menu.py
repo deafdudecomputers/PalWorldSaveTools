@@ -63,19 +63,20 @@ def run_tool(choice):
         7: lambda: subprocess.run([python_exe, "convertids.py"]),
         8: lambda: subprocess.run([python_exe, "coords.py"]),
         9: lambda: subprocess.run([python_exe, "slot_injector.py"]),
-        10: lambda: subprocess.run([python_exe, "palworld_save_pal.py"]),
-        11: scan_save,
-        12: generate_map,
-        13: lambda: subprocess.run([python_exe, "character_transfer.py"]),
-        14: lambda: subprocess.run([python_exe, "fix_host_save.py"]),
-        15: lambda: subprocess.run([python_exe, "delete_inactive_players.py", "players.log"]),
-        16: lambda: subprocess.run([python_exe, "delete_pals_save.py", "players.log"]),
-        17: lambda: subprocess.run([python_exe, "palguard_bases.py"]),
-        18: reset_update_tools,
-        19: about_tools,
-        20: usage_tools,
-        21: readme_tools,
-        22: sys.exit
+        10: lambda: subprocess.run([python_exe, "auto_update_save.py"]),
+        11: lambda: subprocess.run([python_exe, "palworld_save_pal.py"]),
+        12: scan_save,
+        13: generate_map,
+        14: lambda: subprocess.run([python_exe, "character_transfer.py"]),
+        15: lambda: subprocess.run([python_exe, "fix_host_save.py"]),
+        16: lambda: subprocess.run([python_exe, "delete_inactive_players.py", "players.log"]),
+        17: lambda: subprocess.run([python_exe, "delete_pals_save.py", "players.log"]),
+        18: lambda: subprocess.run([python_exe, "palguard_bases.py"]),
+        19: reset_update_tools,
+        20: about_tools,
+        21: usage_tools,
+        22: readme_tools,
+        23: sys.exit
     }
     tool_mapping.get(choice, lambda: print("Invalid choice!"))()
 def scan_save():
@@ -92,12 +93,13 @@ def generate_map():
         subprocess.run(["start", "updated_worldmap.png"], shell=True)
     else: print("updated_worldmap.png not found.")
 def reset_update_tools():
+    repo_url = "https://github.com/deafdudecomputers/PalWorldSaveTools.git"
     python_exe = os.path.join("venv", "Scripts", "python.exe") if os.name == 'nt' else os.path.join("venv", "bin", "python")
     print("Resetting/Updating PalWorldSaveTools...")
     subprocess.run([python_exe, "-m", "ensurepip", "--upgrade"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     subprocess.run(["git", "init"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     subprocess.run(["git", "remote", "remove", "origin"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    subprocess.run(["git", "remote", "add", "origin", "https://github.com/deafdudecomputers/PalWorldSaveTools.git"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    subprocess.run(["git", "remote", "add", "origin", repo_url], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     print("Replacing all files in the current directory with the latest from GitHub...")
     subprocess.run(["git", "fetch", "--all"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     subprocess.run(["git", "reset", "--hard", "origin/main"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
@@ -141,6 +143,7 @@ converting_tools = [
 ]
 management_tools = [
     "Slot Injector",
+    "Update Save",
     "Modify Save",
     "Scan Save",
     "Generate Map",
