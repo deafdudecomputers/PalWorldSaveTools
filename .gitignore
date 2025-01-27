@@ -2,3 +2,5 @@
 .github/
 __pycache__/
 venv/
+GamePassSave/
+saves/

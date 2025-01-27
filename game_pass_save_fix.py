@@ -154,6 +154,8 @@ def convert_JSON_sav(saveName):
         print(f"Deleted JSON file: ./saves/{saveName}/Level/01.sav.json")
         move_save_steam(saveName)
     except subprocess.CalledProcessError as e: print(f"Error executing command: {e}")
+def generate_random_name(length=32):
+    return ''.join(random.choices(string.ascii_uppercase + string.digits, k=length))
 def move_save_steam(saveName):
     print("Moving save file to Steam and GamePassSave...")
     local_app_data_path = os.path.expandvars(r"%localappdata%\Pal\Saved\SaveGames")
@@ -165,8 +167,13 @@ def move_save_steam(saveName):
         print(f"Detected Steam target folder: {target_folder}")
         source_folder = os.path.join("./saves", saveName)
         def ignore_folders(_, names): return {name for name in names if name in {"Level", "Slot1", "Slot2", "Slot3"}}
-        shutil.copytree(source_folder, target_folder + "/" + saveName, dirs_exist_ok=True, ignore=ignore_folders)
-        print(f"Save folder copied to Steam at {target_folder}")
+        new_target_folder = target_folder + "/" + saveName
+        if os.path.exists(new_target_folder):
+            new_name = generate_random_name()
+            new_target_folder = target_folder + "/" + new_name
+            print(f"Folder already exists. Renaming to: {new_target_folder}")
+        shutil.copytree(source_folder, new_target_folder, dirs_exist_ok=True, ignore=ignore_folders)
+        print(f"Save folder copied to Steam at {new_target_folder}")        
         game_pass_save_path = os.path.join(os.getcwd(), "GamePassSave")
         if not os.path.exists(game_pass_save_path): os.makedirs(game_pass_save_path)
         shutil.copytree(source_folder, os.path.join(game_pass_save_path, saveName), dirs_exist_ok=True, ignore=ignore_folders)
