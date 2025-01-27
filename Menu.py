@@ -114,7 +114,7 @@ def about_tools():
     print("License: MIT License")
     print("Updated by: Pylar and Techdude")
     print("Map Pictures Provided by: Kozejin")
-    print("Testers/Helpers: Lethe and xKillerMaverick")
+    print("Testers/Helpers: Lethe, rcioletti and xKillerMaverick")
     print("The UI was made by xKillerMaverick")
     print("Contact me on Discord: Pylar1991")
 def usage_tools():

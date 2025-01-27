@@ -13,7 +13,7 @@ ______     _ _    _            _     _ _____               _____           _
 - **License:** MIT License  
 - **Updated by:** Pylar and Techdude  
 - **Map Pictures Provided by:** Kozejin  
-- **Testers/Helpers:** Lethe and xKillerMaverick  
+- **Testers/Helpers:** Lethe, rcioletti and xKillerMaverick  
 - **Contact me on Discord:** Pylar1991
 
 ---
