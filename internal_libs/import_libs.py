@@ -4,7 +4,7 @@ os.makedirs(external_libs_path, exist_ok=True)
 sys.path.insert(0, external_libs_path)
 import argparse, code, collections, copy, ctypes, datetime, functools, gc, importlib.metadata, json, shutil, glob, requests
 import logging, multiprocessing, platform, pprint, re, subprocess, tarfile, threading, cProfile, pickle, zipfile, customtkinter
-import time, traceback, uuid, io, pathlib, tkinter as tk, tkinter.font, pstats, hashlib, csv, urllib.request, tempfile
+import time, traceback, uuid, io, pathlib, tkinter as tk, tkinter.font, pstats, hashlib, csv, urllib.request, tempfile, ijson
 from multiprocessing import shared_memory
 from tkinter import ttk, filedialog, messagebox
 import pandas as pd, psutil, msgpack, palworld_coord
