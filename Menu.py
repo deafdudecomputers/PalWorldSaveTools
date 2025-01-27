@@ -145,7 +145,7 @@ management_tools = [
     "Modify Save",
     "Scan Save",
     "Generate Map",
-    "Transfer Character",
+    "Character Transfer",
     "Fix Host Save"
 ]
 cleaning_tools = [

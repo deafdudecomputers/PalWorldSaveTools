@@ -848,29 +848,32 @@ TARGET_CNK_DATA_HEADER = None
 source_guild_dict, target_guild_dict = dict(), dict()
 source_section_load_handle, target_section_load_handle = None, None
 root = tk.Tk()
-root.title(f"PalTransfer")
+root.title(f"Transfer Character")
 root.geometry("")
 root.minsize("800", "300")
+root.iconbitmap(r"internal_libs\pal.ico")
+root.config(bg="#2f2f2f")
+root.tk_setPalette(background="#2f2f2f", foreground="white")
 status_label = tk.Label(root, text="Select files to transfer")
 status_label.grid(row=0, column=0, columnspan=2, pady=20, sticky="ew")
 root.columnconfigure(0, weight=3)
 root.columnconfigure(1, weight=1)
 root.rowconfigure(3, weight=1)
 root.rowconfigure(5, weight=1)
+def create_label(text, row, column):
+    return tk.Label(root, text=text, bg="#2f2f2f", fg="white", wraplength=600)
 def sort_treeview_column(treeview, col_index, reverse):
     data = [(treeview.set(child, col_index), child) for child in treeview.get_children('')]
     data.sort(reverse=reverse, key=lambda x: x[0])
     for index, (_, item) in enumerate(data):
         treeview.move(item, '', index)
     treeview.heading(col_index, command=lambda: sort_treeview_column(treeview, col_index, not reverse))
-tk.Button(
-    root,
-    text='Select Source Level File',
-    command=source_level_file
-).grid(row=2, column=1, padx=10, pady=20, sticky="ew")
+tk.Button(root, text='Select Source Level File', command=source_level_file).grid(row=2, column=1, padx=10, pady=20, sticky="ew")
 source_level_path_label = tk.Label(root, text="...", wraplength=600)
 source_level_path_label.grid(row=2, column=0, padx=10, pady=20, sticky="ew")
-source_player_list = ttk.Treeview(root, columns=(0, 1, 2), show='headings')
+source_player_list = ttk.Treeview(root, columns=(0, 1, 2), show='headings', style="Custom.Treeview")
+style = ttk.Style()
+style.configure("Custom.Treeview", background="#2f2f2f", foreground="white", fieldbackground="#2f2f2f")
 source_player_list.grid(row=3, column=0, columnspan=2, padx=10, pady=10, sticky='nsew')
 source_player_list.heading(0, text='Guild ID', command=lambda: sort_treeview_column(source_player_list, 0, False))
 source_player_list.heading(1, text='Player ID', command=lambda: sort_treeview_column(source_player_list, 1, False))
@@ -879,14 +882,10 @@ source_player_list.column(0, width=100)
 source_player_list.column(1, width=100)
 source_player_list.column(2, width=100)
 source_player_list.bind('<<TreeviewSelect>>', on_selection_of_source_player)
-tk.Button(
-    root,
-    text='Select Target Level File',
-    command=target_level_file
-).grid(row=4, column=1, padx=10, pady=20, sticky="ew")
+tk.Button(root, text='Select Target Level File', command=target_level_file).grid(row=4, column=1, padx=10, pady=20, sticky="ew")
 target_level_path_label = tk.Label(root, text="...", wraplength=600)
 target_level_path_label.grid(row=4, column=0, padx=10, pady=20, sticky="ew")
-target_player_list = ttk.Treeview(root, columns=(0, 1, 2), show='headings')
+target_player_list = ttk.Treeview(root, columns=(0, 1, 2), show='headings', style="Custom.Treeview")
 target_player_list.grid(row=5, column=0, columnspan=2, padx=10, pady=10, sticky='nsew')
 target_player_list.heading(0, text='Guild ID', command=lambda: sort_treeview_column(target_player_list, 0, False))
 target_player_list.heading(1, text='Player ID', command=lambda: sort_treeview_column(target_player_list, 1, False))
@@ -897,11 +896,7 @@ target_player_list.column(2, width=100)
 target_player_list.bind('<<TreeviewSelect>>', on_selection_of_target_player)
 current_selection_label = tk.Label(root, text=f"source: {selected_source_player}, target: {selected_target_player}", wraplength=600)
 current_selection_label.grid(row=6, column=0, padx=10, pady=20, sticky="ew")
-tk.Button(
-    root,
-    text='Start Transfer!',
-    command=main
-).grid(row=6, column=1, columnspan=2, pady=20, sticky="ew")
+tk.Button(root, text='Start Transfer!', command=main).grid(row=6, column=1, columnspan=2, pady=20, sticky="ew")
 checkbox_var = tk.IntVar()
 keep_old_guild_check = tk.Checkbutton(root, text="Keep Old Guild ID After Transfer", variable=checkbox_var, command=on_keep_old_guild_check)
 keep_old_guild_check.grid(row=7, column=0, columnspan=2, sticky='w', padx=10, pady=5)
