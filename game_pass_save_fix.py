@@ -170,7 +170,8 @@ def move_save_steam(saveName):
         if not os.path.exists(game_pass_save_path): os.makedirs(game_pass_save_path)
         shutil.copytree(source_folder, os.path.join(game_pass_save_path, saveName), dirs_exist_ok=True)
         print(f"Save folder copied to GamePassSave at {game_pass_save_path}")
-        messagebox.showinfo("Success", "Your save is migrated to Steam and GamePassSave. Launch your game through your preferred platform.")
+        messagebox.showinfo("Success", "Your save is migrated to Steam. You may go ahead and open Steam PalWorld.")
+        shutil.rmtree("./saves")
     except Exception as e:
         print(f"Error copying save folder: {e}")
         messagebox.showerror("Error", f"Failed to copy the save folder: {e}")
