@@ -3,6 +3,7 @@ saves = []
 save_extractor_done = threading.Event()
 save_converter_done = threading.Event()
 def get_save_game_pass(button):
+    if os.path.exists("./saves"): shutil.rmtree("./saves")
     print("Fetching save from Game Pass...")
     button.destroy()
     progressbar = customtkinter.CTkProgressBar(master=window)
@@ -13,7 +14,7 @@ def get_save_game_pass(button):
 def check_progress(progressbar):
     if save_extractor_done.is_set():
         progressbar.set(0.5)
-        print("convert save")
+        print("Attempting to convert the save files...")
         threading.Thread(target=convert_save_files, args=(progressbar,), daemon=True).start()
     else:
         window.after(1000, check_progress, progressbar)
@@ -36,15 +37,14 @@ def convert_save_files(progressbar):
     saveFolders = list_folders_in_directory("./saves")
     if not saveFolders:
         print("No save files found")        
-        return    
-    print(saveFolders)
+        return
     saveList = []
     for index, saveName in enumerate(saveFolders):        
         name = convert_sav_JSON(saveName)        
         if name: saveList.append(name)        
     update_combobox(saveList)
     progressbar.destroy()
-    print("progress bar destroyed")
+    print("Choose a save to convert:")
 def update_combobox(saveList):
     global saves
     saves = saveList
@@ -62,20 +62,23 @@ def run_save_extractor():
         print("Command executed successfully")
         process_zip_files()
     except subprocess.CalledProcessError as e:
-        print(f"Error executing command: {e}"); window.quit()
+        print(f"Error executing command: {e}")
         return None
 def list_folders_in_directory(directory):
     try:
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+            print(f"Directory {directory} created.")
         all_items = os.listdir(directory)
-        folders = [item for item in all_items if os.path.isdir(os.path.join(directory, item))]
-        return folders
+        return [item for item in all_items if os.path.isdir(os.path.join(directory, item))]
     except FileNotFoundError:
         print(f"The directory {directory} does not exist.")
         return []
     except PermissionError:
         print(f"You don't have permission to access {directory}.")
-        return []    
+        return []  
 def find_key_in_json(file_path, target_key):
+        print("Now loading the json...")
         try:
             with open(file_path, 'r') as f:
                 parser = ijson.parse(f)
@@ -94,9 +97,11 @@ def find_key_in_json(file_path, target_key):
         return False
 def is_folder_empty(directory):
     try:
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+            print(f"Directory {directory} created.")
         all_items = os.listdir(directory)
-        if not all_items: return True
-        else: return False
+        return len(all_items) == 0
     except FileNotFoundError:
         print(f"The directory {directory} does not exist.")
         return False
@@ -125,18 +130,16 @@ def unzip_file(zip_file_path, extract_to_folder):
         zip_ref.extractall(extract_to_folder)
         print(f"Extracted all files to {extract_to_folder}")
 def convert_sav_JSON(saveName):
-    print(f"Converting .sav file to JSON: {saveName}")
+    save_path = f"./saves/{saveName}/Level/01.sav"
+    if not os.path.exists(save_path): return None
     python_exe = os.path.join("venv", "Scripts", "python.exe") if os.name == 'nt' else os.path.join("venv", "bin", "python")
-    command = [python_exe, "./convert.py", f"./saves/{saveName}/Level/01.sav"]
+    command = [python_exe, "./convert.py", save_path]
     try:
         subprocess.run(command, check=True)
-        print("Command executed successfully")
         json_file_path = f"./saves/{saveName}/Level/01.sav.json"
         key_found = find_key_in_json(json_file_path, "player_name")
-        print(f"Player name found: {key_found}")
         return f"{key_found} - {saveName}"
-    except subprocess.CalledProcessError as e:
-        print(f"Error executing command: {e}"); window.quit()
+    except subprocess.CalledProcessError:
         return None
 def convert_JSON_sav(saveName):
     saveName = saveName[saveName.find("-") + 2:]
@@ -150,25 +153,24 @@ def convert_JSON_sav(saveName):
         os.remove(f"./saves/{saveName}/Level/01.sav.json")
         print(f"Deleted JSON file: ./saves/{saveName}/Level/01.sav.json")
         move_save_steam(saveName)
-    except subprocess.CalledProcessError as e: print(f"Error executing command: {e}"); window.quit()
+    except subprocess.CalledProcessError as e: print(f"Error executing command: {e}")
 def move_save_steam(saveName):
-    print("Moving save file to GamePassSave and Steam...")
-    main_directory = os.getcwd()
-    game_pass_save_path = os.path.join(main_directory, "GamePassSave")
+    print("Moving save file to Steam and GamePassSave...")
     local_app_data_path = os.path.expandvars(r"%localappdata%\Pal\Saved\SaveGames")
     try:
-        if not os.path.exists(game_pass_save_path): os.makedirs(game_pass_save_path)
+        if not os.path.exists(local_app_data_path): raise FileNotFoundError(f"SaveGames directory does not exist at {local_app_data_path}")
+        subdirs = [d for d in os.listdir(local_app_data_path) if os.path.isdir(os.path.join(local_app_data_path, d))]
+        if not subdirs: raise FileNotFoundError(f"No subdirectories found in {local_app_data_path}")
+        target_folder = os.path.join(local_app_data_path, subdirs[0])
+        print(f"Detected Steam target folder: {target_folder}")
         source_folder = os.path.join("./saves", saveName)
+        shutil.copytree(source_folder, target_folder + "/" + saveName, dirs_exist_ok=True)
+        print(f"Save folder copied to Steam at {target_folder}")
+        game_pass_save_path = os.path.join(os.getcwd(), "GamePassSave")
+        if not os.path.exists(game_pass_save_path): os.makedirs(game_pass_save_path)
         shutil.copytree(source_folder, os.path.join(game_pass_save_path, saveName), dirs_exist_ok=True)
         print(f"Save folder copied to GamePassSave at {game_pass_save_path}")
-        if os.path.exists(local_app_data_path):
-            subdirs = [d for d in os.listdir(local_app_data_path) if os.path.isdir(os.path.join(local_app_data_path, d))]
-            if not subdirs: raise FileNotFoundError(f"No subdirectories found in {local_app_data_path}")
-            steam_target_folder = os.path.join(local_app_data_path, subdirs[0])
-            shutil.copytree(source_folder, os.path.join(steam_target_folder, saveName), dirs_exist_ok=True)
-            print(f"Save folder copied to Steam at {steam_target_folder}")
-        else: print(f"LocalAppData path does not exist: {local_app_data_path}. Skipping Steam save copy.")
-        messagebox.showinfo("Success", "Your save is migrated to GamePassSave and Steam (if available). Launch your game through your preferred platform.")
+        messagebox.showinfo("Success", "Your save is migrated to Steam and GamePassSave. Launch your game through your preferred platform.")
     except Exception as e:
         print(f"Error copying save folder: {e}")
         messagebox.showerror("Error", f"Failed to copy the save folder: {e}")
