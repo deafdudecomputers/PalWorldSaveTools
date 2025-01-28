@@ -117,7 +117,7 @@ class skip_loading_progress(threading.Thread):
                     sys.stdout.write("\033]0;%s - %3.1f%%\a" % ("Loading GVAS file", progress_percent))
                     sys.stdout.flush()
                 else:
-                    print("\rLoading GVAS file: %3.0f%% completed" % progress_percent, end="", flush=True)
+                    print(f"\rLoading GVAS file: {progress_percent:3.0f} completed ", end="\t", flush=True)
 
                 time.sleep(0.05)
                 

@@ -1,4 +1,7 @@
+import struct
 from internal_libs.import_libs import *
+
+
 def main():
     parser = argparse.ArgumentParser(
         prog="palworld-save-tools",
@@ -49,8 +52,10 @@ def main():
         print(f"{args.filename} is not a file")
         exit(1)
     if args.to_json or args.filename.endswith(".sav"):
-        if not args.output: output_path = args.filename + ".json"
-        else: output_path = args.output
+        if not args.output:
+            output_path = args.filename + ".json"
+        else:
+            output_path = args.output
         convert_sav_to_json(
             args.filename,
             output_path,
@@ -60,16 +65,21 @@ def main():
             custom_properties_keys=args.custom_properties,
         )
     if args.from_json or args.filename.endswith(".json"):
-        if not args.output: output_path = args.filename.replace(".json", "")
-        else: output_path = args.output
+        if not args.output:
+            output_path = args.filename.replace(".json", "")
+        else:
+            output_path = args.output
         convert_json_to_sav(args.filename, output_path, force=args.force)
+
+
 def convert_sav_to_json(
     filename,
     output_path,
     force=False,
     minify=False,
     allow_nan=True,
-    custom_properties_keys=["all"],):
+    custom_properties_keys=["all"],
+):
     print(f"Converting {filename} to JSON, saving to {output_path}")
     if os.path.exists(output_path):
         print(f"{output_path} already exists, this will overwrite the file")
@@ -88,11 +98,22 @@ def convert_sav_to_json(
         for prop in PALWORLD_CUSTOM_PROPERTIES:
             if prop in custom_properties_keys:
                 custom_properties[prop] = PALWORLD_CUSTOM_PROPERTIES[prop]
-    gvas_file = GvasFile.read(raw_gvas, PALWORLD_TYPE_HINTS, custom_properties, allow_nan=allow_nan)
-    print(f"Writing JSON to {output_path}")
-    with open(output_path, "w", encoding="utf8") as f:
-        indent = None if minify else "\t"
-        json.dump(gvas_file.dump(), f, indent=indent, cls=CustomEncoder, allow_nan=allow_nan)
+    try:
+        gvas_file = GvasFile.read(
+            raw_gvas, PALWORLD_TYPE_HINTS, custom_properties, allow_nan=allow_nan
+        )
+        print(f"Writing JSON to {output_path}")
+        with open(output_path, "w", encoding="utf8") as f:
+            indent = None if minify else "\t"
+            json.dump(
+                gvas_file.dump(), f, indent=indent, cls=CustomEncoder, allow_nan=allow_nan
+            )
+    except struct.error as error:
+        print("\n", flush=True)
+        print(f"Failed to read GVAS file due to {error.__class__.__name__}")
+        print("GVAS file may be corrupted or invalid, skipping...")
+        exit(1)
+
 def convert_json_to_sav(filename, output_path, force=False):
     print(f"Converting {filename} to SAV, saving to {output_path}")
     if os.path.exists(output_path):
@@ -101,7 +122,8 @@ def convert_json_to_sav(filename, output_path, force=False):
             if not confirm_prompt("Are you sure you want to continue?"):
                 exit(1)
     print(f"Loading JSON from {filename}")
-    with open(filename, "r", encoding="utf8") as f: data = json.load(f)
+    with open(filename, "r", encoding="utf8") as f:
+        data = json.load(f)
     gvas_file = GvasFile.load(data)
     print(f"Compressing SAV file")
     if (
@@ -109,13 +131,22 @@ def convert_json_to_sav(filename, output_path, force=False):
         or "Pal.PalLocalWorldSaveGame" in gvas_file.header.save_game_class_name
     ):
         save_type = 0x32
-    else: save_type = 0x31
-    sav_file = compress_gvas_to_sav(gvas_file.write(PALWORLD_CUSTOM_PROPERTIES), save_type)
+    else:
+        save_type = 0x31
+    sav_file = compress_gvas_to_sav(
+        gvas_file.write(PALWORLD_CUSTOM_PROPERTIES), save_type
+    )
     print(f"Writing SAV file to {output_path}")
-    with open(output_path, "wb") as f: f.write(sav_file)
+    with open(output_path, "wb") as f:
+        f.write(sav_file)
+
+
 def confirm_prompt(question: str) -> bool:
     reply = None
     while reply not in ("y", "n"):
         reply = input(f"{question} (y/n): ").casefold()
     return reply == "y"
-if __name__ == "__main__": main()
+
+
+if __name__ == "__main__":
+    main()

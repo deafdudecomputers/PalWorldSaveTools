@@ -39,7 +39,7 @@ def get_color(color):
     if not COLORAMA_ENABLED:
         return ""
     try:
-        getattr(Fore, color.upper(), "")
+        return getattr(Fore, color.upper(), "")
     except AttributeError:
         return ""
 
