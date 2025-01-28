@@ -68,8 +68,8 @@ ______     _ _    _            _     _ _____               _____           _
 Follow these steps to delete inactive players based on your criteria (e.g., inactivity, level, or number of pals):
 
 1. Copy Players folder and Level.sav from your server (`\Pal\Saved\SaveGames\0\RANDOMSERVERID\`) to the (`PalWorldSave`) folder. 
-2. Select Scan Save via PalWorldSaveToolsMenu.cmd.
-3. Select Delete Inactive Players Saves via PalWorldSaveToolsMenu.cmd.
+2. Select Scan Save.
+3. Select Delete Inactive Players Saves.
 4. Input your desired requirements, then let it finish.  
 5. Copy the `Players` folder from the `PalWorldSave` folder.  
 6. Delete the original `Players` folder from the server (`\Pal\Saved\SaveGames\0\RANDOMSERVERID\`).  
