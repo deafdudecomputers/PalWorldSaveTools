@@ -6,6 +6,7 @@ ______     _ _    _            _     _ _____               _____           _
 | | | (_| | \  /\  / (_) | |  | | (_| /\__/ / (_| |\ V /  __/ | (_) | (_) | \__ \
 \_|  \__,_|_|\/  \/ \___/|_|  |_|\__,_\____/ \__,_| \_/ \___\_/\___/ \___/|_|___/
 ```
+
 ![image](https://github.com/user-attachments/assets/2d5ecb8e-9462-42ef-8d95-4e39983bea82)
 ---
 
@@ -21,9 +22,11 @@ ______     _ _    _            _     _ _____               _____           _
 ## Prerequisites
 
 ### 1. **Updated Saves**
+
 - Ensure your saves were updated on/after the current patch.
 
 ### 2. **[Python Installation](https://www.python.org/downloads)**
+
 - Download Python from the official website.  
 - Before clicking **Install Now**, **CHECK** the box at the bottom that says:  
   **"Add Python to PATH"** 🟩  
@@ -31,6 +34,7 @@ ______     _ _    _            _     _ _____               _____           _
   ![Add Python to PATH checkbox](https://i.imgur.com/SCJEkdJ.png)
 
 ### 3. **[Visual Studio Build Tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/)**
+
 - Download and install Visual Studio Build Tools.  
 - During installation, **CHECK** the box that says:  
   **"Desktop development with C++"** 🟩  
@@ -41,9 +45,7 @@ ______     _ _    _            _     _ _____               _____           _
 
 ---
 
-
-
-## Features:
+## Features
 
 - **Fast parsing/reading** tool—one of the quickest available.  
 - Lists all players/guilds.  
@@ -52,7 +54,7 @@ ______     _ _    _            _     _ _____               _____           _
 - Logs players and their data into `players.log`.  
 - Sorts and deletes players based on level and inactivity.  
 - Logs and sorts players by the number of pals owned.  
-- Deletes players with fewer than a specified number of pals.   
+- Deletes players with fewer than a specified number of pals.
 - Provides a **base map view**.
 - Provides automated killnearestbase commands to be used with palguard for inactive bases.
 - Transfers saves between dedicated servers and single/coop worlds.  
@@ -63,11 +65,11 @@ ______     _ _    _            _     _ _____               _____           _
 
 ---
 
-## Automatically Delete Player Saves Based on Inactivity:
+## Automatically Delete Player Saves Based on Inactivity
 
 Follow these steps to delete inactive players based on your criteria (e.g., inactivity, level, or number of pals):
 
-1. Copy Players folder and Level.sav from your server (`\Pal\Saved\SaveGames\0\RANDOMSERVERID\`) to the (`PalWorldSave`) folder. 
+1. Copy Players folder and Level.sav from your server (`\Pal\Saved\SaveGames\0\RANDOMSERVERID\`) to the (`PalWorldSave`) folder.
 2. Select Scan Save.
 3. Select Delete Inactive Players Saves.
 4. Input your desired requirements, then let it finish.  
@@ -81,9 +83,10 @@ Follow these steps to delete inactive players based on your criteria (e.g., inac
 
 ---
 
-## Steps to Restore Your Map(Fog and icons):
+## Steps to Restore Your Map(Fog and icons)
 
-### 1. Find the Old Server/World ID:
+### 1. Find the Old Server/World ID
+
 - **Join your old server/world**.
 - Open File Explorer and run the search for:  
   `%localappdata%\Pal\Saved\SaveGames\`
@@ -92,7 +95,8 @@ Follow these steps to delete inactive players based on your criteria (e.g., inac
 - Look for the folder that matches your **old server/world ID** (e.g., `FCC47F5F4DD6AC48D3C0E2B30059973D`). The folder with the most recent modification date is typically the one for your **old server/world**.
 - Once you've found the correct folder, **copy** the `LocalData.sav` file from it.
 
-### 2. Find the New Server/World ID:
+### 2. Find the New Server/World ID
+
 - **Join your new server/world**.
 - Go back to the same folder path:  
   `%localappdata%\Pal\Saved\SaveGames\`
@@ -103,15 +107,17 @@ Follow these steps to delete inactive players based on your criteria (e.g., inac
 - If the `LocalData.sav` file already exists in the new folder, **confirm the overwrite** when prompted to replace the existing file.
 
 ### 3. Restore Your Map
+
 - Now, go into your **new server/world**, and your map should be restored with the old server/world data.
 
 Done! Your map is back in your **new server/world**!
 
-## Where to find the save files:
+## Where to find the save files
 
 The save files are usually located at `C:\Users\YOURUSERNAME\AppData\Local\Pal\Saved\SaveGames\YOURSTEAMID\RANDOMID` for co-op saves.
 For server saves, go to the dedicated server's file location through steam.
 You need at least 4 files to complete the transfer:
+
 ```
 - The source player character save in Players folder
 - The source world's Level.sav
@@ -119,7 +125,7 @@ You need at least 4 files to complete the transfer:
 - The target world's Level.sav
 ```
 
-## How to use Transfer Character:
+## How to use Transfer Character
 
 ⚠️WARNING⚠️: Make sure to disable the private locks on the "source" chests before transferring saves!!!
 
@@ -127,6 +133,7 @@ Let's say we want to transfer the character from a coop world of a friend to our
 The friend's world would be the source, our own world the destination.
 
 SaveGames folder of our friend:
+
 ```
 SaveGames
 └── <steam-id>
@@ -139,7 +146,9 @@ SaveGames
         │   └── 12345...6789.sav   <- The source player save
         └── WorldOption.sav
 ```
+
 Our SaveGames folder:
+
 ```
 SaveGames
 └── <steam-id>
@@ -153,7 +162,7 @@ SaveGames
         └── WorldOption.sav
 ```
 
-### Transferring from Host to Server (or vice versa):
+### Transferring from Host to Server (or vice versa)
 
 1. **Create a New Character**  
    - Use the same `Level.sav` file on the world or server after transferring it.
@@ -165,7 +174,7 @@ SaveGames
 4. **Use the Transfer Character Tool**  
    - Load the exact same Level.sav for Source and Target.
    - Select the old character as source.
-   - Select the new character as target.   
+   - Select the new character as target.
 5. **Optional: Keep Old Guild ID**  
    - If you want to keep old bases, tick the option **Keep Old Guild ID After Transfer**.
 6. **Start Transfer**  

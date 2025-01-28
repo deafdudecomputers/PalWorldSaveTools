@@ -3,7 +3,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-from .constants import (
+from constants import (
     ABOUT_TXT,
     TOOLS_VERSION,
     GAME_VERSION,
@@ -14,6 +14,34 @@ from .constants import (
     cleaning_tools,
     pws_tools
 )
+
+COLORAMA_ENABLED = False
+try:
+    from colorama import init as colorama_init, Fore
+    colorama_init()
+    COLORAMA_ENABLED = True
+except ImportError:
+    print("Colorama not installed. Some output may not be colored.")
+
+def get_color(color):
+    """
+    Get the Colorama color code for a given color.
+
+    This function returns the Colorama color code for the specified color.
+    If Colorama is not installed, it returns an empty string.
+
+    Args:
+        color (str): The color name to get the code for.
+
+    Returns:
+        str: The Colorama color code for the specified color.
+    """
+    if not COLORAMA_ENABLED:
+        return ""
+    try:
+        getattr(Fore, color.upper(), "")
+    except AttributeError:
+        return ""
 
 PYBIN = ""
 PIPBIN = ""
@@ -95,6 +123,7 @@ def setup_environment():
     Raises:
         OSError: If there is an issue creating directories or running subprocesses.
     """
+    update_binary_definitions()
     if sys.platform != "win32":
         import resource  # pylint: disable=import-error,import-outside-toplevel
         resource.setrlimit(resource.RLIMIT_NOFILE, (65535, 65535))
@@ -104,6 +133,7 @@ def setup_environment():
     if not os.path.exists("venv"):
         subprocess.run([sys.executable, "-m", "venv", "venv"], check=False)
     subprocess.run([PIPBIN, "install", "-r", "requirements.txt"], check=False)
+    update_binary_definitions()
 
 
 def get_versions():
@@ -160,19 +190,19 @@ def display_menu():
     """
     display_logo()
     sections = [
-        ("Converting Tools", converting_tools),
-        ("Management Tools", management_tools),
-        ("Cleaning Tools", cleaning_tools),
-        ("PalWorldSaveTools", pws_tools),
+        ("Converting Tools", converting_tools, get_color("cyan")),
+        ("Management Tools", management_tools, get_color("green")),
+        ("Cleaning Tools", cleaning_tools, get_color("yellow")),
+        ("PalWorldSaveTools", pws_tools, get_color("magenta")),
     ]
     index = 1
-    for title, tools in sections:
-        print(title.rjust(21+len(title)))
+    for title, tools, color in sections:
+        print(f"{color}{title.rjust(31+len(title))}{get_color('reset')}")
         print(LINE_SEP)
         for tool in tools:
-            print(f"{index}. {tool}")
+            print(f"{color}{index}{get_color('reset')}. {tool}")
             index += 1
-        print(LINE_SEP)
+        print("\n"+LINE_SEP)
 
 
 

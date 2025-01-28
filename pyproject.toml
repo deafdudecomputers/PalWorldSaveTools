@@ -1,0 +1,36 @@
+[project]
+name = "palworldsavetools"
+version = "1.0.16.beta.r1"
+description = "All in one tool for fixing/transferring/editing/etc PalWorld saves"
+authors = [
+    {name = "DJ Stomp",email = "85457381+DJStompZone@users.noreply.github.com"},
+    {name = "deafdudecomputers", email = "164821928+deafdudecomputers@users.noreply.github.com"},
+    {name = "jeevisonline", email = "97365870+jeevisonline@users.noreply.github.com"},
+
+]
+license = {text = "MIT"}
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.10,<4.0"
+PySimpleGUI = "4.60.5.0"
+setuptools = "75.6.0"
+msgpack = "1.1.0"
+psutil = "6.1.1"
+matplotlib = "3.10.0"
+pandas = "2.2.3"
+cityhash = "0.4.7"
+requests = "2.32.3"
+ijson = {version = "*"}
+customtkinter = {version = "*"}
+colorama = {version = "*", optional = true}
+
+[tool.poetry.extras]
+colors = ["colorama"]
+
+[tool.poetry]
+package-mode = false
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
