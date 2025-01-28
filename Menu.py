@@ -1,12 +1,18 @@
 import os, subprocess, sys
 from pathlib import Path
+RED_FONT = "\033[91m"
+BLUE_FONT = "\033[94m"
+GREEN_FONT = "\033[92m"
+YELLOW_FONT= "\033[93m"
+PURPLE_FONT = "\033[95m"
+RESET_FONT = "\033[0m"
 def set_console_title(title): os.system(f'title {title}') if sys.platform == "win32" else print(f'\033]0;{title}\a', end='', flush=True)
 def setup_environment():
     if sys.platform != "win32":
         import resource
         resource.setrlimit(resource.RLIMIT_NOFILE, (65535, 65535))
     os.system('cls' if os.name == 'nt' else 'clear')
-    print("Setting up your environment...")
+    print(f"{YELLOW_FONT}Setting up your environment...{RESET_FONT}")
     os.makedirs("PalWorldSave/Players", exist_ok=True)  
     if not os.path.exists("venv"): subprocess.run([sys.executable, "-m", "venv", "venv"])
     pip_executable = os.path.join("venv", "Scripts", "pip") if os.name == 'nt' else os.path.join("venv", "bin", "pip")
@@ -26,32 +32,32 @@ ______     _ _    _            _     _ _____               _____           _
 | | | (_| | \  /\  / (_) | |  | | (_| /\__/ / (_| |\ V /  __/ | (_) | (_) | \__ \
 \_|  \__,_|_|\/  \/ \___/|_|  |_|\__,_\____/ \__,_| \_/ \___\_/\___/ \___/|_|___/
     """)
-    print(f"\nv{tools_version} - Working as of v{game_version} Patch\n")
-    print("\033[91mWARNING: ALWAYS BACKUP YOUR SAVES BEFORE USING THIS TOOL!\n\033[0m")
-    print(f"\033[91mMAKE SURE TO UPDATE YOUR SAVES ON/AFTER THE v{game_version} PATCH!\n\033[0m")
-    print("\033[91mIF YOU DO NOT UPDATE YOUR SAVES, YOU WILL GET ERRORS!\n\033[0m")
+    print(f"\n{GREEN_FONT}v{tools_version} - Working as of v{game_version} Patch{RESET_FONT}\n")
+    print(f"{RED_FONT}WARNING: ALWAYS BACKUP YOUR SAVES BEFORE USING THIS TOOL!{RESET_FONT}\n")
+    print(f"{RED_FONT}MAKE SURE TO UPDATE YOUR SAVES ON/AFTER THE v{game_version} PATCH!{RESET_FONT}\n")
+    print(f"{RED_FONT}IF YOU DO NOT UPDATE YOUR SAVES, YOU WILL GET ERRORS!{RESET_FONT}\n")
     print("=" * 80)
 def display_menu(tools_version, game_version):
     display_logo()
-    print("                     Converting Tools")
+    print(f"                     {BLUE_FONT}Converting Tools{RESET_FONT}")
     print("=" * 80)
     for i, tool in enumerate(converting_tools, 1):
-        print(f"{i}. {tool}")
+        print(f"{BLUE_FONT}{i}{RESET_FONT}. {tool}")
     print("=" * 80)
-    print("                     Management Tools")
+    print(f"                     {GREEN_FONT}Management Tools{RESET_FONT}")
     print("=" * 80)
     for i, tool in enumerate(management_tools, len(converting_tools) + 1):
-        print(f"{i}. {tool}")
+        print(f"{GREEN_FONT}{i}{RESET_FONT}. {tool}")
     print("=" * 80)
-    print("                     Cleaning Tools")
+    print(f"                     {YELLOW_FONT}Cleaning Tools{RESET_FONT}")
     print("=" * 80)
     for i, tool in enumerate(cleaning_tools, len(converting_tools) + len(management_tools) + 1):
-        print(f"{i}. {tool}")
+        print(f"{YELLOW_FONT}{i}{RESET_FONT}. {tool}")
     print("=" * 80)
-    print("                     PalWorldSaveTools")
+    print(f"                     {PURPLE_FONT}PalWorldSaveTools{RESET_FONT}")
     print("=" * 80)
     for i, tool in enumerate(pws_tools, len(converting_tools) + len(management_tools) + len(cleaning_tools) + 1):
-        print(f"{i}. {tool}")
+        print(f"{PURPLE_FONT}{i}{RESET_FONT}. {tool}")
     print("=" * 80)
 def run_tool(choice):
     python_exe = os.path.join("venv", "Scripts", "python.exe") if os.name == 'nt' else os.path.join("venv", "bin", "python")
@@ -85,30 +91,30 @@ def scan_save():
     for file in ["scan_save.log", "players.log", "sort_players.log"]: Path(file).unlink(missing_ok=True)
     if Path("Pal Logger").exists(): subprocess.run(["rmdir", "/s", "/q", "Pal Logger"], shell=True)
     if Path("PalWorldSave/Level.sav").exists(): subprocess.run([python_exe, "scan_save.py", "PalWorldSave/Level.sav"])
-    else: print("Error: PalWorldSave/Level.sav not found!")
+    else: print(f"{RED_FONT}Error: PalWorldSave/Level.sav not found!{RESET_FONT}")
 def generate_map():
     python_exe = os.path.join("venv", "Scripts", "python.exe") if os.name == 'nt' else os.path.join("venv", "bin", "python")
     subprocess.run([python_exe, "-m", "internal_libs.bases"])
     if Path("updated_worldmap.png").exists():
-        print("Opening updated_worldmap.png...")
+        print(f"{GREEN_FONT}Opening updated_worldmap.png...{RESET_FONT}")
         subprocess.run(["start", "updated_worldmap.png"], shell=True)
-    else: print("updated_worldmap.png not found.")
+    else: print(f"{RED_FONT}updated_worldmap.png not found.{RESET_FONT}")
 def reset_update_tools():
     repo_url = "https://github.com/deafdudecomputers/PalWorldSaveTools.git"
     python_exe = os.path.join("venv", "Scripts", "python.exe") if os.name == 'nt' else os.path.join("venv", "bin", "python")
-    print("Resetting/Updating PalWorldSaveTools...")
+    print(f"{GREEN_FONT}Resetting/Updating PalWorldSaveTools...{RESET_FONT}")
     subprocess.run([python_exe, "-m", "ensurepip", "--upgrade"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     subprocess.run(["git", "init"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     subprocess.run(["git", "remote", "remove", "origin"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     subprocess.run(["git", "remote", "add", "origin", repo_url], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    print("Replacing all files in the current directory with the latest from GitHub...")
+    print(f"{GREEN_FONT}Replacing all files in the current directory with the latest from GitHub...{RESET_FONT}")
     subprocess.run(["git", "fetch", "--all"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     subprocess.run(["git", "reset", "--hard", "origin/main"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     subprocess.run(["git", "clean", "-fdx"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     if os.name == 'nt': subprocess.run(["cmd", "/c", "rmdir", "/s", "/q", ".git"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     else: subprocess.run(["rm", "-rf", ".git"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    print("Update complete. All files have been replaced.")
-    input("Press Enter to continue...")
+    print(f"{GREEN_FONT}Update complete. All files have been replaced.{RESET_FONT}")
+    input(f"{GREEN_FONT}Press Enter to continue...{RESET_FONT}")
     setup_environment()
 def about_tools():
     display_logo()
@@ -131,7 +137,7 @@ def readme_tools():
     display_logo()
     readme_path = Path("README.md")
     if readme_path.exists(): subprocess.run(["start", str(readme_path)], shell=True)
-    else: print("README.md not found.")
+    else: print(f"{RED_FONT}README.md not found.{RESET_FONT}")
 converting_tools = [
     "Convert Level.sav file to Level.json",
     "Convert Level.json file back to Level.sav",
@@ -174,16 +180,16 @@ if __name__ == "__main__":
             tools_version, game_version = get_versions()
             set_console_title(f"PalWorldSaveTools v{tools_version}")
         except ValueError:
-            print("Invalid argument. Please pass a valid number.")
+            print(f"{RED_FONT}Invalid argument. Please pass a valid number.{RESET_FONT}")
     else:
         while True:
             tools_version, game_version = get_versions()
             set_console_title(f"PalWorldSaveTools v{tools_version}")
             display_menu(tools_version, game_version)
             try:
-                choice = int(input("Select what you want to do: "))
+                choice = int(input(f"{GREEN_FONT}Select what you want to do: {RESET_FONT}"))
                 os.system('cls' if os.name == 'nt' else 'clear')
                 run_tool(choice)
-                input("Press Enter to continue...")
+                input(f"{GREEN_FONT}Press Enter to continue...{RESET_FONT}")
             except ValueError:
-                print("Invalid input. Please enter a number.")
+                print(f"{RED_FONT}Invalid input. Please enter a number.{RESET_FONT}")
