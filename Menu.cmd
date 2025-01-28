@@ -1,3 +1,3 @@
 @echo off
 title PalWorldSaveTools
-python Menu.py
+python setup_env.py

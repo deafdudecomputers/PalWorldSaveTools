@@ -5,7 +5,7 @@ def setup_environment():
         resource.setrlimit(resource.RLIMIT_NOFILE, (65535, 65535))
     os.system('cls' if os.name == 'nt' else 'clear')
     print("Setting up your environment...")
-    os.makedirs("PalWorldSave/Players", exist_ok=True)
+    os.makedirs("PalWorldSave/Players", exist_ok=True)  
     if not os.path.exists("venv"): subprocess.run([sys.executable, "-m", "venv", "venv"])
     pip_executable = os.path.join("venv", "Scripts", "pip") if os.name == 'nt' else os.path.join("venv", "bin", "pip")
     subprocess.run([pip_executable, "install", "-r", "requirements.txt"])
