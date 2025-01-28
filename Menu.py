@@ -97,7 +97,7 @@ def reset_update_tools():
     if os.name == 'nt': subprocess.run(["cmd", "/c", "rmdir", "/s", "/q", ".git"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     else: subprocess.run(["rm", "-rf", ".git"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     print("Update complete. All files have been replaced.")
-    input("Press Enter to continue...")    
+    os.system('cls' if os.name == 'nt' else 'clear')   
     subprocess.run([python_exe, "start.py"])
 def about_tools():
     display_logo()
