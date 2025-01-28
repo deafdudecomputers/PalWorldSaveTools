@@ -1,16 +1,5 @@
-import os, subprocess, sys
-from pathlib import Path
+from internal_libs.import_libs import *
 def set_console_title(title): os.system(f'title {title}') if sys.platform == "win32" else print(f'\033]0;{title}\a', end='', flush=True)
-def setup_environment():
-    if sys.platform != "win32":
-        import resource
-        resource.setrlimit(resource.RLIMIT_NOFILE, (65535, 65535))
-    os.system('cls' if os.name == 'nt' else 'clear')
-    print("Setting up your environment...")
-    os.makedirs("PalWorldSave/Players", exist_ok=True)  
-    if not os.path.exists("venv"): subprocess.run([sys.executable, "-m", "venv", "venv"])
-    pip_executable = os.path.join("venv", "Scripts", "pip") if os.name == 'nt' else os.path.join("venv", "bin", "pip")
-    subprocess.run([pip_executable, "install", "-r", "requirements.txt"])
 def get_versions():
     tools_version = "1.0.17"
     game_version = "0.4.14"
@@ -109,6 +98,7 @@ def reset_update_tools():
     else: subprocess.run(["rm", "-rf", ".git"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     print("Update complete. All files have been replaced.")
     input("Press Enter to continue...")
+    
     setup_environment()
 def about_tools():
     display_logo()
@@ -165,7 +155,6 @@ pws_tools = [
 if __name__ == "__main__":
     tools_version, game_version = get_versions()
     set_console_title(f"PalWorldSaveTools v{tools_version}")
-    setup_environment()
     os.system('cls' if os.name == 'nt' else 'clear')
     if len(sys.argv) > 1:
         try:
