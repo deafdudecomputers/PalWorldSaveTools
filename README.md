@@ -6,7 +6,8 @@ ______     _ _    _            _     _ _____               _____           _
 | | | (_| | \  /\  / (_) | |  | | (_| /\__/ / (_| |\ V /  __/ | (_) | (_) | \__ \
 \_|  \__,_|_|\/  \/ \___/|_|  |_|\__,_\____/ \__,_| \_/ \___\_/\___/ \___/|_|___/
 ```
-![image](https://github.com/user-attachments/assets/2d5ecb8e-9462-42ef-8d95-4e39983bea82)
+![image](https://github.com/user-attachments/assets/d9c1579b-54f9-4f4b-aab3-26f333441b77)
+
 ---
 
 - **Author:** MagicBear and cheahjs  
@@ -82,6 +83,8 @@ Follow these steps to delete inactive players based on your criteria (e.g., inac
 ---
 
 ## Steps to Restore Your Map(Fog and icons):
+
+### This only applies if you do NOT want to use the "Restore Map" option.
 
 ### 1. Find the Old Server/World ID:
 - **Join your old server/world**.
