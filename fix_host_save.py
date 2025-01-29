@@ -1,4 +1,12 @@
 from scan_save import *
+from datetime import datetime, timedelta
+def backup_whole_directory(source_folder, backup_folder):
+    if not os.path.exists(backup_folder):
+        os.makedirs(backup_folder)
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    backup_path = os.path.join(backup_folder, f"PalWorldSave_backup_{timestamp}")
+    shutil.copytree(source_folder, backup_path)
+    print(f"Backup of {source_folder} created at: {backup_path}")
 def fix_save(save_path, new_guid, old_guid, guild_fix=True):
     if new_guid[-4:] == '.sav' or old_guid[-4:] == '.sav':
         print('ERROR: You should be using only the GUID, not the entire file name.')
@@ -155,6 +163,8 @@ def main():
                 window['progressbar'].update_bar(30)
                 window.refresh()
                 try:
+                    backup_folder = "Backups/Fix Host Save"
+                    backup_whole_directory(folder_path, backup_folder)
                     fix_save(folder_path, new_guid, old_guid)
                     window['progressbarText'].update("Migration successful!")
                     window['progressbar'].update_bar(100)

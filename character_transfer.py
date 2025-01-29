@@ -1,7 +1,15 @@
 from internal_libs.import_libs import *
+from datetime import datetime, timedelta
 STRUCT_START = b'\x0f\x00\x00\x00StructProperty\x00'
 MAP_START = b'\x0c\x00\x00\x00MapProperty\x00'
 ARRAY_START = b'\x0e\x00\x00\x00ArrayProperty\x00'
+def backup_whole_directory(source_folder, backup_folder):
+    if not os.path.exists(backup_folder):
+        os.makedirs(backup_folder)
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    backup_path = os.path.join(backup_folder, f"PalWorldSave_backup_{timestamp}")
+    shutil.copytree(source_folder, backup_path)
+    print(f"Backup of {source_folder} created at: {backup_path}")
 def _convert_stringval(value):
     if hasattr(value, 'typename'):
         value = str(value)
@@ -696,8 +704,10 @@ of your save folder before continuing. Press Yes if you would like to continue.'
     output_data = SkipFArchiveWriter(custom_properties=PALWORLD_CUSTOM_PROPERTIES).write_sections(targ_lvl, target_section_ranges, target_raw_gvas, size_idx)
     targ_json_gvas.properties = targ_json
     t_host_sav_path = os.path.join(os.path.dirname(t_level_sav_path), 'Players', selected_target_player + '.sav')
-    if not os.path.exists(t_host_sav_path):
-        t_host_sav_path = os.path.join(os.path.dirname(t_level_sav_path), '../Players', selected_target_player + '.sav')
+    if not os.path.exists(t_host_sav_path): t_host_sav_path = os.path.join(os.path.dirname(t_level_sav_path), '../Players', selected_target_player + '.sav')
+    parent_directory = os.path.dirname(t_level_sav_path)
+    backup_folder = "Backups/Character Transfer"
+    backup_whole_directory(parent_directory, backup_folder)
     print("Writing to file...")
     gvas_to_sav(t_level_sav_path, output_data)
     gvas_to_sav(t_host_sav_path, targ_json_gvas.write())

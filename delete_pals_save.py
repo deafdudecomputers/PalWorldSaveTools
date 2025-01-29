@@ -1,4 +1,12 @@
 from internal_libs.import_libs import *
+from datetime import datetime, timedelta
+def backup_whole_directory(source_folder, backup_folder):
+    if not os.path.exists(backup_folder):
+        os.makedirs(backup_folder)
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    backup_path = os.path.join(backup_folder, f"PalWorldSave_backup_{timestamp}")
+    shutil.copytree(source_folder, backup_path)
+    print(f"Backup of {source_folder} created at: {backup_path}")
 def get_number_in_range(min_value, max_value):
   while True:
     try:
@@ -16,6 +24,9 @@ def get_directory_from_user():
             return directory_path
         else:
             print("Invalid directory path. Please try again.")
+def get_filtered_uids(file_path):
+    with open(file_path, 'r', encoding='utf-8', errors='ignore') as file:
+        return {line.strip() for line in file.readlines() if line.strip()}
 def extract_player_info(line):
     match = re.search(r'Player: (.+?) \| UID: ([\w-]+) \| .*?Owned: (\d+)', line)
     if match:
@@ -24,7 +35,7 @@ def extract_player_info(line):
         pals_found = int(match.group(3))
         return player_name, player_uid, pals_found
     return None, None, None
-def find_player_uids_with_max_pals(log_file, max_pals):
+def find_player_uids_with_max_pals(log_file, filtered_uids, max_pals):
     try:
         with open(log_file, 'r', encoding='utf-8') as file:
             lines = file.readlines()
@@ -34,14 +45,16 @@ def find_player_uids_with_max_pals(log_file, max_pals):
     player_info = []
     for line in lines:
         player_name, player_uid, pals_found = extract_player_info(line)
-        if player_uid and pals_found <= max_pals:
+        if player_uid and player_uid not in filtered_uids and pals_found <= max_pals:
             player_info.append((line.strip(), player_uid, pals_found))
     return player_info
 def delete_player_saves(player_info):
     players_folder = "PalWorldSave/Players"
+    backup_folder = "Backups/Delete Saves by Pals Count"
     if not os.path.exists(players_folder):
         print(f"Players folder '{players_folder}' not found.")
         return
+    backup_whole_directory("PalWorldSave", backup_folder)
     total_pals_to_delete = sum(pals_found for _, _, pals_found in player_info)
     deleted_count = 0
     for line, uid, _ in player_info:
@@ -57,7 +70,6 @@ def delete_player_saves(player_info):
     if deleted_count == 0:
         print(f"No PlayerUID.sav files found for deletion, skipping...")
     else:
-        print(f"Total number of pals deleted: {total_pals_to_delete}")
         print(f"Deleted {deleted_count} PlayerUID.sav files.")
 if __name__ == "__main__":
     if len(sys.argv) < 1:
@@ -65,10 +77,9 @@ if __name__ == "__main__":
         sys.exit(1)
     log_file = sys.argv[1]
     max_pals = int(input("Enter maximum number of pals per player to delete: "))
-    player_info = find_player_uids_with_max_pals(log_file, max_pals)
+    filtered_uids = get_filtered_uids('players_filtered.log')
+    player_info = find_player_uids_with_max_pals(log_file, filtered_uids, max_pals)
     if player_info:
         delete_player_saves(player_info)
-        print(f"Filter used: {max_pals} or fewer pals")
     else:
-        print(f"No PlayerUIDs with {max_pals} or fewer pals found in {log_file}.")
-    input("Press enter to exit...")
+        print(f"No PlayerUIDs found in {log_file} that match the filter.")

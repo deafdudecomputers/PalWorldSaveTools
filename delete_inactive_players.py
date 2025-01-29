@@ -1,5 +1,12 @@
 from internal_libs.import_libs import *
 from datetime import datetime, timedelta
+def backup_whole_directory(source_folder, backup_folder):
+    if not os.path.exists(backup_folder):
+        os.makedirs(backup_folder)
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    backup_path = os.path.join(backup_folder, f"PalWorldSave_backup_{timestamp}")
+    shutil.copytree(source_folder, backup_path)
+    print(f"Backup of {source_folder} created at: {backup_path}")
 def get_number_in_range(min_value, max_value):
   while True:
     try:
@@ -50,15 +57,26 @@ def filter_players_by_days_and_level(players, days, level):
     return filtered_players
 def delete_player_saves(player_data):
     players_folder = "PalWorldSave/Players"
+    backup_folder = "Backups/Delete Inactive Players Saves"
     if not os.path.exists(players_folder):
         print(f"Players folder '{players_folder}' not found.")
         return 0, 0
-    total_pals_to_delete = sum(pals_count for _, pals_count in player_data)
+    backup_whole_directory("PalWorldSave", backup_folder)
+    filtered_uids = set()
+    try:
+        with open('players_filtered.log', 'r', encoding='utf-8') as f:
+            filtered_uids = {line.strip().replace('-', '') for line in f.readlines()}
+    except FileNotFoundError:
+        print("No filtered UID file found. Proceeding with all players.")
+    total_pals_to_delete = sum(pals_count for player, pals_count in player_data if player.split()[0].replace('-', '') not in filtered_uids)
     deleted_count = 0
     for player, _ in player_data:
-        match = re.search(r'UID: ([\w-]+)', player)
+        match = re.search(r'UID:\s*([\w-]+)', player)
         if match:
-            uid = match.group(1).replace('-', '')
+            uid = match.group(1).strip().replace('-', '')
+            if uid in filtered_uids:
+                print(f"Skipping deletion for UID {uid} (already filtered).")
+                continue
             sav_filename = f"{uid}.sav"
             sav_file_paths = [os.path.join(players_folder, f) for f in os.listdir(players_folder) if f.lower() == sav_filename.lower()]
             if sav_file_paths:
@@ -66,11 +84,8 @@ def delete_player_saves(player_data):
                 os.remove(sav_file_path)
                 deleted_count += 1
                 print(f"Deleted: {sav_file_path}")
-                print(f"Deleted Player Info: {player}")
-    if deleted_count == 0:
-        print(f"No PlayerUID.sav files found for deletion, skipping...")
-    else:
-        print(f"Total number of pals deleted: {total_pals_to_delete}")
+                print(f"Deleted Player Info: {player}")    
+    if deleted_count == 0: print(f"No PlayerUID.sav files found for deletion, skipping...") 
     return deleted_count, total_pals_to_delete
 def main(file_path):
     try:
@@ -84,12 +99,15 @@ def main(file_path):
     player_data = [line.strip() for line in player_data if line.strip()]
     filtered_players = filter_players_by_days_and_level(player_data, days, level)
     sorted_players = sorted(filtered_players, key=lambda x: extract_last_online(x[0]) or datetime.min)
+    with open('players_filtered.log', 'r', encoding='utf-8') as f:
+        filtered_uids = set(line.strip() for line in f.readlines())
     total_pals_deleted = sum(pals_count for _, pals_count in sorted_players)
+    total_deleted_players = len(sorted_players) - len(filtered_uids)
     delete_count, _ = delete_player_saves(sorted_players)
     print(f"Total Players: {len(player_data)}")
-    print(f"Total Players Deleted: {len(sorted_players)}")
+    print(f"Total Players Deleted: {total_deleted_players}")
     print(f"Total Pals Count of Deleted Players: {total_pals_deleted}")
-    print(f"Total Players Kept: {len(player_data) - len(sorted_players)}")
+    print(f"Total Players Kept: {len(player_data) - len(sorted_players) + len(filtered_uids)}")
     print(f"Filtered by: Days since last online >= {days}, Level <= {level}")
     print(f"Deleted {delete_count} PlayerUID.sav files.")
 if __name__ == "__main__":

@@ -18,7 +18,7 @@ def setup_environment():
     pip_executable = os.path.join("venv", "Scripts", "pip") if os.name == 'nt' else os.path.join("venv", "bin", "pip")
     subprocess.run([pip_executable, "install", "-r", "requirements.txt"])
 def get_versions():
-    tools_version = "1.0.17"
+    tools_version = "1.0.18"
     game_version = "0.4.14"
     return tools_version, game_version
 def display_logo():
@@ -158,7 +158,7 @@ management_tools = [
 ]
 cleaning_tools = [
     "Delete Inactive Players Saves",
-    "Delete Players Saves by Pals amount",
+    "Delete Saves by Pals Count",
     "Generate palguard killnearestbase commands"
 ]
 pws_tools = [
