@@ -186,8 +186,7 @@ SaveGames
 		- Paste the copied files/folders into that folder.
 2. **Transferring the copied solo/co-op world or server:**
     - *Solo/Co-op world to Server:
-		- Create server via SteamCMD. https://docs.palworldgame.com/getting-started/deploy-dedicated-server/#steamcmd. You may skip this step if you already have server.
-		- Then start the server up.
+		- Start the server up.
 		- Wait up to 2 minutes for the auto save.
 		- Shut the server down.
 		- Copy from Solo/Co-op temporary copied folder.
