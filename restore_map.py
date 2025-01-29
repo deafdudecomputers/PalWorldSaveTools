@@ -1,6 +1,6 @@
 import os, shutil, time
 savegames_path = os.path.join(os.environ['LOCALAPPDATA'], 'Pal', 'Saved', 'SaveGames')
-restore_map_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'Restore Map')
+restore_map_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'Backups', 'Restore Map')
 os.makedirs(restore_map_path, exist_ok=True)
 def find_largest_local_data():
     largest_size = 0
@@ -50,7 +50,7 @@ def copy_to_all_subfolders(largest_file, file_size):
 def main():
     print("Warning: This will perform the following actions:")
     print("1. Automatically fetch the largest LocalData.sav")
-    print("2. Create backups of each existing LocalData.sav in the 'Restore Map' folder with timestamps")
+    print("2. Create backups of each existing LocalData.sav in the 'Backups/Restore Map' folder with timestamps")
     print("3. Copy the largest LocalData.sav to all other worlds/servers")
     choice = input("Do you want to continue? (y/n): ")
     if choice.lower() != 'y':
