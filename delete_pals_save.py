@@ -67,10 +67,11 @@ def delete_player_saves(player_info):
             deleted_count += 1
             print(f"Deleted: {sav_file_path}")
             print(f"Deleted Player Info: {line}")
-    if deleted_count == 0:
-        print(f"No PlayerUID.sav files found for deletion, skipping...")
-    else:
-        print(f"Deleted {deleted_count} PlayerUID.sav files.")
+    print("=" * 80)
+    print(f"Filtered by: Pals <= {max_pals}")
+    if deleted_count == 0: print(f"No PlayerUID.sav files found for deletion, skipping...")
+    else: print(f"Deleted {deleted_count} PlayerUID.sav files.")
+    print("=" * 80)
 if __name__ == "__main__":
     if len(sys.argv) < 1:
         print("Usage: python delete_pals_save.py <log_file>")
@@ -79,7 +80,5 @@ if __name__ == "__main__":
     max_pals = int(input("Enter maximum number of pals per player to delete: "))
     filtered_uids = get_filtered_uids('players_filtered.log')
     player_info = find_player_uids_with_max_pals(log_file, filtered_uids, max_pals)
-    if player_info:
-        delete_player_saves(player_info)
-    else:
-        print(f"No PlayerUIDs found in {log_file} that match the filter.")
+    if player_info:delete_player_saves(player_info)
+    else: print(f"No PlayerUIDs found in {log_file} that match the filter.")

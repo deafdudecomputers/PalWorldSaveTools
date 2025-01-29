@@ -60,7 +60,7 @@ def delete_player_saves(player_data):
     backup_folder = "Backups/Delete Inactive Players Saves"
     if not os.path.exists(players_folder):
         print(f"Players folder '{players_folder}' not found.")
-        return 0, 0
+        return
     backup_whole_directory("PalWorldSave", backup_folder)
     filtered_uids = set()
     try:
@@ -104,12 +104,14 @@ def main(file_path):
     total_pals_deleted = sum(pals_count for _, pals_count in sorted_players)
     total_deleted_players = len(sorted_players) - len(filtered_uids)
     delete_count, _ = delete_player_saves(sorted_players)
-    print(f"Total Players: {len(player_data)}")
-    print(f"Total Players Deleted: {total_deleted_players}")
-    print(f"Total Pals Count of Deleted Players: {total_pals_deleted}")
-    print(f"Total Players Kept: {len(player_data) - len(sorted_players) + len(filtered_uids)}")
+    print("=" * 80)
+    #print(f"Total Players: {len(player_data)}")
+    #print(f"Total Players Deleted: {total_deleted_players+ len(filtered_uids)}")
+    #print(f"Total Pals Count of Deleted Players: {total_pals_deleted}")
+    #print(f"Total Players Kept: {len(player_data) - len(sorted_players)}")
     print(f"Filtered by: Days since last online >= {days}, Level <= {level}")
     print(f"Deleted {delete_count} PlayerUID.sav files.")
+    print("=" * 80)
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Sort, filter, and delete players by days since last online and level.")
     parser.add_argument("file", help="Path to the file containing player data")
