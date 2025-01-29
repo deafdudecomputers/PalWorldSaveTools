@@ -258,7 +258,7 @@ SaveGames
 
 ### Server to Solo/Co-op
 
-1. Copy:
+1. Copy the migrated:
    - `Players` folder
    - `Level.sav`
 2. Open **File Explorer** and search for:
