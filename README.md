@@ -88,7 +88,10 @@ Follow these steps to delete inactive players based on your criteria (e.g., inac
 
 ### 1. Find the Old Server/World ID:
 - **Join your old server/world**.
-- Open File Explorer and run the search for: ```%localappdata%\Pal\Saved\SaveGames\ ```
+- Open File Explorer and run the search for: 
+	```
+	%localappdata%\Pal\Saved\SaveGames\
+	```
 - Look for a folder with a **random ID** (this should be your **Steam ID**).
 - Open that folder and **sort the subfolders by the "Last Modified" date**.
 - Look for the folder that matches your **old server/world ID** (e.g., `FCC47F5F4DD6AC48D3C0E2B30059973D`). The folder with the most recent modification date is typically the one for your **old server/world**.
