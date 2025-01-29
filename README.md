@@ -88,8 +88,7 @@ Follow these steps to delete inactive players based on your criteria (e.g., inac
 
 ### 1. Find the Old Server/World ID:
 - **Join your old server/world**.
-- Open File Explorer and run the search for:  
-  `%localappdata%\Pal\Saved\SaveGames\`
+- Open File Explorer and run the search for: ```%localappdata%\Pal\Saved\SaveGames\ ```
 - Look for a folder with a **random ID** (this should be your **Steam ID**).
 - Open that folder and **sort the subfolders by the "Last Modified" date**.
 - Look for the folder that matches your **old server/world ID** (e.g., `FCC47F5F4DD6AC48D3C0E2B30059973D`). The folder with the most recent modification date is typically the one for your **old server/world**.
@@ -97,8 +96,7 @@ Follow these steps to delete inactive players based on your criteria (e.g., inac
 
 ### 2. Find the New Server/World ID:
 - **Join your new server/world**.
-- Go back to the same folder path:  
-  `%localappdata%\Pal\Saved\SaveGames\`
+- Go back to the same folder path: ```%localappdata%\Pal\Saved\SaveGames\ ```
 - Look for a folder with a **random ID** (this should be your **Steam ID**).
 - Open that folder and **sort the subfolders by the "Last Modified" date**.
 - Look for the folder that matches your **new server/world ID**.
@@ -112,7 +110,7 @@ Done! Your map is back in your **new server/world**!
 
 ## Where to find the save files:
 
-The save files are usually located at `C:\Users\YOURUSERNAME\AppData\Local\Pal\Saved\SaveGames\YOURSTEAMID\RANDOMID` for co-op saves.
+The save files are usually located at ```C:\Users\YOURUSERNAME\AppData\Local\Pal\Saved\SaveGames\YOURSTEAMID\RANDOMID``` for co-op saves.
 For server saves, go to the dedicated server's file location through steam.
 You need at least 4 files to complete the transfer:
 ```
