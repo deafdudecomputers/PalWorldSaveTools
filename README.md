@@ -74,7 +74,7 @@ Follow these steps to delete inactive players based on your criteria (e.g., inac
 	\Pal\Saved\SaveGames\0\RANDOMSERVERID\
 	``` 
 
-to the (`PalWorldSave`) folder. 
+   to the (`PalWorldSave`) folder. 
 2. Select Scan Save.
 3. Select Delete Inactive Players Saves.
 4. Input your desired requirements, then let it finish.  
