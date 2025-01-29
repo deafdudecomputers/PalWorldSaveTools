@@ -185,7 +185,7 @@ SaveGames
 		- Create a new temporary folder.
 		- Paste the copied files/folders into that folder.
 2. **Transferring the copied solo/co-op world or server:**
-    - *Solo/Co-op world to Server:
+    - *Solo/Co-op world to Server:*
 		- Start the server up.
 		- Wait up to 2 minutes for the auto save.
 		- Shut the server down.
@@ -199,7 +199,7 @@ SaveGames
 		- Shut down the server.
 		- Copy the updated files/folders from `steamapps\common\Palworld\Pal\Saved\SaveGames\0\RANDOMSERVERID\`.
 		- Create new temporary folder if you desire and paste into that new temporary folder, or simply paste into former temporary folder you created earlier.
-	- *Server to solo/co-op world:
+	- *Server to solo/co-op world:*
 		- Copy these from `steamapps\common\Palworld\Pal\Saved\SaveGames\0\RANDOMSERVERID\`:
 			- Level.sav
 			- Players folder
@@ -249,7 +249,7 @@ SaveGames
 	- Copy these:
 		- Players folder
 		- Level.sav
-	**Server to solo/co-op**
+	*Server to solo/co-op*
 		- Open File Explorer and run the search for:  
 		  `%localappdata%\Pal\Saved\SaveGames\`
 		- Look for a folder with a **random ID** (this should be your **Steam ID**).
@@ -260,7 +260,7 @@ SaveGames
 		- Start the game.
 		- Load the world.
 		- Enjoy your old character, with all of bases/inventory/pals/etc intact.
-	**Solo/co-op to server**
+	*Solo/co-op to server*
 		- Go into `steamapps\common\Palworld\Pal\Saved\SaveGames\0\RANDOMSERVERID\`
 		- Paste the copied files/folders into that folder.
 		- Start the game.
