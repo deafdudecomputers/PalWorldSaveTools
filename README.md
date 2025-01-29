@@ -158,111 +158,122 @@ SaveGames
 
 ### Transferring from Host to Server (or vice versa):
 
-1. **Make a copy of your "host" or "server" saves.**
-    - *Solo/Co-op world:*
-	    - Open PalWorld game.
-		- Load into your world.
-		- Open File Explorer and run the search for:  
-		  `%localappdata%\Pal\Saved\SaveGames\`
-		- Look for a folder with a **random ID** (this should be your **Steam ID**).
-		- Open that folder and **sort the subfolders by the "Last Modified" date**.
-		- The folder with the most recent modification date is typically the one for your **world**.
-		- Open that folder.
-		- Copy these: 
-			- Level.sav
-			- Players folder
-			*Optional*
-			- LocalData.sav
-			- WorldOption.sav
-		- Create a new temporary folder.
-		- Paste the copied files/folders into that folder.
-	- *Dedicated Server:*
-		- Open the server save folder:
-			- Default installation usually set to this path: `steamapps\common\Palworld\Pal\Saved\SaveGames\0\RANDOMSERVERID\`
-		- Copy these:
-			- Level.sav
-			- Players folder
-		- Create a new temporary folder.
-		- Paste the copied files/folders into that folder.
-2. **Transferring the copied solo/co-op world or server:**
-    - *Solo/Co-op world to Server:*
-		- Start the server up.
-		- Wait up to 2 minutes for the auto save.
-		- Shut the server down.
-		- Copy from Solo/Co-op temporary copied folder.
-		- Go into `steamapps\common\Palworld\Pal\Saved\SaveGames\0\RANDOMSERVERID\`
-		- Paste the copied files/folders from Solo/Co-op temporary copied folder.
-		- Start the server up.
-		- Join the server. 
-		- Create new character.
-		- Wait up to 2 minutes for the auto save after making the character.
-		- Shut down the server.
-		- Copy the updated files/folders from `steamapps\common\Palworld\Pal\Saved\SaveGames\0\RANDOMSERVERID\`.
-		- Create new temporary folder if you desire and paste into that new temporary folder, or simply paste into former temporary folder you created earlier.
-	- *Server to solo/co-op world:*
-		- Copy these from `steamapps\common\Palworld\Pal\Saved\SaveGames\0\RANDOMSERVERID\`:
-			- Level.sav
-			- Players folder
-		- Create new temporary folder.
-		- Paste the copied files/folders into the created temporary folder.
-		- Start the game.
-		- Create new world.
-		- Create new character.
-		- Wait up to 2 minutes for the auto save.
-		- Close the game.
-		- Copy the files/folders from the created temporary folder.
-		- Open File Explorer and run the search for:  
-		  `%localappdata%\Pal\Saved\SaveGames\`
-		- Look for a folder with a **random ID** (this should be your **Steam ID**).
-		- Open that folder and **sort the subfolders by the "Last Modified" date**.
-		- The folder with the most recent modification date is typically the one for your **world**.
-		- Open that folder.
-		- Paste the copied files/folders from the created temporary folder.
-		- Start the game.
-		- Rejoin the same world you just made.
-		- Remake the new character again.
-		- Wait up to 2 minutes for the auto save after making the character.
-		- Close the game.
-		- Open File Explorer and run the search for:  
-		  `%localappdata%\Pal\Saved\SaveGames\`
-		- Look for a folder with a **random ID** (this should be your **Steam ID**).
-		- Open that folder and **sort the subfolders by the "Last Modified" date**.
-		- The folder with the most recent modification date is typically the one for your **world**.
-		- Open that folder.
-		- Check the Players folder, you should see two different files:
-			- 0001.sav, which is the solo/co-op save - aka, the host save.
-			- RANDOMID....000.sav, which is YOUR regular save.
-		- Copy these:
-			- Players folder
-			- Level.sav
-		- Create new temporary folder if you desire and paste into that new temporary folder, or simply paste into former temporary folder you created earlier.
-3. **Use the Fix Host Save**  
-	- Click on Browse button:
-		- Nagivate to the created temporary folder from above steps.
-		- Select the Level.sav in that temporary folder.
-	- After it loads the Level.sav data:
-		- Select your old character as old GUID.
-		- Select your new character as new GUID.
-	- After you confirm and everything looks right, you may go ahead and press the Migrate button.
-4. **Updating the solo/co-op or server saves**
-	- Open the temporary folder you just migrated.
-	- Copy these:
-		- Players folder
-		- Level.sav
-	- *Server to solo/co-op*
-		- Open File Explorer and run the search for:  
-		  `%localappdata%\Pal\Saved\SaveGames\`
-		- Look for a folder with a **random ID** (this should be your **Steam ID**).
-		- Open that folder and **sort the subfolders by the "Last Modified" date**.
-		- The folder with the most recent modification date is typically the one for your **world**.
-		- Open that folder.
-		- Paste the copied files/folders into that folder.
-		- Start the game.
-		- Load the world.
-		- Enjoy your old character, with all of bases/inventory/pals/etc intact.
-	- *Solo/co-op to server*
-		- Go into `steamapps\common\Palworld\Pal\Saved\SaveGames\0\RANDOMSERVERID\`
-		- Paste the copied files/folders into that folder.
-		- Start the game.
-		- Join the server.
-		- Enjoy your old character, with all of bases/inventory/pals/etc intact.
+# Palworld Save Transfer Guide
+
+## 1. Backup Your Saves
+
+### Solo/Co-op World Backup
+
+1. Open **Palworld** and load into your world.
+2. Open **File Explorer** and search for:
+   ```
+   %localappdata%\Pal\Saved\SaveGames\
+   ```
+3. Find the folder with a **random ID** (your **Steam ID**).
+4. Open that folder and **sort subfolders by 'Last Modified' date**.
+5. The most recent folder is your **world**—open it.
+6. Copy the following files and folders:
+   - `Level.sav`
+   - `Players` folder
+   - *(Optional)* `LocalData.sav`, `WorldOption.sav`
+7. Paste them into a new **temporary folder**.
+
+### Dedicated Server Backup
+
+1. Navigate to your server save folder (default location):
+   ```
+   steamapps\common\Palworld\Pal\Saved\SaveGames\0\RANDOMSERVERID\
+   ```
+2. Copy:
+   - `Level.sav`
+   - `Players` folder
+3. Paste them into a new **temporary folder**.
+
+---
+
+## 2. Transfer Saves
+
+### Solo/Co-op to Server
+
+1. **Start the server** and let it run for **2 minutes** to auto-save.
+2. **Shut down the server**.
+3. Copy files from the **temporary folder**.
+4. Navigate to:
+   ```
+   steamapps\common\Palworld\Pal\Saved\SaveGames\0\RANDOMSERVERID\
+   ```
+5. Paste the copied files into this folder.
+6. **Start the server** and join it.
+7. **Create a new character** and wait for the **auto-save**.
+8. **Shut down the server**.
+9. Copy the updated files from:
+   ```
+   steamapps\common\Palworld\Pal\Saved\SaveGames\0\RANDOMSERVERID\
+   ```
+10. Paste them into a **new or existing temporary folder**.
+
+### Server to Solo/Co-op
+
+1. Copy the following from:
+   ```
+   steamapps\common\Palworld\Pal\Saved\SaveGames\0\RANDOMSERVERID\
+   ```
+   - `Level.sav`
+   - `Players` folder
+2. Paste them into a **temporary folder**.
+3. Start **Palworld** and create a **new world**.
+4. Create a **new character** and wait **2 minutes** for the auto-save.
+5. **Close the game**.
+6. Copy the files from the **temporary folder**.
+7. Open **File Explorer** and search for:
+   ```
+   %localappdata%\Pal\Saved\SaveGames\
+   ```
+8. Find the **most recently modified** world folder and open it.
+9. Paste the copied files into this folder.
+10. Start **Palworld**, rejoin your world, and **create a new character**.
+11. Wait **2 minutes** for the auto-save, then **close the game**.
+12. Reopen the save folder and check the `Players` folder. It should contain:
+    - `0001.sav` (host save)
+    - `RANDOMID....000.sav` (your regular save)
+13. Copy:
+    - `Players` folder
+    - `Level.sav`
+14. Paste them into a **new or existing temporary folder**.
+
+---
+
+## 3. Fix Host Save
+
+1. Open the **Fix Host Save** tool.
+2. Click `Browse` and select `Level.sav` from your **temporary folder**.
+3. After loading, select:
+   - **Old GUID** (your old character)
+   - **New GUID** (your new character)
+4. Click `Migrate` once confirmed.
+
+---
+
+## 4. Update Saves
+
+### Server to Solo/Co-op
+
+1. Copy:
+   - `Players` folder
+   - `Level.sav`
+2. Open **File Explorer** and search for:
+   ```
+   %localappdata%\Pal\Saved\SaveGames\
+   ```
+3. Find the **most recently modified** world folder and open it.
+4. Paste the copied files into this folder.
+5. Start **Palworld**, load your world, and enjoy your character with all progress intact.
+
+### Solo/Co-op to Server
+
+1. Navigate to:
+   ```
+   steamapps\common\Palworld\Pal\Saved\SaveGames\0\RANDOMSERVERID\
+   ```
+2. Paste the copied files into this folder.
+3. Start **Palworld**, join the server, and enjoy your character with all progress intact.
