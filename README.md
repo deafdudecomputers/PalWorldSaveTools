@@ -249,7 +249,7 @@ SaveGames
 	- Copy these:
 		- Players folder
 		- Level.sav
-	*Server to solo/co-op*
+	#Server to solo/co-op
 		- Open File Explorer and run the search for:  
 		  `%localappdata%\Pal\Saved\SaveGames\`
 		- Look for a folder with a **random ID** (this should be your **Steam ID**).
@@ -260,7 +260,7 @@ SaveGames
 		- Start the game.
 		- Load the world.
 		- Enjoy your old character, with all of bases/inventory/pals/etc intact.
-	*Solo/co-op to server*
+	#Solo/co-op to server
 		- Go into `steamapps\common\Palworld\Pal\Saved\SaveGames\0\RANDOMSERVERID\`
 		- Paste the copied files/folders into that folder.
 		- Start the game.
