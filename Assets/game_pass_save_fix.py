@@ -134,7 +134,8 @@ def convert_sav_JSON(saveName):
     save_path = f"./saves/{saveName}/Level/01.sav"
     if not os.path.exists(save_path): return None
     python_exe = os.path.join("venv", "Scripts", "python.exe") if os.name == 'nt' else os.path.join("venv", "bin", "python")
-    command = [python_exe, "./convert.py", save_path]
+    convert_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "convert.py")
+    command = [python_exe, convert_path, save_path]
     try:
         subprocess.run(command, check=True)
         json_file_path = f"./saves/{saveName}/Level/01.sav.json"
@@ -147,7 +148,8 @@ def convert_JSON_sav(saveName):
     print(saveName)
     print(f"Converting JSON file to .sav: {saveName}")
     python_exe = os.path.join("venv", "Scripts", "python.exe") if os.name == 'nt' else os.path.join("venv", "bin", "python")
-    command = [python_exe, "./convert.py", f"./saves/{saveName}/Level/01.sav.json", "--output", f"./saves/{saveName}/Level.sav"]
+    convert_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "convert.py")
+    command = [python_exe, convert_path, f"./saves/{saveName}/Level/01.sav.json", "--output", f"./saves/{saveName}/Level.sav"]
     try:
         subprocess.run(command, check=True)
         print("Command executed successfully")
@@ -189,7 +191,8 @@ def move_save_steam(saveName):
         messagebox.showerror("Error", f"Failed to copy the save folder: {e}")
 window = customtkinter.CTk()
 window.title("PalWorld Save Converter")
-window.iconbitmap("./internal_libs/pal.ico")
+icon_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "resources", "pal.ico")
+window.iconbitmap(icon_path)
 screen_width = window.winfo_screenwidth()
 screen_height = window.winfo_screenheight()
 app_width = 400
@@ -199,8 +202,10 @@ y = (screen_height // 2) - (app_height // 2)
 window.geometry(f"{app_width}x{app_height}+{x}+{y}")
 overlay_frame = customtkinter.CTkFrame(window, fg_color="transparent")
 overlay_frame.place(relx=0.5, rely=0.1, anchor="n")
-xgp = customtkinter.CTkImage(dark_image=Image.open("./internal_libs/xgp.png"), size=(80,40)) 
-steam = customtkinter.CTkImage(dark_image=Image.open("./internal_libs/steam.png"), size=(30,30))
+xgp_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "resources", "xgp.png")
+steam_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "resources", "steam.png")
+xgp = customtkinter.CTkImage(dark_image=Image.open(xgp_path), size=(80,40))
+steam = customtkinter.CTkImage(dark_image=Image.open(steam_path), size=(30,30))
 label = customtkinter.CTkLabel(overlay_frame , image=xgp, text="")
 label.pack(side="left", padx=10)
 label = customtkinter.CTkLabel(overlay_frame , image=steam, text="")
