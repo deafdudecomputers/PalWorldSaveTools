@@ -848,6 +848,18 @@ def sort_treeview_column(treeview, col_index, reverse):
     data.sort(reverse=reverse, key=lambda x: x[0])
     for index, (_, item) in enumerate(data): treeview.move(item, '', index)
     treeview.heading(col_index, command=lambda: sort_treeview_column(treeview, col_index, not reverse))
+def filter_treeview(tree, query):
+    query = query.lower()
+    if not hasattr(filter_treeview, "original_rows"):
+        filter_treeview.original_rows = [row for row in tree.get_children()]
+    for row in filter_treeview.original_rows:
+        tree.reattach(row, '', 'end')
+    for row in tree.get_children():
+        values = tree.item(row, "values")
+        if any(query in str(value).lower() for value in values):
+            tree.reattach(row, '', 'end')
+        else:
+            tree.detach(row)
 level_sav_path, host_sav_path, t_level_sav_path, t_host_sav_path = None, None, None, None
 level_json, host_json, targ_lvl, targ_json = None, None, None, None
 target_section_ranges, target_save_type, target_raw_gvas, targ_json_gvas = None, None, None, None
@@ -871,6 +883,14 @@ root.columnconfigure(0, weight=3)
 root.columnconfigure(1, weight=1)
 root.rowconfigure(3, weight=1)
 root.rowconfigure(5, weight=1)
+source_search_var = tk.StringVar()
+source_search_entry = tk.Entry(root, textvariable=source_search_var, font=font_style, bg="#444", fg="white", insertbackground="white")
+source_search_entry.grid(row=1, column=0, columnspan=2, padx=10, pady=5, sticky="ew")
+source_search_var.trace_add("write", lambda *args: filter_treeview(source_player_list, source_search_var.get()))
+target_search_var = tk.StringVar()
+target_search_entry = tk.Entry(root, textvariable=target_search_var, font=font_style, bg="#444", fg="white", insertbackground="white")
+target_search_entry.grid(row=6, column=0, columnspan=2, padx=10, pady=5, sticky="ew")
+target_search_var.trace_add("write", lambda *args: filter_treeview(target_player_list, target_search_var.get()))
 tk.Button(root, text='Select Source Level File', command=source_level_file).grid(row=2, column=1, padx=10, pady=20, sticky="ew")
 source_level_path_label = tk.Label(root, text="Please select a file:", font=font_style, bg="#2f2f2f", fg="white", wraplength=600)
 source_level_path_label.grid(row=2, column=0, padx=10, pady=20, sticky="ew")
@@ -927,6 +947,6 @@ keep_old_guild_check = tk.Checkbutton(
     foreground="white", 
     bg="#2f2f2f"
 )
-keep_old_guild_check.grid(row=6, column=1, columnspan=2, sticky='w', padx=10, pady=5)
+keep_old_guild_check.grid(row=8, column=0, columnspan=2, sticky='w', padx=10, pady=5)
 root.protocol("WM_DELETE_WINDOW", on_exit)
 root.mainloop()
