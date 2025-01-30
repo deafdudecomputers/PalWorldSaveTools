@@ -1,6 +1,6 @@
 from import_libs import *
 from convert import convert_json_to_sav, convert_sav_to_json
-def search_file(pattern, directory): return glob.glob(f"{directory}/**/{pattern}", recursive=True)
+def search_file(pattern, directory): return glob.glob(f"{directory}/PalWorldSave/**/{pattern}", recursive=True)
 def edit_json(file_path, pages, slots):
     with open(file_path, 'r') as file: data = json.load(file)
     value_to_replace, new_value, count_found, count_replaced = 960, pages * slots, 0, 0
