@@ -18,7 +18,7 @@ def setup_environment():
     pip_executable = os.path.join("venv", "Scripts", "pip") if os.name == 'nt' else os.path.join("venv", "bin", "pip")
     subprocess.run([pip_executable, "install", "-r", "requirements.txt"])
 def get_versions():
-    tools_version = "1.0.18"
+    tools_version = "1.0.19"
     game_version = "0.4.14"
     return tools_version, game_version
 def display_logo():
@@ -41,44 +41,41 @@ def display_menu(tools_version, game_version):
     display_logo()
     print(f"                     {BLUE_FONT}Converting Tools{RESET_FONT}")
     print("=" * 80)
-    for i, tool in enumerate(converting_tools, 1):
-        print(f"{BLUE_FONT}{i}{RESET_FONT}. {tool}")
+    for i, tool in enumerate(converting_tools, 1): print(f"{BLUE_FONT}{i}{RESET_FONT}. {tool}")
     print("=" * 80)
     print(f"                     {GREEN_FONT}Management Tools{RESET_FONT}")
     print("=" * 80)
-    for i, tool in enumerate(management_tools, len(converting_tools) + 1):
-        print(f"{GREEN_FONT}{i}{RESET_FONT}. {tool}")
+    for i, tool in enumerate(management_tools, len(converting_tools) + 1): print(f"{GREEN_FONT}{i}{RESET_FONT}. {tool}")
     print("=" * 80)
     print(f"                     {YELLOW_FONT}Cleaning Tools{RESET_FONT}")
     print("=" * 80)
-    for i, tool in enumerate(cleaning_tools, len(converting_tools) + len(management_tools) + 1):
-        print(f"{YELLOW_FONT}{i}{RESET_FONT}. {tool}")
+    for i, tool in enumerate(cleaning_tools, len(converting_tools) + len(management_tools) + 1): print(f"{YELLOW_FONT}{i}{RESET_FONT}. {tool}")
     print("=" * 80)
     print(f"                     {PURPLE_FONT}PalWorldSaveTools{RESET_FONT}")
     print("=" * 80)
-    for i, tool in enumerate(pws_tools, len(converting_tools) + len(management_tools) + len(cleaning_tools) + 1):
-        print(f"{PURPLE_FONT}{i}{RESET_FONT}. {tool}")
+    for i, tool in enumerate(pws_tools, len(converting_tools) + len(management_tools) + len(cleaning_tools) + 1): print(f"{PURPLE_FONT}{i}{RESET_FONT}. {tool}")
     print("=" * 80)
 def run_tool(choice):
     python_exe = os.path.join("venv", "Scripts", "python.exe") if os.name == 'nt' else os.path.join("venv", "bin", "python")
+    assets_folder = os.path.join(os.path.dirname(__file__), "Assets")
     tool_mapping = {
-        1: lambda: subprocess.run([python_exe, "convert_level_location_finder.py", "json"]),
-        2: lambda: subprocess.run([python_exe, "convert_level_location_finder.py", "sav"]),
-        3: lambda: subprocess.run([python_exe, "convert_players_location_finder.py", "json"]),
-        4: lambda: subprocess.run([python_exe, "convert_players_location_finder.py", "sav"]),
-        5: lambda: subprocess.run([python_exe, "game_pass_save_fix.py"]),
-        6: lambda: subprocess.run([python_exe, "convertids.py"]),
-        7: lambda: subprocess.run([python_exe, "coords.py"]),
-        8: lambda: subprocess.run([python_exe, "slot_injector.py"]),
-        9: lambda: subprocess.run([python_exe, "palworld_save_pal.py"]),
+        1: lambda: subprocess.run([python_exe, os.path.join(assets_folder, "convert_level_location_finder.py"), "json"]),
+        2: lambda: subprocess.run([python_exe, os.path.join(assets_folder, "convert_level_location_finder.py"), "sav"]),
+        3: lambda: subprocess.run([python_exe, os.path.join(assets_folder, "convert_players_location_finder.py"), "json"]),
+        4: lambda: subprocess.run([python_exe, os.path.join(assets_folder, "convert_players_location_finder.py"), "sav"]),
+        5: lambda: subprocess.run([python_exe, os.path.join(assets_folder, "game_pass_save_fix.py")]),
+        6: lambda: subprocess.run([python_exe, os.path.join(assets_folder, "convertids.py")]),
+        7: lambda: subprocess.run([python_exe, os.path.join(assets_folder, "coords.py")]),
+        8: lambda: subprocess.run([python_exe, os.path.join(assets_folder, "slot_injector.py")]),
+        9: lambda: subprocess.run([python_exe, os.path.join(assets_folder, "palworld_save_pal.py")]),
         10: scan_save,
         11: generate_map,
-        12: lambda: subprocess.run([python_exe, "character_transfer.py"]),
-        13: lambda: subprocess.run([python_exe, "fix_host_save.py"]),
-        14: lambda: subprocess.run([python_exe, "restore_map.py"]),
-        15: lambda: subprocess.run([python_exe, "delete_inactive_players.py", "players.log"]),
-        16: lambda: subprocess.run([python_exe, "delete_pals_save.py", "players.log"]),
-        17: lambda: subprocess.run([python_exe, "palguard_bases.py"]),
+        12: lambda: subprocess.run([python_exe, os.path.join(assets_folder, "character_transfer.py")]),
+        13: lambda: subprocess.run([python_exe, os.path.join(assets_folder, "fix_host_save.py")]),
+        14: lambda: subprocess.run([python_exe, os.path.join(assets_folder, "restore_map.py")]),
+        15: lambda: subprocess.run([python_exe, os.path.join(assets_folder, "delete_inactive_players.py"), "players.log"]),
+        16: lambda: subprocess.run([python_exe, os.path.join(assets_folder, "delete_pals_save.py"), "players.log"]),
+        17: lambda: subprocess.run([python_exe, os.path.join(assets_folder, "palguard_bases.py")]),
         18: reset_update_tools,
         19: about_tools,
         20: usage_tools,
@@ -90,11 +87,11 @@ def scan_save():
     python_exe = os.path.join("venv", "Scripts", "python.exe") if os.name == 'nt' else os.path.join("venv", "bin", "python")
     for file in ["scan_save.log", "players.log", "sort_players.log"]: Path(file).unlink(missing_ok=True)
     if Path("Pal Logger").exists(): subprocess.run(["rmdir", "/s", "/q", "Pal Logger"], shell=True)
-    if Path("PalWorldSave/Level.sav").exists(): subprocess.run([python_exe, "scan_save.py", "PalWorldSave/Level.sav"])
+    if Path("PalWorldSave/Level.sav").exists(): subprocess.run([python_exe, os.path.join("Assets", "scan_save.py"), "PalWorldSave/Level.sav"])
     else: print(f"{RED_FONT}Error: PalWorldSave/Level.sav not found!{RESET_FONT}")
 def generate_map():
     python_exe = os.path.join("venv", "Scripts", "python.exe") if os.name == 'nt' else os.path.join("venv", "bin", "python")
-    subprocess.run([python_exe, "-m", "internal_libs.bases"])
+    subprocess.run([python_exe, "-m", "Assets.bases"])
     if Path("updated_worldmap.png").exists():
         print(f"{GREEN_FONT}Opening updated_worldmap.png...{RESET_FONT}")
         subprocess.run(["start", "updated_worldmap.png"], shell=True)

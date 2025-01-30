@@ -1,4 +1,4 @@
-from internal_libs.import_libs import *
+from import_libs import *
 def set_console_title(title):
     try:
         if platform.system() == "Windows":

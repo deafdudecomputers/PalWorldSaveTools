@@ -1,4 +1,4 @@
-from internal_libs.import_libs import *
+from import_libs import *
 try:
     from setproctitle import setproctitle
 except ImportError:

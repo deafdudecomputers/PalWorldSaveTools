@@ -1,6 +1,6 @@
 import os, shutil, time
 savegames_path = os.path.join(os.environ['LOCALAPPDATA'], 'Pal', 'Saved', 'SaveGames')
-restore_map_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'Backups', 'Restore Map')
+restore_map_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'Backups', 'Restore Map')
 os.makedirs(restore_map_path, exist_ok=True)
 def find_largest_local_data():
     largest_size = 0

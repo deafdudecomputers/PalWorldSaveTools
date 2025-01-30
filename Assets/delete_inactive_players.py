@@ -1,4 +1,4 @@
-from internal_libs.import_libs import *
+from import_libs import *
 from datetime import datetime, timedelta
 def backup_whole_directory(source_folder, backup_folder):
     if not os.path.exists(backup_folder):

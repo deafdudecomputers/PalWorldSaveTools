@@ -1,4 +1,4 @@
-from internal_libs.import_libs import *
+from import_libs import *
 def get_steam_id_from_local():
     local_app_data_path = os.path.expandvars(r"%localappdata%\Pal\Saved\SaveGames")
     try:

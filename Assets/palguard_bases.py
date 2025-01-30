@@ -1,4 +1,4 @@
-from internal_libs.import_libs import *
+from import_libs import *
 from datetime import datetime, timedelta
 def parse_log(inactivity_days=None, max_level=None):
     print()

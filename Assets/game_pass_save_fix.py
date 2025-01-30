@@ -1,4 +1,4 @@
-from internal_libs.import_libs import *
+from import_libs import *
 saves = []
 save_extractor_done = threading.Event()
 save_converter_done = threading.Event()

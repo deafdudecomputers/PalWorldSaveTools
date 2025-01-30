@@ -1,7 +1,9 @@
-from internal_libs.import_libs import *
+import os, sys
+sys.path.append(os.path.dirname(__file__))
+from import_libs import *
 x_min, x_max = -1000, 1000
 y_min, y_max = -1000, 1000
-image_path = 'internal_libs/worldmap.png'
+image_path = os.path.join(os.path.dirname(__file__), "resources", "worldmap.png")
 image = plt.imread(image_path)
 height, width = image.shape[:2]
 x_scale = width / (x_max - x_min)
@@ -84,9 +86,12 @@ def extract_info_from_log():
         print(f"{key}: {value}")
     return stats
 def create_world_map():
-    image = Image.open('internal_libs/worldmap.png').convert('RGBA')
-    marker = Image.open('internal_libs/baseicon.png').convert('RGBA')
-    font_path = 'internal_libs/NotoSans-Regular.ttf'
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    worldmap_path = os.path.join(base_dir, 'resources', 'worldmap.png')
+    marker_path = os.path.join(base_dir, 'resources', 'baseicon.png')
+    font_path = os.path.join(base_dir, 'resources', 'NotoSans-Regular.ttf')
+    image = Image.open(worldmap_path).convert('RGBA')
+    marker = Image.open(marker_path).convert('RGBA')
     pil_font = ImageFont.truetype(font_path, 14)
     df = pd.read_csv('bases.csv')
     marker_size = (64, 64)

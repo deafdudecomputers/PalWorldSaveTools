@@ -97,7 +97,7 @@ def main():
         [sg.Button("Migrate", key='button_migrate')],
         [sg.ProgressBar(100, orientation='h', size=(20, 20), key='progressbar')],
         [sg.Text("", key='progressbarText')],]
-    icon_path = os.path.join("internal_libs", "pal.ico")
+    icon_path = os.path.join("Assets", "resources", "pal.ico")
     window = sg.Window("GUID Migration Tool", layout, icon=icon_path)
     player_files = []
     players = {}
@@ -106,20 +106,22 @@ def main():
         if event == sg.WIN_CLOSED or event == "Cancel": break
         if event == "file_path":
             file_path = values["file_path"]
-            if not os.path.exists(file_path): sg.popup(f"The file doesn't exist. Please select a valid \"Level.sav\" file.", text_color='lightcoral')
+            if not os.path.exists(file_path): 
+                sg.popup(f"The file doesn't exist. Please select a valid \"Level.sav\" file.", text_color='lightcoral', icon=icon_path)
             else:
                 folder_path = os.path.dirname(file_path)
                 players_folder = os.path.join(folder_path, "Players")
                 if os.path.exists(players_folder):
                     player_files = [f[:-4] for f in os.listdir(players_folder) if f.endswith(".sav")]
                     if len(player_files) <= 1:
-                        sg.popup("There should be at least two different saves in the Players folder to proceed.", text_color='lightcoral')
+                        sg.popup("There should be at least two different saves in the Players folder to proceed.", text_color='lightcoral', icon=icon_path)
                         window.close()
                         sys.exit(1)
                     try:
                         LoadFile(file_path)
                         ShowPlayers()
-                    except Exception as e: sg.popup(f"Error loading the file: {e}", text_color='lightcoral')
+                    except Exception as e: 
+                        sg.popup("Error loading the file: {e}", text_color='lightcoral', icon=icon_path)
                     log_file = 'players.log'
                     players = extract_player_data(log_file)
                     player_files_with_names = []
@@ -130,7 +132,7 @@ def main():
                     window['old_guid'].update(values=player_files_with_names)
                     window['new_guid'].update(values=player_files_with_names)
                 else:
-                    sg.popup("No Players folder found.", text_color='lightcoral')
+                    sg.popup("No Players folder found.", text_color='lightcoral', icon=icon_path)
         if event == "old_guid":
             old_guid_name = values["old_guid"]
             old_guid = re.search(r'\((.*?)\)', old_guid_name).group(1)
@@ -168,10 +170,10 @@ def main():
                     fix_save(folder_path, new_guid, old_guid)
                     window['progressbarText'].update("Migration successful!")
                     window['progressbar'].update_bar(100)
-                    sg.popup("Finished migrating. Have fun!")
+                    sg.popup("Finished migrating. Have fun!", icon=icon_path)
                 except Exception as e:
                     window['progressbarText'].update("An error occurred during migration.")
-                    sg.popup(f"Error: {e}", text_color='lightcoral')
+                    sg.popup(f"Error: {e}", text_color='lightcoral', icon=icon_path)
     window.close()
 if __name__ == "__main__":
     file_path = 'players.log'
