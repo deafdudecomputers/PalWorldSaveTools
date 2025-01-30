@@ -76,26 +76,7 @@ def list_folders_in_directory(directory):
         return []
     except PermissionError:
         print(f"You don't have permission to access {directory}.")
-        return []  
-def find_key_in_json(file_path, target_key):
-    print("Now loading the json...")
-    try:
-        with open(file_path, 'r') as f:
-            parser = ijson.parse(f)
-            player_uid = None
-            player_name = None
-            for prefix, event, value in parser:
-                if event == 'map_key' and value == "player_uid":
-                    prefix, event, player_uid = next(parser)
-                if player_uid == target_key and value == "player_name":
-                    prefix, event, player_name = next(parser)
-                    return player_name
-            return None
-    except FileNotFoundError:
-        print(f"Error: File not found at path: {file_path}")
-    except ijson.common.IncompleteJSONError:
-        print(f"Error: Incomplete or invalid JSON in file: {file_path}")
-    return None
+        return [] 
 def is_folder_empty(directory):
     try:
         if not os.path.exists(directory):
@@ -136,15 +117,9 @@ def convert_sav_JSON(saveName):
     python_exe = os.path.join("venv", "Scripts", "python.exe") if os.name == 'nt' else os.path.join("venv", "bin", "python")
     convert_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "convert.py")
     command = [python_exe, convert_path, save_path]
-    try:
-        subprocess.run(command, check=True)
-        json_file_path = f"./saves/{saveName}/Level/01.sav.json"
-        player_name = find_key_in_json(json_file_path, "00000000-0000-0000-0000-000000000001")
-        if not player_name: player_name = find_key_in_json(json_file_path, "player_name")
-        return f"{player_name} - {saveName}" if player_name else None
-    except subprocess.CalledProcessError: return None
+    subprocess.run(command, check=True)
+    return f"{saveName}"
 def convert_JSON_sav(saveName):
-    saveName = saveName[saveName.find("-") + 2:]
     print(saveName)
     print(f"Converting JSON file to .sav: {saveName}")
     python_exe = os.path.join("venv", "Scripts", "python.exe") if os.name == 'nt' else os.path.join("venv", "bin", "python")
