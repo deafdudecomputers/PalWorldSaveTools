@@ -387,15 +387,12 @@ def main():
     response = messagebox.askyesno(title='WARNING', message='WARNING: Running this script WILL change your target save files and could \
 potentially corrupt your data. It is HIGHLY recommended that you make a backup \
 of your save folder before continuing. Press Yes if you would like to continue.')
-    if not response:
-        return
+    if not response: return
     host_json_gvas = load_player_file(level_sav_path, selected_source_player)
-    if host_json_gvas is None:
-        return
+    if host_json_gvas is None: return
     host_json = host_json_gvas.properties
     targ_json_gvas = load_player_file(t_level_sav_path, selected_target_player)
-    if targ_json_gvas is None:
-        return
+    if targ_json_gvas is None: return
     targ_json = targ_json_gvas.properties
     host_guid = UUID.from_str(selected_source_player).raw_bytes
     host_instance_id = host_json["SaveData"]["value"]["IndividualId"]["value"]["InstanceId"]["value"]
@@ -615,8 +612,7 @@ of your save folder before continuing. Press Yes if you would like to continue.'
     for pal_param in param_maps:
         pal_data = pal_param['value']['RawData']['value']
         slot_id_idx = pal_data.find(b'\x07\x00\x00\x00SlotID\x00\x0f\x00\x00\x00StructProperty\x00')
-        if slot_id_idx == -1:
-            continue
+        if slot_id_idx == -1: continue
         pal_container_id_bytes = pal_data[slot_id_idx + 217:slot_id_idx + 233]
         pal_data_bytearray = bytearray(pal_data)
         if pal_container_id_bytes == host_inv_pals["value"]["ID"]["value"]:
@@ -793,7 +789,7 @@ def source_level_file():
         source_level_path_label.config(text=tmp)
         level_sav_path = tmp
         selected_source_player = None
-        current_selection_label.config(text=f"source: {selected_source_player}, target: {selected_target_player}")
+        current_selection_label.config(text=f"Source: {selected_source_player}, Target: {selected_target_player}")
 def load_all_target_sections_async(group_save_section, group_save_section_range, reader):
     global targ_lvl, target_section_ranges
     targ_lvl, target_section_ranges = reader.load_sections([
@@ -824,7 +820,7 @@ def target_level_file():
         target_level_path_label.config(text=tmp)
         t_level_sav_path = tmp
         selected_target_player = None
-        current_selection_label.config(text=f"source: {selected_source_player}, target: {selected_target_player}")
+        current_selection_label.config(text=f"Source: {selected_source_player}, Target: {selected_target_player}")
 def on_exit():
     global level_sav_path, host_sav_path, t_level_sav_path, t_host_sav_path
     root.destroy() 
@@ -833,30 +829,24 @@ def on_selection_of_source_player(event):
     selections = source_player_list.selection()
     if len(selections):
         selected_source_player = source_player_list.item(selections[0])['values'][1]
-        current_selection_label.config(text=f"source: {selected_source_player}, target: {selected_target_player}")
+        current_selection_label.config(text=f"Source: {selected_source_player}, Target: {selected_target_player}")
 def on_selection_of_target_player(event):
     global selected_target_player
     selections = target_player_list.selection()
     if len(selections):
         selected_target_player = target_player_list.item(selections[0])['values'][1]
-        current_selection_label.config(text=f"source: {selected_source_player}, target: {selected_target_player}")
+        current_selection_label.config(text=f"Source: {selected_source_player}, Target: {selected_target_player}")
 def on_keep_old_guild_check():
     global keep_old_guild_id
     keep_old_guild_id = bool(checkbox_var.get())
     print("Keep old guild id after transfer:", "on" if keep_old_guild_id else "off")
     checkbox_var.set(1 if keep_old_guild_id else 0)
-def on_output_old_save_version_check():
-    global output_old_save_version
-    output_old_save_version = bool(save_version_var.get())
-    print("Output Old Save Version:", "on" if output_old_save_version else "off")
-    save_version_var.set(1 if output_old_save_version else 0)
 def create_label(text, row, column):
     return tk.Label(root, text=text, bg="#2f2f2f", fg="white", wraplength=600)
 def sort_treeview_column(treeview, col_index, reverse):
     data = [(treeview.set(child, col_index), child) for child in treeview.get_children('')]
     data.sort(reverse=reverse, key=lambda x: x[0])
-    for index, (_, item) in enumerate(data):
-        treeview.move(item, '', index)
+    for index, (_, item) in enumerate(data): treeview.move(item, '', index)
     treeview.heading(col_index, command=lambda: sort_treeview_column(treeview, col_index, not reverse))
 level_sav_path, host_sav_path, t_level_sav_path, t_host_sav_path = None, None, None, None
 level_json, host_json, targ_lvl, targ_json = None, None, None, None
@@ -875,14 +865,14 @@ root.config(bg="#2f2f2f")
 root.tk_setPalette(background="#2f2f2f", foreground="white")
 font_style = ("Arial", 10)
 heading_font = ("Arial", 12, "bold")
-status_label = tk.Label(root, text="Select files to transfer", font=font_style, bg="#2f2f2f", fg="white")
+status_label = tk.Label(root, text="", font=font_style, bg="#2f2f2f", fg="white")
 status_label.grid(row=0, column=0, columnspan=2, pady=20, sticky="ew")
 root.columnconfigure(0, weight=3)
 root.columnconfigure(1, weight=1)
 root.rowconfigure(3, weight=1)
 root.rowconfigure(5, weight=1)
 tk.Button(root, text='Select Source Level File', command=source_level_file).grid(row=2, column=1, padx=10, pady=20, sticky="ew")
-source_level_path_label = tk.Label(root, text="...", font=font_style, bg="#2f2f2f", fg="white", wraplength=600)
+source_level_path_label = tk.Label(root, text="Please select a file:", font=font_style, bg="#2f2f2f", fg="white", wraplength=600)
 source_level_path_label.grid(row=2, column=0, padx=10, pady=20, sticky="ew")
 style = ttk.Style()
 style.theme_use('clam')
@@ -893,35 +883,41 @@ source_player_list.grid(row=3, column=0, columnspan=2, padx=10, pady=10, sticky=
 source_player_list.tag_configure("even", background="#333333", foreground="white")
 source_player_list.tag_configure("odd", background="#444444", foreground="white")
 source_player_list.tag_configure("selected", background="#555555", foreground="white")
+source_player_list.column(0, anchor='center')
+source_player_list.column(1, anchor='center')
+source_player_list.column(2, anchor='center')
 source_player_list.heading(0, text='Guild ID', command=lambda: sort_treeview_column(source_player_list, 0, False))
-source_player_list.heading(1, text='Player ID', command=lambda: sort_treeview_column(source_player_list, 1, False))
-source_player_list.heading(2, text='NickName', command=lambda: sort_treeview_column(source_player_list, 2, False))
+source_player_list.heading(1, text='Player UID', command=lambda: sort_treeview_column(source_player_list, 1, False))
+source_player_list.heading(2, text='Nickname', command=lambda: sort_treeview_column(source_player_list, 2, False))
 source_player_list.column(0, width=100)
 source_player_list.column(1, width=100)
 source_player_list.column(2, width=100)
 source_player_list.bind('<<TreeviewSelect>>', on_selection_of_source_player)
 tk.Button(root, text='Select Target Level File', command=target_level_file).grid(row=4, column=1, padx=10, pady=20, sticky="ew")
-target_level_path_label = tk.Label(root, text="...", font=font_style, bg="#2f2f2f", fg="white", wraplength=600)
+target_level_path_label = tk.Label(root, text="Please select a file:", font=font_style, bg="#2f2f2f", fg="white", wraplength=600)
 target_level_path_label.grid(row=4, column=0, padx=10, pady=20, sticky="ew")
 target_player_list = ttk.Treeview(root, columns=(0, 1, 2), show='headings', style="Treeview")
 target_player_list.grid(row=5, column=0, columnspan=2, padx=10, pady=10, sticky='nsew')
 target_player_list.tag_configure("even", background="#333333", foreground="white")
 target_player_list.tag_configure("odd", background="#444444", foreground="white")
 target_player_list.tag_configure("selected", background="#555555", foreground="white")
+target_player_list.column(0, anchor='center')
+target_player_list.column(1, anchor='center')
+target_player_list.column(2, anchor='center')
 target_player_list.heading(0, text='Guild ID', command=lambda: sort_treeview_column(target_player_list, 0, False))
-target_player_list.heading(1, text='Player ID', command=lambda: sort_treeview_column(target_player_list, 1, False))
-target_player_list.heading(2, text='NickName', command=lambda: sort_treeview_column(target_player_list, 2, False))
+target_player_list.heading(1, text='Player UID', command=lambda: sort_treeview_column(target_player_list, 1, False))
+target_player_list.heading(2, text='Nickname', command=lambda: sort_treeview_column(target_player_list, 2, False))
 target_player_list.column(0, width=100)
 target_player_list.column(1, width=100)
 target_player_list.column(2, width=100)
 target_player_list.bind('<<TreeviewSelect>>', on_selection_of_target_player)
-current_selection_label = tk.Label(root, text=f"source: N/A, target: N/A", font=font_style, bg="#2f2f2f", fg="white", wraplength=600)
-current_selection_label.grid(row=6, column=0, padx=10, pady=20, sticky="ew")
-tk.Button(root, text='Start Transfer!', font=font_style, command=main).grid(row=6, column=1, columnspan=2, pady=20, sticky="ew")
+current_selection_label = tk.Label(root, text=f"Source: N/A, Target: N/A", font=font_style, bg="#2f2f2f", fg="white", wraplength=600)
+current_selection_label.grid(row=7, column=0, padx=10, pady=20, sticky="ew")
+tk.Button(root, text='Start Transfer!', font=font_style, command=main).grid(row=7, column=1, padx=10, pady=20, sticky="ew")
 checkbox_var = tk.IntVar()
 keep_old_guild_check = tk.Checkbutton(
     root, 
-    text="Keep Old Guild ID After Transfer", 
+    text="Keep old Guild ID after Transfer", 
     variable=checkbox_var, 
     command=on_keep_old_guild_check,
     indicatoron=True,
@@ -931,20 +927,6 @@ keep_old_guild_check = tk.Checkbutton(
     foreground="white", 
     bg="#2f2f2f"
 )
-keep_old_guild_check.grid(row=7, column=0, columnspan=2, sticky='w', padx=10, pady=5)
-save_version_var = tk.IntVar()
-output_old_save_version_check = tk.Checkbutton(
-    root, 
-    text="Output Old Save Version", 
-    variable=save_version_var, 
-    command=on_output_old_save_version_check,
-    indicatoron=True,
-    selectcolor="#2f2f2f",
-    activebackground="black",
-    activeforeground="white",
-    foreground="white",
-    bg="#2f2f2f"
-)
-output_old_save_version_check.grid(row=7, column=1, columnspan=2, sticky='w', padx=10, pady=5)
+keep_old_guild_check.grid(row=6, column=1, columnspan=2, sticky='w', padx=10, pady=5)
 root.protocol("WM_DELETE_WINDOW", on_exit)
 root.mainloop()
