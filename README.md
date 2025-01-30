@@ -51,7 +51,7 @@ ______     _ _    _            _     _ _____               _____           _
 - Lists all pals and their details.  
 - Displays last online time for players.  
 - Logs players and their data into `players.log`.  
-- Sorts and deletes players based on level and inactivity.  
+- Filters and deletes players based on level, inactivity, or maximum number of pals, with filtering available through the players' UID in the `players_filtered.log`.
 - Logs and sorts players by the number of pals owned.  
 - Deletes players with fewer than a specified number of pals.   
 - Provides a **base map view**.
