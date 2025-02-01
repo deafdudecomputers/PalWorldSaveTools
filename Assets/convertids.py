@@ -9,7 +9,7 @@ def get_steam_id_from_local():
 def fetch_palworld_uids(steam_id):
     try:
         with sync_playwright() as p:
-            browser = p.firefox.launch(headless=True)
+            browser = p.webkit.launch(headless=True)
             page = browser.new_page()
             page.goto("https://uid.palservers.xyz/")
             page.fill("input", steam_id)
