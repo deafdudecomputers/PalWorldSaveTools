@@ -16,9 +16,9 @@ def setup_environment():
     os.makedirs("PalWorldSave/Players", exist_ok=True)  
     if not os.path.exists("venv"): subprocess.run([sys.executable, "-m", "venv", "venv"])
     pip_executable = os.path.join("venv", "Scripts", "pip") if os.name == 'nt' else os.path.join("venv", "bin", "pip")
-    subprocess.run([pip_executable, "install", "-r", "requirements.txt"])
+    subprocess.run([pip_executable, "install", "--no-cache-dir", "-r", "requirements.txt"])
 def get_versions():
-    tools_version = "1.0.20"
+    tools_version = "1.0.21"
     game_version = "0.4.14"
     return tools_version, game_version
 def display_logo():
