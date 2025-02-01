@@ -30,19 +30,10 @@ ______     _ _    _            _     _ _____               _____           _
   **"Add Python to PATH"** 🟩  
   (*This ensures Python is accessible from the command line!*)  
   ![Add Python to PATH checkbox](https://i.imgur.com/SCJEkdJ.png)
-
-### 3. **[Visual Studio Build Tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/)**
-- Download and install Visual Studio Build Tools.  
-- During installation, **CHECK** the box that says:  
-  **"Desktop development with C++"** 🟩  
-  (*This allows the `cityhash` library to install!*)  
-  ![CityHash Screenshot](https://i.imgur.com/RZGZ9So.png)
   
-### 4. ***Start Menu.cmd***
+### 3. ***Start Menu.cmd***
 
 ---
-
-
 
 ## Features:
 
