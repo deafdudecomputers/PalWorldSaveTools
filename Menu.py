@@ -13,12 +13,16 @@ def setup_environment():
         resource.setrlimit(resource.RLIMIT_NOFILE, (65535, 65535))
     os.system('cls' if os.name == 'nt' else 'clear')
     print(f"{YELLOW_FONT}Setting up your environment...{RESET_FONT}")
-    os.makedirs("PalWorldSave/Players", exist_ok=True)  
+    os.makedirs("PalWorldSave/Players", exist_ok=True)
     if not os.path.exists("venv"): subprocess.run([sys.executable, "-m", "venv", "venv"])
     pip_executable = os.path.join("venv", "Scripts", "pip") if os.name == 'nt' else os.path.join("venv", "bin", "pip")
     subprocess.run([pip_executable, "install", "--no-cache-dir", "-r", "requirements.txt"])
+    playwright_browsers_path = os.path.join(os.path.dirname(__file__), "venv", "playwright_browsers")
+    os.environ["PLAYWRIGHT_BROWSERS_PATH"] = playwright_browsers_path
+    venv_python = os.path.join("venv", "Scripts", "python.exe") if os.name == 'nt' else os.path.join("venv", "bin", "python")
+    subprocess.run([venv_python, "-m", "playwright", "install"])
 def get_versions():
-    tools_version = "1.0.21"
+    tools_version = "1.0.21.r1"
     game_version = "0.4.14"
     return tools_version, game_version
 def display_logo():
