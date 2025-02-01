@@ -20,9 +20,9 @@ def setup_environment():
     playwright_browsers_path = os.path.join(os.path.dirname(__file__), "venv", "playwright_browsers")
     os.environ["PLAYWRIGHT_BROWSERS_PATH"] = playwright_browsers_path
     venv_python = os.path.join("venv", "Scripts", "python.exe") if os.name == 'nt' else os.path.join("venv", "bin", "python")
-    subprocess.run([venv_python, "-m", "playwright", "install"])
+    subprocess.run([venv_python, "-m", "playwright", "install", "firefox"])
 def get_versions():
-    tools_version = "1.0.21.r1"
+    tools_version = "1.0.21.r2"
     game_version = "0.4.14"
     return tools_version, game_version
 def display_logo():
