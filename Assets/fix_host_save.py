@@ -91,19 +91,23 @@ def main():
         [sg.Text("Please select the \"Level.sav\" file that should be updated:")],
         [sg.InputText(key="file_path", enable_events=True, default_text=os.path.join("PalWorldSave", "Level.sav")), sg.FileBrowse(file_types=(("SAV Files", "*.sav"),))],
         [sg.Text("Select the old GUID:")],
+        [sg.InputText(key="search_old_guid", enable_events=True, size=(20, 1))],
         [sg.Combo([], key='old_guid', enable_events=True, size=(40, 1))],
         [sg.Text("Select the new GUID:")],
+        [sg.InputText(key="search_new_guid", enable_events=True, size=(20, 1))],
         [sg.Combo([], key='new_guid', size=(40, 1))],
         [sg.Button("Migrate", key='button_migrate')],
         [sg.ProgressBar(100, orientation='h', size=(20, 20), key='progressbar')],
-        [sg.Text("", key='progressbarText')],]
+        [sg.Text("", key='progressbarText')],
+    ]
     icon_path = os.path.join("Assets", "resources", "pal.ico")
     window = sg.Window("GUID Migration Tool", layout, icon=icon_path)
     player_files = []
     players = {}
     while True:
         event, values = window.read()
-        if event == sg.WIN_CLOSED or event == "Cancel": break
+        if event == sg.WIN_CLOSED or event == "Cancel":
+            break
         if event == "file_path":
             file_path = values["file_path"]
             if not os.path.exists(file_path): 
@@ -121,7 +125,7 @@ def main():
                         LoadFile(file_path)
                         ShowPlayers()
                     except Exception as e: 
-                        sg.popup("Error loading the file: {e}", text_color='lightcoral', icon=icon_path)
+                        sg.popup(f"Error loading the file: {e}", text_color='lightcoral', icon=icon_path)
                     log_file = 'players.log'
                     players = extract_player_data(log_file)
                     player_files_with_names = []
@@ -133,47 +137,45 @@ def main():
                     window['new_guid'].update(values=player_files_with_names)
                 else:
                     sg.popup("No Players folder found.", text_color='lightcoral', icon=icon_path)
-        if event == "old_guid":
-            old_guid_name = values["old_guid"]
-            old_guid = re.search(r'\((.*?)\)', old_guid_name).group(1)
-            available_new_guids = [guid for guid in player_files if guid != old_guid]
-            player_files_with_names = []
-            for save in available_new_guids:
-                save_uid = save.replace("-", "").upper()
-                if save_uid in players: player_files_with_names.append(f"{players[save_uid]} ({save_uid})")
-                else: player_files_with_names.append(f"Unknown ({save_uid})")
-            window['new_guid'].update(values=player_files_with_names)
-        if event == "new_guid":
-            new_guid_name = values["new_guid"]
-            new_guid = re.search(r'\((.*?)\)', new_guid_name).group(1)
-            available_old_guids = [guid for guid in player_files if guid != new_guid]
-            player_files_with_names = []
-            for save in available_old_guids:
-                save_uid = save.replace("-", "").upper()
-                if save_uid in players: player_files_with_names.append(f"{players[save_uid]} ({save_uid})")
-                else: player_files_with_names.append(f"Unknown ({save_uid})")
-            window['old_guid'].update(values=player_files_with_names)
+        if event == "old_guid" or event == "search_old_guid":
+            old_guid_search = values["search_old_guid"].lower()
+            old_guid_filtered = [player for player in player_files_with_names if old_guid_search in player.lower()]
+            window['old_guid'].update(values=old_guid_filtered)
+        if event == "new_guid" or event == "search_new_guid":
+            new_guid_search = values["search_new_guid"].lower()
+            new_guid_filtered = [player for player in player_files_with_names if new_guid_search in player.lower()]
+            window['new_guid'].update(values=new_guid_filtered)
+        if event == 'old_guid':
+            old_guid_selected = values['old_guid']
+            window['old_guid'].update(value=old_guid_selected)
+        if event == 'new_guid':
+            new_guid_selected = values['new_guid']
+            window['new_guid'].update(value=new_guid_selected)
         if event == "button_migrate":
             new_guid_name = values['new_guid']
             old_guid_name = values['old_guid']
             file_path = values["file_path"]
-            old_guid = re.search(r'\((.*?)\)', old_guid_name).group(1)
-            new_guid = re.search(r'\((.*?)\)', new_guid_name).group(1)
-            if not new_guid or not old_guid: sg.popup("Both GUID fields are required!", text_color='lightcoral')
+            if old_guid_name and new_guid_name:
+                old_guid = re.search(r'\((.*?)\)', old_guid_name).group(1)
+                new_guid = re.search(r'\((.*?)\)', new_guid_name).group(1)
+                if not new_guid or not old_guid:
+                    sg.popup("Both GUID fields are required!", text_color='lightcoral')
+                else:
+                    window['progressbarText'].update("Validating and migrating save files...")
+                    window['progressbar'].update_bar(30)
+                    window.refresh()
+                    try:
+                        backup_folder = "Backups/Fix Host Save"
+                        backup_whole_directory(folder_path, backup_folder)
+                        fix_save(folder_path, new_guid, old_guid)
+                        window['progressbarText'].update("Migration successful!")
+                        window['progressbar'].update_bar(100)
+                        sg.popup("Finished migrating. Have fun!", icon=icon_path)
+                    except Exception as e:
+                        window['progressbarText'].update("An error occurred during migration.")
+                        sg.popup(f"Error: {e}", text_color='lightcoral', icon=icon_path)
             else:
-                window['progressbarText'].update("Validating and migrating save files...")
-                window['progressbar'].update_bar(30)
-                window.refresh()
-                try:
-                    backup_folder = "Backups/Fix Host Save"
-                    backup_whole_directory(folder_path, backup_folder)
-                    fix_save(folder_path, new_guid, old_guid)
-                    window['progressbarText'].update("Migration successful!")
-                    window['progressbar'].update_bar(100)
-                    sg.popup("Finished migrating. Have fun!", icon=icon_path)
-                except Exception as e:
-                    window['progressbarText'].update("An error occurred during migration.")
-                    sg.popup(f"Error: {e}", text_color='lightcoral', icon=icon_path)
+                sg.popup("Please select both GUIDs!", text_color='lightcoral', icon=icon_path)
     window.close()
 if __name__ == "__main__":
     file_path = 'players.log'
