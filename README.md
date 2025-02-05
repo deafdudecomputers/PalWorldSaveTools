@@ -253,14 +253,15 @@ SaveGames
 
 ---
 
-## 3. Fix Host Save
+## 3. Character Transfer
 
-1. Open the **Fix Host Save** tool.
-2. Click `Browse` and select `Level.sav` from your **temporary folder**.
+1. Open the **Character Transfer** tool.
+2. Click `Select Source Level File` and select `Level.sav` from your **temporary folder**.
+3. Click `Select Target Level File` and select `Level.sav` from your same **temporary folder**.
 3. After loading, select:
-   - **Old GUID** (your old character)
-   - **New GUID** (your new character)
-4. Click `Migrate` once confirmed.
+   - **Source Player** (your old character)
+   - **Target Player** (your new character)
+4. Click `Start Transfer!` once confirmed.
 
 ---
 
