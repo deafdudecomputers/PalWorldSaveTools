@@ -317,9 +317,6 @@ PALWORLD_CUSTOM_PROPERTIES[".worldSaveData.GroupSaveDataMap"] = (decode_group, e
 PALWORLD_CUSTOM_PROPERTIES[".worldSaveData.GroupSaveDataMap.Value.RawData"] = (skip_decode, skip_encode)
 OwnerPlayerUIdSearchPrefix = b'\x0f\x00\x00\x00OwnerPlayerUId\x00\x0f\x00\x00\x00StructProperty\x00\x10\x00\x00\x00\x00\x00\x00\x00\x05\x00\x00\x00Guid\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'
 LocalIdSearchPrefix = b'\x16\x00\x00\x00LocalIdInCreatedWorld\x00\x0f\x00\x00\x00StructProperty\x00\x10\x00\x00\x00\x00\x00\x00\x00\x05\x00\x00\x00Guid\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'
-PalSlotDataPrefix = b'\r\x00\x00\x00ByteProperty\x00\x00!\x00\x00\x00'
-OldOwnerPlayerUIdPrefix = b'\x13\x00\x00\x00OldOwnerPlayerUIds\x00\x0e\x00\x00\x00ArrayProperty\x00'
-OldOwnerPlayerUIdSuffix = b'\x06\x00\x00\x00MaxHP'
 def find_id_match_prefix(encoded_bytes, prefix):
     start_idx = encoded_bytes.find(prefix) + len(prefix)
     return encoded_bytes[start_idx:start_idx + 16]
@@ -746,21 +743,22 @@ def load_player_file(level_sav_path, player_uid):
     return SkipGvasFile.read(raw_gvas)
 def load_players(save_json, is_source):
     guild_dict = source_guild_dict if is_source else target_guild_dict
-    if len(guild_dict) > 0:
-        guild_dict.clear()
-    players = dict()
+    if guild_dict:
+        guild_dict.clear()    
+    players = {}
     for group_data in save_json["GroupSaveDataMap"]["value"]:
         if group_data["value"]["GroupType"]["value"]["value"] == "EPalGroupType::Guild":
             group_id = group_data["value"]["RawData"]["value"]['group_id']
             players[group_id] = group_data["value"]["RawData"]["value"]["players"]
-            guild_dict[group_id] = group_data
+            guild_dict[group_id] = group_data    
     list_box = source_player_list if is_source else target_player_list
-    for item in list_box.get_children():
-        list_box.delete(item)
+    list_box.delete(*list_box.get_children())
+    filter_treeview.original_rows = []
     for guild_id, player_items in players.items():
         for player_item in player_items:
             playerUId = ''.join(str(UUID(player_item['player_uid'])).split('-')).upper()
-            list_box.insert('', tk.END, values=(UUID(guild_id), playerUId, player_item['player_info']['player_name']))
+            row_id = list_box.insert('', tk.END, values=(UUID(guild_id), playerUId, player_item['player_info']['player_name']))
+            filter_treeview.original_rows.append(row_id)
 def load_all_source_sections_async(group_save_section, reader):
     global level_json
     level_json, _ = reader.load_sections([
@@ -881,13 +879,19 @@ root.columnconfigure(0, weight=1)
 root.columnconfigure(1, weight=2)
 root.rowconfigure(3, weight=1)
 root.rowconfigure(5, weight=1)
+source_frame = tk.Frame(root, bg="#444")
+source_frame.grid(row=2, column=0, padx=10, pady=5, sticky="ew")
+tk.Label(source_frame, text="Search Source Player:", font=font_style, bg="#444", fg="white").pack(side="left", padx=(0, 5))
 source_search_var = tk.StringVar()
-source_search_entry = tk.Entry(root, textvariable=source_search_var, font=font_style, bg="#444", fg="white", insertbackground="white", width=20)
-source_search_entry.grid(row=2, column=0, padx=10, pady=5, sticky="ew")
+source_search_entry = tk.Entry(source_frame, textvariable=source_search_var, font=font_style, bg="#444", fg="white", insertbackground="white", width=20)
+source_search_entry.pack(side="left", fill="x", expand=True)
 source_search_var.trace_add("write", lambda *args: filter_treeview(source_player_list, source_search_var.get()))
+target_frame = tk.Frame(root, bg="#444")
+target_frame.grid(row=5, column=0, padx=10, pady=5, sticky="ew")
+tk.Label(target_frame, text="Search Target Player:", font=font_style, bg="#444", fg="white").pack(side="left", padx=(0, 5))
 target_search_var = tk.StringVar()
-target_search_entry = tk.Entry(root, textvariable=target_search_var, font=font_style, bg="#444", fg="white", insertbackground="white", width=20)
-target_search_entry.grid(row=5, column=0, padx=10, pady=5, sticky="ew")
+target_search_entry = tk.Entry(target_frame, textvariable=target_search_var, font=font_style, bg="#444", fg="white", insertbackground="white", width=20)
+target_search_entry.pack(side="left", fill="x", expand=True)
 target_search_var.trace_add("write", lambda *args: filter_treeview(target_player_list, target_search_var.get()))
 tk.Button(root, text='Select Source Level File', command=source_level_file).grid(row=1, column=1, padx=10, pady=20, sticky="ew")
 source_level_path_label = tk.Label(root, text="Please select a file:", font=font_style, bg="#2f2f2f", fg="white", wraplength=600)
