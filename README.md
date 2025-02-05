@@ -261,7 +261,7 @@ SaveGames
 3. After loading, select:
    - **Source Player** (your old character)
    - **Target Player** (your new character)
-   - **Optional** If you want to keep old guild id, to take old player's bases/etc, make sure to tick the option that says "Keep old Guild ID after Transfer".
+   - **Optional** (If you want to keep old guild id, to take old player's bases/etc, make sure to tick the option that says "Keep old Guild ID after Transfer".)
 4. Click `Start Transfer!` once confirmed.
 
 ---
