@@ -283,9 +283,12 @@ SaveGames
 
 ### Solo/Co-op to Server
 
-1. Navigate to:
+1. Copy the migrated:
+   - `Players` folder
+   - `Level.sav`
+2. Navigate to:
    ```
    steamapps\common\Palworld\Pal\Saved\SaveGames\0\RANDOMSERVERID\
    ```
-2. Paste the copied files into this folder.
-3. Start **Palworld**, join the server, and enjoy your character with all progress intact.
+3. Paste the copied files into this folder.
+4. Start **Palworld**, join the server, and enjoy your character with all progress intact.
