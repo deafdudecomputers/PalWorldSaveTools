@@ -75,16 +75,15 @@ def run_tool(choice):
         10: scan_save,
         11: generate_map,
         12: lambda: subprocess.run([python_exe, os.path.join(assets_folder, "character_transfer.py")]),
-        13: lambda: subprocess.run([python_exe, os.path.join(assets_folder, "fix_host_save.py")]),
-        14: lambda: subprocess.run([python_exe, os.path.join(assets_folder, "restore_map.py")]),
-        15: lambda: subprocess.run([python_exe, os.path.join(assets_folder, "delete_inactive_players.py"), "players.log"]),
-        16: lambda: subprocess.run([python_exe, os.path.join(assets_folder, "delete_pals_save.py"), "players.log"]),
-        17: lambda: subprocess.run([python_exe, os.path.join(assets_folder, "palguard_bases.py")]),
-        18: reset_update_tools,
-        19: about_tools,
-        20: usage_tools,
-        21: readme_tools,
-        22: sys.exit
+        13: lambda: subprocess.run([python_exe, os.path.join(assets_folder, "restore_map.py")]),
+        14: lambda: subprocess.run([python_exe, os.path.join(assets_folder, "delete_inactive_players.py"), "players.log"]),
+        15: lambda: subprocess.run([python_exe, os.path.join(assets_folder, "delete_pals_save.py"), "players.log"]),
+        16: lambda: subprocess.run([python_exe, os.path.join(assets_folder, "palguard_bases.py")]),
+        17: reset_update_tools,
+        18: about_tools,
+        19: usage_tools,
+        20: readme_tools,
+        21: sys.exit
     }
     tool_mapping.get(choice, lambda: print("Invalid choice!"))()
 def scan_save():
@@ -154,7 +153,6 @@ management_tools = [
     "Scan Save",
     "Generate Map",
     "Character Transfer",
-    "Fix Host Save",
     "Restore Map"
 ]
 cleaning_tools = [
