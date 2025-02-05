@@ -22,7 +22,7 @@ def setup_environment():
     venv_python = os.path.join("venv", "Scripts", "python.exe") if os.name == 'nt' else os.path.join("venv", "bin", "python")
     subprocess.run([venv_python, "-m", "playwright", "install", "webkit"])
 def get_versions():
-    tools_version = "1.0.22"
+    tools_version = "1.0.22.r1"
     game_version = "0.4.14"
     return tools_version, game_version
 def display_logo():

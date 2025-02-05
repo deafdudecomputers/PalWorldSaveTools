@@ -705,7 +705,7 @@ of your save folder before continuing. Press Yes if you would like to continue.'
     gvas_to_sav(t_level_sav_path, output_data)
     gvas_to_sav(t_host_sav_path, targ_json_gvas.write())
     print("Saved all data successfully. PLEASE DON'T BREAK")
-    messagebox.showinfo(message='Transfer finished! You may continue transferring more players or close the windows now.')
+    messagebox.showinfo(title="Transfer Successful", message='Transfer finished! You may continue transferring more players or close the window now.')
 def sav_to_gvas(file):
     with open(file, 'rb') as f:
         data = f.read()
@@ -744,21 +744,27 @@ def load_player_file(level_sav_path, player_uid):
 def load_players(save_json, is_source):
     guild_dict = source_guild_dict if is_source else target_guild_dict
     if guild_dict:
-        guild_dict.clear()    
+        guild_dict.clear()
     players = {}
     for group_data in save_json["GroupSaveDataMap"]["value"]:
         if group_data["value"]["GroupType"]["value"]["value"] == "EPalGroupType::Guild":
             group_id = group_data["value"]["RawData"]["value"]['group_id']
             players[group_id] = group_data["value"]["RawData"]["value"]["players"]
-            guild_dict[group_id] = group_data    
+            guild_dict[group_id] = group_data
     list_box = source_player_list if is_source else target_player_list
     list_box.delete(*list_box.get_children())
-    filter_treeview.original_rows = []
+    if is_source:
+        filter_treeview.source_original_rows = []
+    else:
+        filter_treeview.target_original_rows = []    
     for guild_id, player_items in players.items():
         for player_item in player_items:
             playerUId = ''.join(str(UUID(player_item['player_uid'])).split('-')).upper()
             row_id = list_box.insert('', tk.END, values=(UUID(guild_id), playerUId, player_item['player_info']['player_name']))
-            filter_treeview.original_rows.append(row_id)
+            if is_source:
+                filter_treeview.source_original_rows.append(row_id)
+            else:
+                filter_treeview.target_original_rows.append(row_id)
 def load_all_source_sections_async(group_save_section, reader):
     global level_json
     level_json, _ = reader.load_sections([
@@ -839,19 +845,23 @@ def on_keep_old_guild_check():
     keep_old_guild_id = bool(checkbox_var.get())
     print("Keep old guild id after transfer:", "on" if keep_old_guild_id else "off")
     checkbox_var.set(1 if keep_old_guild_id else 0)
-def create_label(text, row, column):
-    return tk.Label(root, text=text, bg="#2f2f2f", fg="white", wraplength=600)
 def sort_treeview_column(treeview, col_index, reverse):
     data = [(treeview.set(child, col_index), child) for child in treeview.get_children('')]
     data.sort(reverse=reverse, key=lambda x: x[0])
     for index, (_, item) in enumerate(data): treeview.move(item, '', index)
     treeview.heading(col_index, command=lambda: sort_treeview_column(treeview, col_index, not reverse))
-def filter_treeview(tree, query):
+def filter_treeview(tree, query, is_source):
     query = query.lower()
-    if not hasattr(filter_treeview, "original_rows"):
-        filter_treeview.original_rows = [row for row in tree.get_children()]
-    for row in filter_treeview.original_rows:
-        tree.reattach(row, '', 'end')
+    if is_source:
+        if not hasattr(filter_treeview, "source_original_rows"):
+            filter_treeview.source_original_rows = [row for row in tree.get_children()]
+        original_rows = filter_treeview.source_original_rows
+    else:
+        if not hasattr(filter_treeview, "target_original_rows"):
+            filter_treeview.target_original_rows = [row for row in tree.get_children()]
+        original_rows = filter_treeview.target_original_rows
+    for row in original_rows:
+        tree.reattach(row, '', 'end')    
     for row in tree.get_children():
         values = tree.item(row, "values")
         if any(query in str(value).lower() for value in values):
@@ -885,14 +895,14 @@ tk.Label(source_frame, text="Search Source Player:", font=font_style, bg="#444",
 source_search_var = tk.StringVar()
 source_search_entry = tk.Entry(source_frame, textvariable=source_search_var, font=font_style, bg="#444", fg="white", insertbackground="white", width=20)
 source_search_entry.pack(side="left", fill="x", expand=True)
-source_search_var.trace_add("write", lambda *args: filter_treeview(source_player_list, source_search_var.get()))
+source_search_var.trace_add("write", lambda *args: filter_treeview(source_player_list, source_search_var.get(), is_source=True))
 target_frame = tk.Frame(root, bg="#444")
 target_frame.grid(row=5, column=0, padx=10, pady=5, sticky="ew")
 tk.Label(target_frame, text="Search Target Player:", font=font_style, bg="#444", fg="white").pack(side="left", padx=(0, 5))
 target_search_var = tk.StringVar()
 target_search_entry = tk.Entry(target_frame, textvariable=target_search_var, font=font_style, bg="#444", fg="white", insertbackground="white", width=20)
 target_search_entry.pack(side="left", fill="x", expand=True)
-target_search_var.trace_add("write", lambda *args: filter_treeview(target_player_list, target_search_var.get()))
+target_search_var.trace_add("write", lambda *args: filter_treeview(target_player_list, target_search_var.get(), is_source=False))
 tk.Button(root, text='Select Source Level File', command=source_level_file).grid(row=1, column=1, padx=10, pady=20, sticky="ew")
 source_level_path_label = tk.Label(root, text="Please select a file:", font=font_style, bg="#2f2f2f", fg="white", wraplength=600)
 source_level_path_label.grid(row=1, column=0, padx=10, pady=20, sticky="ew")
