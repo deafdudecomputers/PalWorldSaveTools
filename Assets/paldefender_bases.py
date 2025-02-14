@@ -57,8 +57,8 @@ def parse_log(inactivity_days=None, max_level=None):
         print("-" * 40)
     print(f"\nFound {guild_count} guild(s) with {base_count} base(s).")
     if kill_commands:
-        with open("palguard_bases.log", "w", encoding='utf-8') as log_file: log_file.writelines(f"{command}\n" for command in kill_commands)
-        print(f"Successfully wrote {len(kill_commands)} kill commands to palguard_bases.log.")
+        with open("paldefender_bases.log", "w", encoding='utf-8') as log_file: log_file.writelines(f"{command}\n" for command in kill_commands)
+        print(f"Successfully wrote {len(kill_commands)} kill commands to paldefender_bases.log.")
     else: print("No kill commands were generated.")
     if inactivity_days: print(f"Inactivity filter applied: >= {inactivity_days} day(s).")
     if max_level: print(f"Player level filter applied: <= {max_level} level(s).")
