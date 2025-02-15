@@ -57,11 +57,25 @@ def parse_log(inactivity_days=None, max_level=None):
         print("-" * 40)
     print(f"\nFound {guild_count} guild(s) with {base_count} base(s).")
     if kill_commands:
-        with open("paldefender_bases.log", "w", encoding='utf-8') as log_file: log_file.writelines(f"{command}\n" for command in kill_commands)
+        with open("paldefender_bases.log", "w", encoding='utf-8') as log_file: log_file.write("\n".join(kill_commands))
         print(f"Successfully wrote {len(kill_commands)} kill commands to paldefender_bases.log.")
     else: print("No kill commands were generated.")
     if inactivity_days: print(f"Inactivity filter applied: >= {inactivity_days} day(s).")
     if max_level: print(f"Player level filter applied: <= {max_level} level(s).")
+    if guild_count > 0:
+        with open("paldefender_bases_info.log", "w", encoding='utf-8') as info_log:
+            info_log.write("-" * 40 + "\n")
+            for guild_id, guild_info in inactive_guilds.items():
+                info_log.write(f"Guild: {guild_info['guild_name']} | Guild Leader: {guild_info['guild_leader']} | Guild ID: {guild_id}\n")
+                info_log.write(f"Guild Players: {len(guild_info['players'])}\n")
+                for player in guild_info["players"]:
+                    info_log.write(f"  Player: {player['name']} | UID: {player['uid']} | Level: {player['level']} | Caught: {player['caught']} | Owned: {player['owned']} | Encounters: {player['encounters']} | Uniques: {player['uniques']} | Last Online: {player['last_online']}\n")
+                info_log.write(f"Base Locations: {len(guild_info['bases'])}\n")
+                for base_id, raw_data in guild_info["bases"]:
+                    info_log.write(f"  Base ID: {base_id} | RawData: {raw_data}\n")
+                info_log.write("-" * 40 + "\n")
+            info_log.write(f"Found {guild_count} guild(s) with {base_count} base(s).\n")
+            info_log.write("-" * 40)
 if __name__ == "__main__":
     print("Filter options:")
     print("1) Inactivity: Guilds qualify if all players exceed >= days.")
