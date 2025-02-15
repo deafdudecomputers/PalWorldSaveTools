@@ -8,7 +8,7 @@ PURPLE_FONT = "\033[95m"
 RESET_FONT = "\033[0m"
 terminal_cols = 85
 terminal_lines = 47
-def set_console(title):
+def set_console_title(title):
     if sys.platform == "win32":
         os.system(f'title {title}')
         os.system(f'mode con: cols={terminal_cols} lines={terminal_lines}')
