@@ -6,16 +6,7 @@ GREEN_FONT = "\033[92m"
 YELLOW_FONT= "\033[93m"
 PURPLE_FONT = "\033[95m"
 RESET_FONT = "\033[0m"
-terminal_cols = 85
-terminal_lines = 47
-def set_console_title(title):
-    if sys.platform == "win32":
-        os.system(f'title {title}')
-        os.system(f'mode con: cols={terminal_cols} lines={terminal_lines}')
-    else:
-        print(f'\033]0;{title}\a', end='', flush=True)
-        os.system(f'printf "\\e[8;{terminal_lines};{terminal_cols}t"')
-        os.system(f'stty rows {terminal_lines} cols {terminal_cols}')
+def set_console_title(title): os.system(f'title {title}') if sys.platform == "win32" else print(f'\033]0;{title}\a', end='', flush=True)
 def setup_environment():
     if sys.platform != "win32":
         import resource
