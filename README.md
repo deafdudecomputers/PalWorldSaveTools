@@ -6,19 +6,9 @@
   | | | (_| | \  /\  / (_) | |  | | (_| /\__/ / (_| |\ V /  __/ | (_) | (_) | \__ \
   \_|  \__,_|_|\/  \/ \___/|_|  |_|\__,_\____/ \__,_| \_/ \___\_/\___/ \___/|_|___/
 ```
-![image](https://github.com/user-attachments/assets/e47dd6b9-b7e1-4d31-8b7a-40c021666c00)
-
 ---
-
-- **Author:** MagicBear and cheahjs  
-- **License:** MIT License  
-- **Updated by:** Pylar and Techdude  
-- **Map Pictures Provided by:** Kozejin  
-- **Testers/Helpers:** Lethe, rcioletti and xKillerMaverick  
 - **Contact me on Discord:** Pylar1991
-
 ---
-
 ## Prerequisites
 
 ### 1. **Updated Saves**
