@@ -37,7 +37,8 @@ def decode_bytes(
     }
     data["hp"] = reader.i32()
     if not reader.eof():
-        raise Exception("Warning: EOF not reached")
+        data["unknown_data"] = [int(b) for b in reader.read_to_end()]
+        # raise Exception("Warning: EOF not reached")
     return data
 
 
@@ -69,6 +70,8 @@ def encode_bytes(p: dict[str, Any]) -> bytes:
     )
     writer.float(p["world_transform"]["scale_x"])
     writer.i32(p["hp"])
+    if "unknown_data" in p:
+        writer.write(bytes(p["unknown_data"]))
 
     encoded_bytes = writer.bytes()
     return encoded_bytes
